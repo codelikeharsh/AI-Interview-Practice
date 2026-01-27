@@ -1,5 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, Response
 from pydantic import BaseModel
+from typing import Optional, Dict
 
 from app.services.session_store import (
     create_session,
@@ -13,11 +14,12 @@ from app.services.llm_service import generate_question
 from app.services.llm_evaluator import evaluate_answer
 from app.services.speech_to_text import transcribe_audio
 from app.services.speech_confidence import analyze_confidence
+from app.services.emotion_detector import analyze_emotion
 
 router = APIRouter()
 
 # --------------------------------------------------
-# CORS PREFLIGHT HANDLER (IMPORTANT)
+# CORS PREFLIGHT HANDLER
 # --------------------------------------------------
 @router.options("/{path:path}")
 def options_handler(path: str):
@@ -35,6 +37,7 @@ class AnswerRequest(BaseModel):
     session_id: str
     question: str
     answer: str
+    emotion: Optional[Dict] = None  # 👈 emotion comes from frontend
 
 
 # --------------------------------------------------
@@ -45,7 +48,6 @@ def start_interview(payload: StartInterviewRequest):
     session_id = create_session(payload.role)
     session = get_session(session_id)
 
-    # First topic + easy question
     topic = select_topic(
         role=payload.role,
         asked_topics=[],
@@ -77,11 +79,15 @@ def answer_interview(payload: AnswerRequest):
         if not session:
             return {"error": "Invalid session"}
 
-        # 🔥 REAL EVALUATION (LLM)
+        # 🔥 LLM evaluation
         evaluation = evaluate_answer(
             question=payload.question,
             answer=payload.answer,
         )
+
+        # 🧠 Attach emotion if available
+        if payload.emotion:
+            evaluation["emotion"] = payload.emotion
 
         # Store evaluation
         add_evaluation(payload.session_id, evaluation)
@@ -100,7 +106,6 @@ def answer_interview(payload: AnswerRequest):
             else "easy"
         )
 
-        # Select next topic
         topic = select_topic(
             role=session["role"],
             asked_topics=session["asked_topics"],
@@ -150,6 +155,15 @@ async def transcribe_audio_endpoint(file: UploadFile = File(...)):
         "text": result["text"],
         "confidence": confidence,
     }
+
+
+# --------------------------------------------------
+# EMOTION DETECTION
+# --------------------------------------------------
+@router.post("/emotion")
+async def detect_emotion(file: UploadFile = File(...)):
+    image_bytes = await file.read()
+    return analyze_emotion(image_bytes)
 
 
 # --------------------------------------------------
