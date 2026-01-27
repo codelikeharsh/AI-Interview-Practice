@@ -1,81 +1,118 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-/**
- * Backend base URL
- */
 const API = "http://127.0.0.1:8000";
 
-/**
- * MediaRecorder references (outside component to persist across renders)
- */
 let mediaRecorder = null;
 let audioChunks = [];
 
 export default function Interview() {
   /* ---------------- STATE ---------------- */
-
-  // Interview flow
   const [role, setRole] = useState("aiml");
   const [sessionId, setSessionId] = useState(null);
   const [question, setQuestion] = useState("");
   const [questionCount, setQuestionCount] = useState(0);
 
-  // Answer & feedback
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState(null);
-
-  // Speech analysis
-  const [speechConfidence, setSpeechConfidence] = useState(null);
-
-  // Final scorecard
   const [finalSummary, setFinalSummary] = useState(null);
 
-  // UI control flags
+  const [starting, setStarting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [recording, setRecording] = useState(false);
-  const [loading, setLoading] = useState(false);
+
+  /* ---------------- VIDEO ---------------- */
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const streamRef = useRef(null);
+
+  /* ---------------- AUDIO ---------------- */
+  const playInterviewer = () => {
+  const audio = new Audio(`${API}/interview/audio?ts=${Date.now()}`);
+  audio.play().catch(() => {
+    console.warn("Audio autoplay blocked");
+  });
+};
+
 
   /* ---------------- START INTERVIEW ---------------- */
-  /**
-   * Starts a new interview session.
-   * Calls backend → generates first question.
-   */
   const startInterview = async () => {
-    if (loading) return;
+  if (starting) return;
 
-    try {
-      setLoading(true);
-      setFeedback(null);
-      setFinalSummary(null);
-      setAnswer("");
-      setSpeechConfidence(null);
+  // ✅ MUST be first line
+  document.documentElement.requestFullscreen?.();
 
-      const res = await fetch(`${API}/interview/start`, {
+  setStarting(true);
+
+  try {
+    const res = await fetch(`${API}/interview/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role }),
+    });
+
+    const data = await res.json();
+
+    setSessionId(data.session_id);
+    setQuestion(data.question);
+    setQuestionCount(1);
+
+    // Camera
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    streamRef.current = stream;
+    videoRef.current.srcObject = stream;
+
+    await playInterviewer();
+  } catch (e) {
+    alert("Failed to start interview.");
+  } finally {
+    setStarting(false);
+  }
+};
+
+
+  /* ---------------- RECORDING ---------------- */
+  const startRecording = async () => {
+    if (recording) return;
+
+    audioChunks = [];
+    setRecording(true);
+
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+
+    mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
+    mediaRecorder.start();
+  };
+
+  const stopRecording = async () => {
+    if (!mediaRecorder) return;
+
+    setRecording(false);
+    mediaRecorder.stop();
+
+    mediaRecorder.onstop = async () => {
+      mediaRecorder.stream.getTracks().forEach((t) => t.stop());
+
+      const blob = new Blob(audioChunks, { type: "audio/wav" });
+      const formData = new FormData();
+      formData.append("file", blob);
+
+      const res = await fetch(`${API}/interview/transcribe`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role }),
+        body: formData,
       });
 
       const data = await res.json();
-      setSessionId(data.session_id);
-      setQuestion(data.question);
-      setQuestionCount(1);
-    } catch (err) {
-      alert("Failed to start interview.");
-    } finally {
-      setLoading(false);
-    }
+      setAnswer(data.text || "");
+    };
   };
 
   /* ---------------- SUBMIT ANSWER ---------------- */
-  /**
-   * Sends answer to backend → gets feedback + next question.
-   */
   const submitAnswer = async () => {
-    if (!answer.trim() || loading) return;
+    if (!answer.trim() || submitting) return;
+    setSubmitting(true);
 
     try {
-      setLoading(true);
-
       const res = await fetch(`${API}/interview/answer`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -87,100 +124,63 @@ export default function Interview() {
       });
 
       const data = await res.json();
+
+      // Repeat question flow
+      if (data.repeat) {
+        await playInterviewer();
+        setSubmitting(false);
+        return;
+      }
+
       setFeedback(data.evaluation);
-      setQuestion(data.next_question);
       setAnswer("");
-      setSpeechConfidence(null);
-      setQuestionCount((c) => c + 1);
-    } catch (err) {
+
+      if (data.next_question) {
+        setQuestion(data.next_question);
+        setQuestionCount((c) => c + 1);
+        await playInterviewer();
+      }
+    } catch {
       alert("Failed to submit answer.");
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
-  };
-
-  /* ---------------- AUDIO RECORDING ---------------- */
-  /**
-   * Starts microphone recording.
-   */
-  const startRecording = async () => {
-    if (recording || loading) return;
-
-    audioChunks = [];
-    setRecording(true);
-
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
-
-    mediaRecorder.ondataavailable = (event) => {
-      audioChunks.push(event.data);
-    };
-
-    mediaRecorder.start();
-  };
-
-  /**
-   * Stops recording, sends audio to backend for:
-   * Whisper transcription + speech confidence analysis.
-   * VERY IMPORTANT: stops mic tracks to turn mic OFF.
-   */
-  const stopRecording = async () => {
-    if (!mediaRecorder) return;
-
-    setRecording(false);
-    setLoading(true);
-
-    mediaRecorder.stop();
-
-    mediaRecorder.onstop = async () => {
-      // 🔴 HARD STOP MIC
-      mediaRecorder.stream.getTracks().forEach((track) => track.stop());
-
-      const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-      const formData = new FormData();
-      formData.append("file", audioBlob);
-
-      try {
-        const res = await fetch(`${API}/interview/transcribe`, {
-          method: "POST",
-          body: formData,
-        });
-
-        const data = await res.json();
-        setAnswer(data.text || "");
-        setSpeechConfidence(data.confidence || null);
-      } catch (err) {
-        alert("Speech transcription failed.");
-      } finally {
-        setLoading(false);
-      }
-    };
   };
 
   /* ---------------- END INTERVIEW ---------------- */
-  /**
-   * Fetches final interview scorecard.
-   */
   const endInterview = async () => {
-    try {
-      const res = await fetch(`${API}/interview/final/${sessionId}`);
-      const data = await res.json();
-      setFinalSummary(data.summary);
-    } catch (err) {
-      alert("Failed to load final scorecard.");
+  try {
+    // Stop camera
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((t) => t.stop());
+      streamRef.current = null;
     }
-  };
+
+    // Exit fullscreen
+    document.exitFullscreen?.();
+
+    // Fetch final scorecard
+    const res = await fetch(`${API}/interview/final/${sessionId}`);
+    const data = await res.json();
+
+    setFinalSummary(data.summary);
+
+    // 🔑 EXIT INTERVIEW MODE
+    setSessionId(null);
+    setQuestion("");
+    setQuestionCount(0);
+    setAnswer("");
+    setFeedback(null);
+  } catch {
+    alert("Failed to load final scorecard.");
+  }
+};
 
   /* ---------------- UI ---------------- */
   return (
-    <div className="min-h-screen bg-black text-white p-10">
-      <h1 className="text-4xl font-bold text-green-400 mb-6">
-        AI Interview Coach
-      </h1>
-
-      {/* ROLE SELECTION */}
+    <div className="min-h-screen bg-black text-white p-6">
       {!sessionId && (
-        <div className="flex items-center gap-4">
+        <div className="flex gap-4">
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
@@ -192,29 +192,34 @@ export default function Interview() {
 
           <button
             onClick={startInterview}
-            disabled={loading}
+            disabled={starting}
             className="bg-green-500 px-6 py-2 rounded text-black disabled:opacity-50"
           >
-            {loading ? "Starting..." : "Start Interview"}
+            {starting ? "Starting..." : "Start Interview"}
           </button>
         </div>
       )}
 
-      {/* QUESTION + ANSWER FLOW */}
       {sessionId && (
-        <>
-          <p className="mt-6 text-gray-400">Question {questionCount}</p>
+        <div className="fixed inset-0 bg-black flex flex-col items-center justify-center">
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            className="w-96 rounded border mb-6"
+          />
 
-          <p className="text-xl text-cyan-400 mt-2">{question}</p>
+          <p className="text-gray-400 mb-2">
+            Question {questionCount}
+          </p>
 
-          {/* RECORD CONTROLS */}
-          <div className="mt-4 flex gap-4">
+          <div className="flex gap-4 items-center">
             <button
               onClick={startRecording}
-              disabled={recording || loading}
+              disabled={recording}
               className="bg-yellow-400 px-4 py-2 rounded text-black disabled:opacity-50"
             >
-              🎙 Start Recording
+              🎙 Start Answer
             </button>
 
             <button
@@ -222,88 +227,51 @@ export default function Interview() {
               disabled={!recording}
               className="bg-red-400 px-4 py-2 rounded text-black disabled:opacity-50"
             >
-              ⏹ Stop Recording
+              ⏹ Stop
             </button>
+
+            {recording && (
+              <span className="text-red-400 font-semibold">
+                🔴 Recording…
+              </span>
+            )}
           </div>
 
-          {/* ANSWER INPUT */}
           <textarea
-            className="w-full mt-4 p-3 text-black rounded"
-            rows={5}
-            placeholder="Type or record your answer..."
+            className="w-2/3 mt-4 p-3 text-black rounded"
+            rows={4}
+            placeholder="(Optional) Type answer"
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
           />
 
-          {/* SPEECH CONFIDENCE */}
-          {speechConfidence && (
-            <div className="mt-4 bg-gray-800 p-4 rounded">
-              <h3 className="text-green-300 font-semibold mb-2">
-                Speech Confidence
-              </h3>
-              <p>Words: {speechConfidence.words}</p>
-              <p>Speaking Rate: {speechConfidence.wpm} wpm</p>
-              <p>
-                Confidence Score: {speechConfidence.confidence_score} / 10
-              </p>
+          <div className="mt-4">
+            <button
+              onClick={submitAnswer}
+              disabled={submitting || !answer.trim()}
+              className="bg-cyan-400 px-6 py-2 rounded text-black disabled:opacity-50"
+            >
+              {submitting ? "Submitting..." : "Submit Answer"}
+            </button>
 
-              {speechConfidence.tips.length > 0 && (
-                <ul className="mt-2 list-disc list-inside text-sm text-gray-300">
-                  {speechConfidence.tips.map((tip, i) => (
-                    <li key={i}>{tip}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          )}
-
-          {/* SUBMIT */}
-          <button
-            onClick={submitAnswer}
-            disabled={loading || !answer.trim()}
-            className="mt-4 bg-cyan-400 px-6 py-2 rounded text-black disabled:opacity-50"
-          >
-            {loading ? "Processing..." : "Submit Answer"}
-          </button>
-
-          {/* END INTERVIEW */}
-          <button
-            onClick={endInterview}
-            className="mt-4 ml-4 bg-purple-500 px-6 py-2 rounded text-black"
-          >
-            End Interview
-          </button>
-        </>
-      )}
-
-      {/* FEEDBACK */}
-      {feedback && (
-        <div className="mt-6 bg-gray-900 p-4 rounded">
-          <h2 className="text-green-300 font-semibold mb-2">Feedback</h2>
-          <pre className="text-sm whitespace-pre-wrap text-gray-200">
-            {typeof feedback === "string"
-              ? feedback
-              : JSON.stringify(feedback, null, 2)}
-          </pre>
+            <button
+              onClick={endInterview}
+              className="ml-4 bg-purple-500 px-6 py-2 rounded text-black"
+            >
+              End Interview
+            </button>
+          </div>
         </div>
       )}
 
-      {/* FINAL SCORECARD */}
+      <canvas ref={canvasRef} className="hidden" />
+
       {finalSummary && (
         <div className="mt-10 bg-gray-900 p-6 rounded">
           <h2 className="text-2xl text-green-400 mb-4">
             Final Interview Scorecard
           </h2>
-
-          <p>Overall Score: {finalSummary.overall_score} / 10</p>
-          <p>Relevance: {finalSummary.avg_relevance}</p>
-          <p>Clarity: {finalSummary.avg_clarity}</p>
-          <p>Depth: {finalSummary.avg_depth}</p>
-          <p>Speech Confidence: {finalSummary.avg_confidence}</p>
-
-          <p className="mt-3 font-semibold text-cyan-400">
-            Recommendation: {finalSummary.recommendation}
-          </p>
+          <pre>{JSON.stringify(finalSummary, null, 2)}</pre>
         </div>
       )}
     </div>
