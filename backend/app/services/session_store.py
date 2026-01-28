@@ -1,19 +1,21 @@
 import uuid
+import time   # ⏱️ NEW
 
 # In-memory session store (for demo / local use)
 _sessions = {}
 
-def create_session(role: str):
+def create_session(config: dict):
     """
-    Creates a new interview session.
+    Creates a new interview session with config.
     """
     session_id = str(uuid.uuid4())
     _sessions[session_id] = {
-    "role": role,
-    "asked_topics": [],
-    "evaluations": []
-}
-
+        "config": config,           # domain, topics, level, duration
+        "question_index": 0,
+        "start_time": time.time(),  # ⏱️ NEW: interview start time
+        "asked_topics": [],
+        "evaluations": []
+    }
     return session_id
 
 

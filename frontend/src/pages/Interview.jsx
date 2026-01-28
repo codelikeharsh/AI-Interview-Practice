@@ -1,279 +1,297 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { FaceDetection } from "@mediapipe/face_detection";
+import { Camera } from "@mediapipe/camera_utils";
 
 const API = "http://127.0.0.1:8000";
+const WS_URL = "ws://127.0.0.1:8000/ws/interview";
 
-let mediaRecorder = null;
-let audioChunks = [];
-
-export default function Interview() {
+export default function Interview({ config }) {
   /* ---------------- STATE ---------------- */
-  const [role, setRole] = useState("aiml");
   const [sessionId, setSessionId] = useState(null);
   const [question, setQuestion] = useState("");
   const [questionCount, setQuestionCount] = useState(0);
-
-  const [answer, setAnswer] = useState("");
-  const [feedback, setFeedback] = useState(null);
-  const [finalSummary, setFinalSummary] = useState(null);
-
-  const [starting, setStarting] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
   const [recording, setRecording] = useState(false);
+  const [warning, setWarning] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(null);
 
-  /* ---------------- VIDEO ---------------- */
+  const timerRef = useRef(null);
+
+  /* ---------------- REFS ---------------- */
+  const wsRef = useRef(null);
   const videoRef = useRef(null);
-  const canvasRef = useRef(null);
   const streamRef = useRef(null);
 
-  /* ---------------- AUDIO ---------------- */
-  const playInterviewer = () => {
-  const audio = new Audio(`${API}/interview/audio?ts=${Date.now()}`);
-  audio.play().catch(() => {
-    console.warn("Audio autoplay blocked");
-  });
-};
+  const recorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
 
+  const aiAudioRef = useRef(null);
+  const audioCtxRef = useRef(null);
 
-  /* ---------------- START INTERVIEW ---------------- */
-  const startInterview = async () => {
-  if (starting) return;
+  const faceCameraRef = useRef(null);
+  const lastFaceSeenRef = useRef(Date.now());
 
-  // ✅ MUST be first line
-  document.documentElement.requestFullscreen?.();
+  /* =========================================================
+     CAMERA — START ONCE (NO RESTART EVER)
+  ========================================================= */
+  useEffect(() => {
+    let active = true;
 
-  setStarting(true);
+    navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "user" },
+      audio: true,
+    }).then((stream) => {
+      if (!active) return;
 
-  try {
-    const res = await fetch(`${API}/interview/start`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ role }),
-    });
+      streamRef.current = stream;
+      videoRef.current.srcObject = stream;
 
-    const data = await res.json();
-
-    setSessionId(data.session_id);
-    setQuestion(data.question);
-    setQuestionCount(1);
-
-    // Camera
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    streamRef.current = stream;
-    videoRef.current.srcObject = stream;
-
-    await playInterviewer();
-  } catch (e) {
-    alert("Failed to start interview.");
-  } finally {
-    setStarting(false);
-  }
-};
-
-
-  /* ---------------- RECORDING ---------------- */
-  const startRecording = async () => {
-    if (recording) return;
-
-    audioChunks = [];
-    setRecording(true);
-
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
-
-    mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
-    mediaRecorder.start();
-  };
-
-  const stopRecording = async () => {
-    if (!mediaRecorder) return;
-
-    setRecording(false);
-    mediaRecorder.stop();
-
-    mediaRecorder.onstop = async () => {
-      mediaRecorder.stream.getTracks().forEach((t) => t.stop());
-
-      const blob = new Blob(audioChunks, { type: "audio/wav" });
-      const formData = new FormData();
-      formData.append("file", blob);
-
-      const res = await fetch(`${API}/interview/transcribe`, {
-        method: "POST",
-        body: formData,
+      // Face Detection (single instance)
+      const detector = new FaceDetection({
+        locateFile: (file) =>
+          `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`,
       });
 
-      const data = await res.json();
-      setAnswer(data.text || "");
+      detector.setOptions({ model: "short", minDetectionConfidence: 0.6 });
+
+      detector.onResults((res) => {
+        const now = Date.now();
+        if (res.detections?.length) {
+          lastFaceSeenRef.current = now;
+          setWarning(null);
+        } else if (now - lastFaceSeenRef.current > 3000) {
+          setWarning("⚠️ Face not detected");
+        }
+      });
+
+      const cam = new Camera(videoRef.current, {
+        onFrame: async () => detector.send({ image: videoRef.current }),
+        width: 640,
+        height: 480,
+      });
+
+      faceCameraRef.current = cam;
+      cam.start();
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  /* =========================================================
+     AUTO START INTERVIEW
+  ========================================================= */
+  useEffect(() => {
+    if (config && !sessionId) startInterview();
+    // eslint-disable-next-line
+  }, [config]);
+
+  /* =========================================================
+     TIMER
+  ========================================================= */
+  useEffect(() => {
+    if (timeLeft === null) return;
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft((t) => (t > 0 ? t - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timerRef.current);
+  }, [timeLeft]);
+
+  /* =========================================================
+     START INTERVIEW (WS)
+  ========================================================= */
+  const startInterview = () => {
+    const ws = new WebSocket(WS_URL);
+    wsRef.current = ws;
+
+    ws.onopen = () => {
+      ws.send(JSON.stringify({
+        event: "start",
+        role: config.domain,
+        topics: config.topics,
+        level: config.level,
+        duration: config.duration,
+      }));
+    };
+
+    ws.onmessage = async (msg) => {
+      const data = JSON.parse(msg.data);
+
+      if (data.event === "question") {
+        setSessionId((p) => p || data.session_id);
+        setQuestion(data.text);
+        setQuestionCount((c) => c + 1);
+
+        if (timeLeft === null) setTimeLeft(config.duration * 60);
+
+        await playAIVoice(data.audio_url);
+        startRecording(); // 🎙️ AFTER AI finishes
+      }
+
+      if (data.event === "end") {
+        cleanup();
+        window.location.href = `/result?session=${sessionId}`;
+      }
     };
   };
 
-  /* ---------------- SUBMIT ANSWER ---------------- */
-  const submitAnswer = async () => {
-    if (!answer.trim() || submitting) return;
-    setSubmitting(true);
+  /* =========================================================
+     AI VOICE — STOP PREVIOUS BEFORE PLAY
+  ========================================================= */
+  const playAIVoice = async (url) => {
+    if (!url) return;
+
+    // 🛑 Stop previous audio
+    if (aiAudioRef.current) {
+      aiAudioRef.current.pause();
+      aiAudioRef.current.currentTime = 0;
+    }
+
+    const audio = new Audio(`${API}${url}`);
+    aiAudioRef.current = audio;
 
     try {
-      const res = await fetch(`${API}/interview/answer`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          session_id: sessionId,
-          question,
-          answer,
-        }),
-      });
-
-      const data = await res.json();
-
-      // Repeat question flow
-      if (data.repeat) {
-        await playInterviewer();
-        setSubmitting(false);
-        return;
-      }
-
-      setFeedback(data.evaluation);
-      setAnswer("");
-
-      if (data.next_question) {
-        setQuestion(data.next_question);
-        setQuestionCount((c) => c + 1);
-        await playInterviewer();
-      }
+      await audio.play();
     } catch {
-      alert("Failed to submit answer.");
-    } finally {
-      setSubmitting(false);
+      /* ignore */
     }
   };
 
-  /* ---------------- END INTERVIEW ---------------- */
-  const endInterview = async () => {
-  try {
-    // Stop camera
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((t) => t.stop());
-      streamRef.current = null;
+  /* =========================================================
+     RECORD ANSWER (ONE RECORDER PER QUESTION)
+  ========================================================= */
+  const startRecording = () => {
+    if (recording || !streamRef.current) return;
+
+    setRecording(true);
+    audioChunksRef.current = [];
+
+    const audioTrack = streamRef.current.getAudioTracks()[0];
+    const audioStream = new MediaStream([audioTrack]);
+
+    const recorder = new MediaRecorder(audioStream);
+    recorderRef.current = recorder;
+
+    recorder.ondataavailable = (e) => audioChunksRef.current.push(e.data);
+
+    recorder.onstop = async () => {
+      setRecording(false);
+
+      if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
+
+      const blob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+      const fd = new FormData();
+      fd.append("file", blob);
+
+      try {
+        const res = await fetch(`${API}/interview/transcribe`, {
+          method: "POST",
+          body: fd,
+        });
+        const { text } = await res.json();
+
+        wsRef.current.send(JSON.stringify({
+          event: "transcript",
+          text: text || "",
+        }));
+      } catch {
+        /* backend closed */
+      }
+    };
+
+    recorder.start();
+
+    // Silence detection
+    const ctx = new AudioContext();
+    audioCtxRef.current = ctx;
+
+    const source = ctx.createMediaStreamSource(audioStream);
+    const analyser = ctx.createAnalyser();
+    analyser.fftSize = 2048;
+    source.connect(analyser);
+
+    const data = new Uint8Array(analyser.fftSize);
+    const start = Date.now();
+    let silenceTimer = null;
+
+    const loop = () => {
+      if (recorder.state !== "recording") return;
+
+      analyser.getByteTimeDomainData(data);
+      const energy = data.reduce((a, b) => a + Math.abs(b - 128), 0);
+
+      if (energy < 3000 && Date.now() - start > 4000) {
+        if (!silenceTimer) silenceTimer = setTimeout(() => recorder.stop(), 2500);
+      } else {
+        clearTimeout(silenceTimer);
+        silenceTimer = null;
+      }
+
+      requestAnimationFrame(loop);
+    };
+
+    loop();
+  };
+
+  /* =========================================================
+     END INTERVIEW (SAFE)
+  ========================================================= */
+  const handleEndInterview = () => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({ event: "end" }));
     }
+  };
 
-    // Exit fullscreen
-    document.exitFullscreen?.();
+  /* =========================================================
+     CLEANUP
+  ========================================================= */
+  const cleanup = () => {
+    aiAudioRef.current?.pause();
+    recorderRef.current?.stop();
+    wsRef.current?.close();
+    streamRef.current?.getTracks().forEach((t) => t.stop());
+    clearInterval(timerRef.current);
+  };
 
-    // Fetch final scorecard
-    const res = await fetch(`${API}/interview/final/${sessionId}`);
-    const data = await res.json();
-
-    setFinalSummary(data.summary);
-
-    // 🔑 EXIT INTERVIEW MODE
-    setSessionId(null);
-    setQuestion("");
-    setQuestionCount(0);
-    setAnswer("");
-    setFeedback(null);
-  } catch {
-    alert("Failed to load final scorecard.");
-  }
-};
-
-  /* ---------------- UI ---------------- */
+  /* =========================================================
+     UI
+  ========================================================= */
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      {!sessionId && (
-        <div className="flex gap-4">
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className="text-black p-2 rounded"
-          >
-            <option value="aiml">AI / ML Engineer</option>
-            <option value="software">Software Engineer</option>
-          </select>
+    <div className="fixed inset-0 bg-black text-white">
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        playsInline
+        className="w-full h-full object-cover pointer-events-none"
+      />
 
-          <button
-            onClick={startInterview}
-            disabled={starting}
-            className="bg-green-500 px-6 py-2 rounded text-black disabled:opacity-50"
-          >
-            {starting ? "Starting..." : "Start Interview"}
-          </button>
+      <div className="absolute top-0 left-0 right-0 bg-black/80 px-6 py-4 flex justify-between">
+        <div>🎤 AI Interview</div>
+        <div className="text-green-400 font-bold">
+          ⏱️ {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, "0")}
+        </div>
+      </div>
+
+      {warning && (
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-red-600 px-4 py-2 rounded">
+          {warning}
         </div>
       )}
 
-      {sessionId && (
-        <div className="fixed inset-0 bg-black flex flex-col items-center justify-center">
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            className="w-96 rounded border mb-6"
-          />
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+        <p className="text-2xl font-semibold">{question}</p>
+        {recording && <p className="mt-4 text-red-400">🔴 Listening…</p>}
 
-          <p className="text-gray-400 mb-2">
-            Question {questionCount}
-          </p>
-
-          <div className="flex gap-4 items-center">
-            <button
-              onClick={startRecording}
-              disabled={recording}
-              className="bg-yellow-400 px-4 py-2 rounded text-black disabled:opacity-50"
-            >
-              🎙 Start Answer
-            </button>
-
-            <button
-              onClick={stopRecording}
-              disabled={!recording}
-              className="bg-red-400 px-4 py-2 rounded text-black disabled:opacity-50"
-            >
-              ⏹ Stop
-            </button>
-
-            {recording && (
-              <span className="text-red-400 font-semibold">
-                🔴 Recording…
-              </span>
-            )}
-          </div>
-
-          <textarea
-            className="w-2/3 mt-4 p-3 text-black rounded"
-            rows={4}
-            placeholder="(Optional) Type answer"
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-          />
-
-          <div className="mt-4">
-            <button
-              onClick={submitAnswer}
-              disabled={submitting || !answer.trim()}
-              className="bg-cyan-400 px-6 py-2 rounded text-black disabled:opacity-50"
-            >
-              {submitting ? "Submitting..." : "Submit Answer"}
-            </button>
-
-            <button
-              onClick={endInterview}
-              className="ml-4 bg-purple-500 px-6 py-2 rounded text-black"
-            >
-              End Interview
-            </button>
-          </div>
-        </div>
-      )}
-
-      <canvas ref={canvasRef} className="hidden" />
-
-      {finalSummary && (
-        <div className="mt-10 bg-gray-900 p-6 rounded">
-          <h2 className="text-2xl text-green-400 mb-4">
-            Final Interview Scorecard
-          </h2>
-          <pre>{JSON.stringify(finalSummary, null, 2)}</pre>
-        </div>
-      )}
+        <button
+          onClick={handleEndInterview}
+          className="mt-10 bg-purple-500 px-6 py-2 rounded text-black"
+        >
+          End Interview
+        </button>
+      </div>
     </div>
   );
 }
