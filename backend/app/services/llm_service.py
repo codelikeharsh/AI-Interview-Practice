@@ -1,84 +1,85 @@
-import requests
-import os
-
-USE_LOCAL_LLM = True  # 🔁 TURN OFF DURING DEPLOYMENT
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL = "llama3"
-
-
 import subprocess
+import re
 
-def generate_question(role: str, topic: str, difficulty: str):
+MODEL_NAME = "llama3"
+
+def _run_llm(prompt: str) -> str:
+    try:
+        result = subprocess.run(
+            ["ollama", "run", MODEL_NAME, prompt],
+            capture_output=True,
+            text=True,
+            timeout=60
+        )
+
+        if result.returncode != 0:
+            print("❌ LLM error:", result.stderr)
+            return ""
+
+        return result.stdout.strip()
+
+    except Exception as e:
+        print("❌ LLM exception:", e)
+        return ""
+
+
+def _clean_question(text: str) -> str:
+    """
+    Aggressively clean LLM output to keep ONLY the question.
+    """
+    if not text:
+        return ""
+
+    # Remove common narration phrases
+    patterns = [
+        r"^here is.*?:",
+        r"^this is.*?:",
+        r"^thank you.*",
+        r"^i will.*",
+        r"^note.*",
+        r"^let me.*",
+    ]
+
+    t = text.strip().lower()
+
+    for p in patterns:
+        t = re.sub(p, "", t).strip()
+
+    # Take only the first sentence ending with ?
+    match = re.search(r"(.+?\?)", t)
+    if match:
+        return match.group(1).capitalize()
+
+    # Fallback: first line only
+    return text.split("\n")[0].strip()
+
+
+def generate_question(role, topic, difficulty, history=""):
+    """
+    Generates ONE clean interview question.
+    Output MUST be ONLY the question text.
+    """
+
     prompt = f"""
-You are a professional technical interviewer.
+You are an interview question generator.
 
-Generate ONE interview question for a {role} role.
+STRICT RULES:
+- Output ONLY ONE interview question
+- Output ONLY the question text
+- DO NOT add explanations, greetings, or commentary
+- DO NOT number the question
+- DO NOT mention "interview", "candidate", or "response"
+- DO NOT include anything except the question
 
-Topic: {topic}
+Role: {role}
 Difficulty: {difficulty}
+Topic: {topic}
 
-Rules:
-- Be concise
-- No multiple questions
-- No explanations
-- Just the question
-"""
-
-    result = subprocess.run(
-        ["ollama", "run", "llama3"],
-        input=prompt,
-        text=True,
-        capture_output=True
-    )
-
-    return result.stdout.strip()
-
-
-
-def evaluate_answer(question: str, answer: str):
-    if not USE_LOCAL_LLM:
-        return {
-            "scores": {
-                "relevance": 6,
-                "clarity": 6,
-                "depth": 5
-            },
-            "feedback": "Try to structure your answer with a clear example and measurable impact."
-        }
-
-    prompt = f"""
-You are an interview coach.
+Previous questions (for context, do not repeat):
+{history}
 
 Question:
-{question}
-
-Candidate Answer:
-{answer}
-
-Evaluate the answer on:
-- Relevance (0–10)
-- Clarity (0–10)
-- Depth (0–10)
-
-Return STRICT JSON like:
-{{
-  "scores": {{
-    "relevance": 0,
-    "clarity": 0,
-    "depth": 0
-  }},
-  "feedback": "short advice"
-}}
 """
 
-    response = requests.post(
-        OLLAMA_URL,
-        json={
-            "model": MODEL,
-            "prompt": prompt,
-            "stream": False
-        },
-        timeout=90
-    )
-
-    return response.json()["response"]
+    raw = _run_llm(prompt)
+    return _clean_question(raw)

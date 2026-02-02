@@ -1,8 +1,15 @@
 from fastapi import WebSocket, WebSocketDisconnect
-from app.services.session_store import create_session, get_session
+from app.services.session_store import (
+    create_session,
+    get_session,
+    set_questions,
+    get_next_question,
+)
 from app.services.llm_service import generate_question
 from app.services.tts_service import generate_tts
-import json, time
+import json
+import time
+import math
 
 LEVEL_MAP = {
     "fresher": "easy",
@@ -22,7 +29,7 @@ async def interview_ws(websocket: WebSocket):
             payload = json.loads(raw)
             event = payload.get("event")
 
-            # ---------------- START ----------------
+            # ================= START =================
             if event == "start":
                 config = {
                     "role": payload.get("role", "General"),
@@ -35,14 +42,38 @@ async def interview_ws(websocket: WebSocket):
                 session = get_session(session_id)
 
                 difficulty = LEVEL_MAP.get(config["level"], "easy")
+                topics = config["topics"] or ["general"]
 
-                topic = config["topics"][0] if config["topics"] else "general"
+                # -------------------------------
+                # PRE-GENERATE QUESTIONS
+                # -------------------------------
+                # Avg ~3 min per question + buffer
+                base_q = math.ceil(config["duration"] / 3)
+                total_questions = base_q + 2
 
-                current_question = generate_question(
-                    role=config["role"],
-                    topic=topic,
-                    difficulty=difficulty,
-                )
+                generated_questions = []
+                history = ""
+
+                for i in range(total_questions):
+                    topic = topics[i % len(topics)]
+
+                    q = generate_question(
+                        role=config["role"],
+                        topic=topic,
+                        difficulty=difficulty,
+                        history=history,
+                    )
+
+                    if not q:
+                        q = f"Explain a key concept related to {topic}."
+
+                    generated_questions.append(q)
+                    history += f"\nQ{i+1}: {q}"
+
+                set_questions(session_id, generated_questions)
+
+                # Send FIRST question
+                current_question = get_next_question(session_id)
 
                 await websocket.send_json({
                     "event": "question",
@@ -52,7 +83,7 @@ async def interview_ws(websocket: WebSocket):
                     "audio_url": generate_tts(current_question),
                 })
 
-            # ---------------- TRANSCRIPT ----------------
+            # ================= TRANSCRIPT =================
             elif event == "transcript":
                 if not session_id:
                     continue
@@ -60,24 +91,23 @@ async def interview_ws(websocket: WebSocket):
                 session = get_session(session_id)
                 config = session["config"]
 
-                # ⏱️ CHECK DURATION (soft limit)
+                # ⏱️ Duration check (hard stop)
                 elapsed = time.time() - session["start_time"]
                 max_time = config["duration"] * 60
 
                 if elapsed >= max_time:
                     await websocket.send_json({
-    "event": "end",
-    "reason": "Interview time completed",
-    "total_questions": session["question_index"] + 1
-})
-
+                        "event": "end",
+                        "reason": "Interview time completed",
+                        "total_questions": len(session.get("evaluations", [])),
+                    })
                     return
 
                 text = payload.get("text", "").lower().strip()
                 if not text:
                     continue
 
-                # repeat
+                # ---------------- REPEAT ----------------
                 if any(p in text for p in ["repeat", "say again", "once again"]):
                     await websocket.send_json({
                         "event": "repeat",
@@ -86,28 +116,24 @@ async def interview_ws(websocket: WebSocket):
                     })
                     continue
 
-                # next question
-                session["question_index"] += 1
+                # ---------------- NEXT QUESTION ----------------
+                next_q = get_next_question(session_id)
 
-                difficulty = LEVEL_MAP.get(config["level"], "easy")
+                if not next_q:
+                    await websocket.send_json({
+                        "event": "end",
+                        "reason": "Questions completed",
+                    })
+                    return
 
-                topic = (
-                    config["topics"][session["question_index"] % len(config["topics"])]
-                    if config["topics"] else "general"
-                )
-
-                current_question = generate_question(
-                    role=config["role"],
-                    topic=topic,
-                    difficulty=difficulty,
-                )
+                current_question = next_q
 
                 await websocket.send_json({
                     "event": "question",
-                    "index": session["question_index"] + 1,
+                    "index": session["current_question_ptr"],
                     "text": current_question,
                     "audio_url": generate_tts(current_question),
                 })
-         
+
     except WebSocketDisconnect:
         print("🟡 Interview disconnected")

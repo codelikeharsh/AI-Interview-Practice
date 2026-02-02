@@ -1,12 +1,14 @@
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles  # ✅ NEW
+from fastapi.staticfiles import StaticFiles
 from app.routers import interview
 from app.ws.interview_ws import interview_ws
 
 app = FastAPI(title="AI Interview Coach API")
 
-# 🔴 MUST COME BEFORE ROUTERS
+# ===============================
+# CORS
+# ===============================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -18,16 +20,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ✅ NEW: expose generated TTS audio safely
+# ===============================
+# STATIC TTS FILES
+# ===============================
 app.mount("/tts", StaticFiles(directory="generated_audio"), name="tts")
 
+# ===============================
+# WEBSOCKET
+# ===============================
 @app.websocket("/ws/interview")
 async def interview_socket(ws: WebSocket):
     print("🔥 WS ROUTE HIT")
     await interview_ws(ws)
 
-app.include_router(interview.router, prefix="/interview")
+# ===============================
+# REST ROUTERS  ✅ FIX HERE
+# ===============================
+app.include_router(interview.router)  # ❗ NO PREFIX HERE
 
+# ===============================
+# HEALTH CHECK
+# ===============================
 @app.get("/health")
 def health():
     return {"status": "ok"}
