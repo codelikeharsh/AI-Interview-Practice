@@ -1,0 +1,69 @@
+/* ===== BASE RESET ===== */
+:root {
+  --bg: #000;
+  --card: #111;
+  --border: rgba(255,255,255,0.08);
+  --text: #fff;
+  --muted: #9ca3af;
+  --accent: #fff;
+}
+
+/* ===============================
+   THEME A — Graphite + Warm Sand
+================================ */
+[data-theme="graphite"] {
+  --bg: #0f1115;
+  --card: #181a20;
+  --border: rgba(255,255,255,0.08);
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #d4b996;
+}
+
+/* ===============================
+   THEME B — Charcoal + Emerald
+================================ */
+[data-theme="emerald"] {
+  --bg: #0b0f0e;
+  --card: #121917;
+  --border: rgba(52,211,153,0.25);
+  --text: #ecfdf5;
+  --muted: #9ca3af;
+  --accent: #34d399;
+}
+
+/* ===============================
+   THEME C — Midnight + Amber
+================================ */
+[data-theme="amber"] {
+  --bg: #0a0a0a;
+  --card: #141414;
+  --border: rgba(245,158,11,0.3);
+  --text: #fafafa;
+  --muted: #a1a1aa;
+  --accent: #f59e0b;
+}
+
+/* ===============================
+   THEME D — Slate Monochrome
+================================ */
+[data-theme="mono"] {
+  --bg: #020617;
+  --card: #020617;
+  --border: #1e293b;
+  --text: #cbd5e1;
+  --muted: #64748b;
+  --accent: #ffffff;
+}
+
+/* ===============================
+   THEME E — Deep Teal + Fog
+================================ */
+[data-theme="teal"] {
+  --bg: #071a1a;
+  --card: #0b2c2c;
+  --border: rgba(45,212,191,0.25);
+  --text: #e6fffa;
+  --muted: #94a3b8;
+  --accent: #2dd4bf;
+}
