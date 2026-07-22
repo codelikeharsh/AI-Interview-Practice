@@ -8,5 +8,9 @@ __pycache__/
 # Node
 node_modules/
 
+# Generated at runtime
+backend/generated_audio/*.mp3
+backend/generated_audio/*.wav
+
 # OS
 .DS_Store

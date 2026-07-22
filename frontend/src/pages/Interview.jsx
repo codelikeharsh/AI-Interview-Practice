@@ -1,9 +1,14 @@
 import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { FaceDetection } from "@mediapipe/face_detection";
 import { Camera } from "@mediapipe/camera_utils";
+import { MicVAD } from "@ricky0123/vad-web";
+import { API_BASE as API, WS_URL } from "../services/config";
+import Button from "../components/ui/Button";
+import StatusDot from "../components/ui/StatusDot";
 
-const API = "http://127.0.0.1:8000";
-const WS_URL = "ws://127.0.0.1:8000/ws/interview";
+const VAD_ASSET_PATH = "https://cdn.jsdelivr.net/npm/@ricky0123/vad-web@0.0.30/dist/";
+const VAD_ONNX_WASM_PATH = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.27.0/dist/";
 
 const SKIP_PHRASES = [
   "i don't know",
@@ -15,11 +20,8 @@ const SKIP_PHRASES = [
 ];
 
 const REPEAT_PHRASES = ["repeat", "say again", "once again"];
-const MIN_SPEAK_MS = 1500;
-const SILENCE_HOLD_MS = 1700;
 const MAX_ANSWER_MS = 105000;
-const GRACE_AFTER_START_MS = 800;
-const ABS_MIN_RMS = 0.012;
+const TTS_PLAY_TIMEOUT_MS = 4000;
 
 export default function Interview({ config }) {
   const [sessionId, setSessionId] = useState(null);
@@ -43,15 +45,7 @@ export default function Interview({ config }) {
   const aiAudioRef = useRef(null);
   const timerRef = useRef(null);
   const answerTimerRef = useRef(null);
-  const audioContextRef = useRef(null);
-  const analyserRef = useRef(null);
-  const vadRafRef = useRef(null);
-  const speakingRef = useRef(false);
-  const speechSegmentStartRef = useRef(null);
-  const silenceStartRef = useRef(null);
-  const answerStartRef = useRef(null);
-  const spokenMsRef = useRef(0);
-  const noiseFloorRef = useRef(0.008);
+  const vadRef = useRef(null);
   const sessionIdRef = useRef(null);
   const skipInProgressRef = useRef(false);
   const playAIVoiceRef = useRef(null);
@@ -64,6 +58,7 @@ export default function Interview({ config }) {
   const toastTimerRef = useRef(null);
   const questionFadeTimerRef = useRef(null);
   const timerInitializedRef = useRef(false);
+  const startSentRef = useRef(false);
 
   function showToast(message, tone = "info", ms = 1800) {
     if (toastTimerRef.current) {
@@ -106,19 +101,54 @@ export default function Interview({ config }) {
       });
   }, []);
 
+  /* VOICE ACTIVITY DETECTION (Silero VAD) */
+  useEffect(() => {
+    if (!cameraReady || vadRef.current) return;
+    let cancelled = false;
+
+    MicVAD.new({
+      getStream: async () => streamRef.current,
+      pauseStream: async () => {},
+      resumeStream: async () => streamRef.current,
+      baseAssetPath: VAD_ASSET_PATH,
+      onnxWASMBasePath: VAD_ONNX_WASM_PATH,
+      startOnLoad: false,
+      redemptionMs: 1500,
+      minSpeechMs: 300,
+      preSpeechPadMs: 800,
+      onSpeechStart: () => {},
+      onSpeechEnd: () => stopRecordingRef.current?.("vad-speech-end"),
+      onVADMisfire: () => console.log("[Interview] VAD misfire (too short); still listening"),
+    })
+      .then((vad) => {
+        if (cancelled) {
+          vad.destroy();
+          return;
+        }
+        vadRef.current = vad;
+        console.log("[Interview] Silero VAD ready");
+      })
+      .catch((err) => {
+        console.error("[Interview] VAD init failed, falling back to manual controls only:", err);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [cameraReady]);
+
   /* START WS */
   useEffect(() => {
     if (!config || wsRef.current) return;
 
-    console.log("[Interview] Opening WebSocket:", WS_URL, config);
-    const ws = new WebSocket(WS_URL);
+    const wsUrl = config.demo ? `${WS_URL}?demo=true` : WS_URL;
+    console.log("[Interview] Opening WebSocket:", wsUrl, config);
+    const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
     ws.onopen = () => {
-      console.log("[Interview] WebSocket connected, sending start event");
+      console.log("[Interview] WebSocket connected");
       setWsConnected(true);
-      showToast("Connected to interview server", "success");
-      ws.send(JSON.stringify({ event: "start", ...config }));
     };
     ws.onerror = (err) => {
       console.error("[Interview] WebSocket error:", err);
@@ -127,6 +157,15 @@ export default function Interview({ config }) {
     ws.onclose = (evt) => {
       console.warn("[Interview] WebSocket closed:", evt.code, evt.reason);
       setWsConnected(false);
+      if (evt.code === 4401) {
+        showToast("Please sign in again to continue.", "error", 2500);
+        window.location.href = "/login";
+        return;
+      }
+      if (evt.code === 4429) {
+        showToast("You've started a lot of interviews recently - try again soon.", "error", 3000);
+        return;
+      }
       showToast("Connection lost. Please refresh if interview stops.", "error", 2500);
     };
 
@@ -154,44 +193,104 @@ export default function Interview({ config }) {
         }
 
         if (playAIVoiceRef.current) {
-          await playAIVoiceRef.current(data.audio_url);
+          await playAIVoiceRef.current(data.audio_url, data.text);
         }
         startRecordingRef.current?.();
       }
 
       if (data.event === "end") {
         console.log("[Interview] Interview end event received:", data);
-        const targetSessionId = sessionIdRef.current || sessionId;
         cleanupRef.current?.();
+
+        if (data.summary) {
+          // Demo mode - nothing persisted server-side, carry the summary
+          // over to a lightweight, unauthenticated results page.
+          sessionStorage.setItem("demoSummary", JSON.stringify(data.summary));
+          window.location.href = "/demo-result";
+          return;
+        }
+
+        const targetSessionId = sessionIdRef.current || sessionId;
         window.location.href = `/result?session=${targetSessionId || ""}`;
       }
     };
   }, [config]);
 
-  /* AI VOICE */
-  function playAIVoice(url) {
+  /* SEND START ONLY ONCE THE WS IS OPEN AND CAMERA/MIC ARE READY - starting
+     the question/audio before permissions resolve is jarring and can play
+     into a mic that isn't actually being captured yet. */
+  useEffect(() => {
+    if (startSentRef.current) return;
+    if (!wsConnected || !cameraReady) return;
+    if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
+
+    startSentRef.current = true;
+    wsRef.current.send(JSON.stringify({ event: "start", ...config }));
+    queueMicrotask(() => showToast("Connected to interview server", "success"));
+  }, [wsConnected, cameraReady, config]);
+
+  /* AI VOICE — server TTS, with an instant browser-voice fallback so a
+     question is never silently un-audible. */
+  function playAIVoice(url, text) {
     return new Promise((resolve) => {
-      if (!url) return resolve();
+      const speakBrowserFallback = () => {
+        if (!text || !window.speechSynthesis) {
+          resolve();
+          return;
+        }
+        showToast("Using browser voice", "info");
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.onend = resolve;
+        utterance.onerror = resolve;
+        window.speechSynthesis.speak(utterance);
+      };
+
+      if (!url) {
+        speakBrowserFallback();
+        return;
+      }
+
+      let settled = false;
+      const finishOnce = (fn) => {
+        if (!settled) {
+          settled = true;
+          fn();
+        }
+      };
+
       const audio = new Audio(`${API}${url}`);
       aiAudioRef.current = audio;
-      audio.onended = resolve;
-      audio.onerror = resolve;
-      audio.play();
+
+      const startTimeout = setTimeout(() => {
+        finishOnce(() => {
+          audio.pause();
+          speakBrowserFallback();
+        });
+      }, TTS_PLAY_TIMEOUT_MS);
+
+      audio.onended = () => finishOnce(resolve);
+      audio.onerror = () => {
+        clearTimeout(startTimeout);
+        finishOnce(speakBrowserFallback);
+      };
+
+      audio.play()
+        .then(() => clearTimeout(startTimeout))
+        .catch(() => {
+          clearTimeout(startTimeout);
+          finishOnce(speakBrowserFallback);
+        });
     });
   }
 
-  /* RECORDING WITH PROPER SILENCE LOGIC */
+  /* RECORDING — Silero VAD decides when to stop, MediaRecorder captures audio */
   function startRecording() {
     if (!streamRef.current || recording) return;
 
     setStatus("listening");
     setRecording(true);
     audioChunksRef.current = [];
-    speakingRef.current = false;
-    speechSegmentStartRef.current = null;
-    silenceStartRef.current = null;
-    answerStartRef.current = 0;
-    spokenMsRef.current = 0;
 
     const audioTrack = streamRef.current.getAudioTracks()[0];
     if (!audioTrack) {
@@ -226,6 +325,7 @@ export default function Interview({ config }) {
         const res = await fetch(`${API}/interview/transcribe`, {
           method: "POST",
           body: fd,
+          credentials: "include",
         });
         const data = await res.json();
         text = (data?.text || "").trim();
@@ -266,126 +366,32 @@ export default function Interview({ config }) {
     };
 
     recorder.start();
-    startVoiceActivityDetection();
+
+    // Silero VAD drives onSpeechEnd -> stopRecording; this is just a hard
+    // safety net in case VAD isn't ready or the user goes on forever.
+    answerTimerRef.current = setTimeout(
+      () => stopRecordingRef.current?.("max-answer-time"),
+      MAX_ANSWER_MS
+    );
+
+    if (vadRef.current) {
+      vadRef.current.start();
+    } else {
+      console.warn("[Interview] VAD not ready yet; relying on manual controls + max-answer timer");
+    }
   }
 
   function stopRecording(reason = "unknown") {
     console.log("[Interview] Stopping recording:", reason);
-    if (recorderRef.current && recorderRef.current.state !== "inactive") {
-      recorderRef.current.stop();
-    }
-    teardownVad();
-  }
-
-  function teardownVad() {
     if (answerTimerRef.current) {
       clearTimeout(answerTimerRef.current);
       answerTimerRef.current = null;
     }
-    if (vadRafRef.current) {
-      cancelAnimationFrame(vadRafRef.current);
-      vadRafRef.current = null;
+    if (vadRef.current) {
+      vadRef.current.pause();
     }
-    if (audioContextRef.current) {
-      audioContextRef.current.close();
-      audioContextRef.current = null;
-    }
-    analyserRef.current = null;
-  }
-
-  async function startVoiceActivityDetection() {
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      const audioContext = new AudioCtx();
-      audioContextRef.current = audioContext;
-      const source = audioContext.createMediaStreamSource(streamRef.current);
-      const analyser = audioContext.createAnalyser();
-      analyser.fftSize = 2048;
-      analyser.smoothingTimeConstant = 0.85;
-      source.connect(analyser);
-      analyserRef.current = analyser;
-
-      const buffer = new Uint8Array(analyser.fftSize);
-      let calibrationStart = null;
-      let calibrationSamples = 0;
-      let calibrationSum = 0;
-
-      const rmsFromBuffer = () => {
-        analyser.getByteTimeDomainData(buffer);
-        let sum = 0;
-        for (let i = 0; i < buffer.length; i += 1) {
-          const normalized = (buffer[i] - 128) / 128;
-          sum += normalized * normalized;
-        }
-        return Math.sqrt(sum / buffer.length);
-      };
-
-      const loop = (ts) => {
-        const now = typeof ts === "number" ? ts : 0;
-        if (!answerStartRef.current) {
-          answerStartRef.current = now;
-        }
-        if (calibrationStart === null) {
-          calibrationStart = now;
-        }
-        const elapsed = now - answerStartRef.current;
-        const rms = rmsFromBuffer();
-
-        if (elapsed < 600) {
-          calibrationSamples += 1;
-          calibrationSum += rms;
-          const avg = calibrationSum / Math.max(calibrationSamples, 1);
-          noiseFloorRef.current = Math.max(0.006, avg);
-        } else if (!speakingRef.current) {
-          noiseFloorRef.current = (noiseFloorRef.current * 0.96) + (rms * 0.04);
-        }
-
-        const dynamicThreshold = Math.max(ABS_MIN_RMS, noiseFloorRef.current * 2.0);
-        const isSpeech = elapsed > GRACE_AFTER_START_MS && rms > dynamicThreshold;
-
-        if (isSpeech) {
-          if (!speakingRef.current) {
-            speakingRef.current = true;
-            speechSegmentStartRef.current = now;
-          }
-          silenceStartRef.current = null;
-        } else {
-          if (speakingRef.current && speechSegmentStartRef.current) {
-            spokenMsRef.current += now - speechSegmentStartRef.current;
-            speechSegmentStartRef.current = null;
-          }
-          speakingRef.current = false;
-
-          if (!silenceStartRef.current) {
-            silenceStartRef.current = now;
-          }
-
-          if (
-            spokenMsRef.current >= MIN_SPEAK_MS &&
-            silenceStartRef.current &&
-            now - silenceStartRef.current >= SILENCE_HOLD_MS
-          ) {
-            stopRecording("silence-detected");
-            return;
-          }
-        }
-
-        if (now - calibrationStart >= MAX_ANSWER_MS) {
-          stopRecordingRef.current?.("max-answer-time");
-          return;
-        }
-
-        vadRafRef.current = requestAnimationFrame(loop);
-      };
-
-      answerTimerRef.current = setTimeout(
-        () => stopRecordingRef.current?.("max-answer-time-safety"),
-        MAX_ANSWER_MS + 1000
-      );
-      vadRafRef.current = requestAnimationFrame(loop);
-    } catch (err) {
-      console.error("[Interview] VAD setup failed, using timer fallback:", err);
-      answerTimerRef.current = setTimeout(() => stopRecordingRef.current?.("timer-fallback"), 25000);
+    if (recorderRef.current && recorderRef.current.state !== "inactive") {
+      recorderRef.current.stop();
     }
   }
 
@@ -430,10 +436,18 @@ export default function Interview({ config }) {
 
   function cleanup() {
     aiAudioRef.current?.pause();
+    window.speechSynthesis?.cancel();
     if (recorderRef.current?.state !== "inactive") {
       recorderRef.current.stop();
     }
-    teardownVad();
+    if (answerTimerRef.current) {
+      clearTimeout(answerTimerRef.current);
+      answerTimerRef.current = null;
+    }
+    if (vadRef.current) {
+      vadRef.current.destroy();
+      vadRef.current = null;
+    }
     wsRef.current?.close();
     streamRef.current?.getTracks().forEach((t) => t.stop());
     clearInterval(timerRef.current);
@@ -452,23 +466,25 @@ export default function Interview({ config }) {
 
   function skipCurrentQuestion() {
     aiAudioRef.current?.pause();
+    window.speechSynthesis?.cancel();
     setStatus("processing");
     if (recording) {
       skipInProgressRef.current = true;
       stopRecording("manual-skip");
     } else {
-      teardownVad();
+      vadRef.current?.pause();
     }
     wsRef.current?.send(JSON.stringify({ event: "skip" }));
   }
 
   function requestRepeat() {
     aiAudioRef.current?.pause();
+    window.speechSynthesis?.cancel();
     if (recording) {
       skipInProgressRef.current = true;
       stopRecording("manual-repeat");
     } else {
-      teardownVad();
+      vadRef.current?.pause();
     }
     setStatus("processing");
     wsRef.current?.send(JSON.stringify({ event: "repeat" }));
@@ -502,177 +518,147 @@ export default function Interview({ config }) {
         ? "Processing Response"
         : "Listening";
 
-  const turnStateClass =
-    status === "ai-speaking"
-      ? "text-indigo-300 bg-indigo-500/20 border-indigo-400/30"
-      : status === "processing"
-        ? "text-amber-300 bg-amber-500/20 border-amber-400/30"
-        : "text-emerald-300 bg-emerald-500/20 border-emerald-400/30";
+  const turnStateTone =
+    status === "ai-speaking" ? "active" : status === "processing" ? "warning" : "success";
 
   const formattedTime =
     typeof timeLeft === "number" && timeLeft >= 0
       ? `${String(Math.floor(timeLeft / 60)).padStart(2, "0")}:${String(timeLeft % 60).padStart(2, "0")}`
       : "--:--";
 
-  const baseActionBtn =
-    "min-h-11 rounded-full border px-4 py-2.5 text-sm font-medium transition " +
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black " +
-    "motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0";
-
-  const activeActionBtn =
-    "border-white/35 bg-white/5 text-white hover:bg-white/12 hover:border-white/55";
-
-  const subtleActionBtn =
-    "border-white/25 bg-black/30 text-slate-200 hover:bg-white/10 hover:border-white/45";
-
   return (
-    <div className="fixed inset-0 bg-[#05070d] text-white">
+    <div className="fixed inset-0 bg-bg text-text-primary">
       <video ref={videoRef} autoPlay muted className="h-full w-full object-cover" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-black/80" />
 
       <div className="absolute left-0 right-0 top-0 z-20 px-3 py-3 sm:px-5 sm:py-4">
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/20 bg-black/50 px-3 py-2.5 backdrop-blur-xl sm:px-4 sm:py-3">
-          <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-100 sm:gap-3 sm:text-sm">
-            <span className="rounded-full border border-white/20 px-3 py-1">
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-surface/90 px-3 py-2.5 backdrop-blur-xl sm:px-4 sm:py-3">
+          <div className="flex flex-wrap items-center gap-2 text-[11px] text-text-primary sm:gap-3 sm:text-sm">
+            <span className="rounded-lg border border-border px-3 py-1">
               Role: {config?.role || "General"}
             </span>
-            <span className="rounded-full border border-white/20 px-3 py-1">
+            <span className="rounded-lg border border-border px-3 py-1">
               Question: {questionCount || 1}
             </span>
-            <span className="rounded-full border border-white/20 px-3 py-1">
+            <span className="rounded-lg border border-border px-3 py-1">
               Time Left: {formattedTime}
             </span>
           </div>
-          <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-sm">
-            <span
-              className={`rounded-full border px-3 py-1 ${
-                wsConnected ? "border-emerald-400/50 bg-emerald-500/10 text-emerald-200" : "border-red-400/50 bg-red-500/10 text-red-200"
-              }`}
-            >
-              {wsConnected ? "WS Connected" : "WS Disconnected"}
-            </span>
-            <span
-              className={`rounded-full border px-3 py-1 ${
-                cameraReady ? "border-emerald-400/50 bg-emerald-500/10 text-emerald-200" : "border-amber-400/50 bg-amber-500/10 text-amber-200"
-              }`}
-            >
-              {cameraReady ? "Camera Ready" : "Camera Pending"}
-            </span>
-          </div>
+          {(!wsConnected || !cameraReady) && (
+            <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-sm">
+              {!wsConnected && (
+                <StatusDot
+                  tone="danger"
+                  label="Disconnected"
+                  className="border-none bg-transparent px-0 py-0"
+                />
+              )}
+              {!cameraReady && (
+                <StatusDot
+                  tone="warning"
+                  label="Camera Pending"
+                  className="border-none bg-transparent px-0 py-0"
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="absolute right-3 top-24 z-20 hidden md:block">
-        <div
-          className={`rounded-xl border px-4 py-3 text-sm backdrop-blur ${
-            faceInFrame === null
-              ? "border-slate-500/40 bg-black/35 text-slate-200"
-              : faceInFrame
-                ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-200"
-                : "border-amber-400/40 bg-amber-500/10 text-amber-200"
-          }`}
+      {(cameraError || faceInFrame === false) && (
+        <div className="absolute right-3 top-24 z-20 hidden md:block">
+          <div
+            className={`rounded-lg border px-4 py-3 text-sm backdrop-blur ${
+              cameraError
+                ? "border-red-400/40 bg-surface/90 text-red-300"
+                : "border-amber-400/40 bg-surface/90 text-amber-300"
+            }`}
+          >
+            <p className="text-xs uppercase tracking-wide text-text-tertiary">Webcam Framing</p>
+            <p className="mt-1 leading-relaxed">
+              {cameraError || "Move into center and improve lighting."}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {cameraError && !wsConnected === false && !question && (
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-bg/90 px-6 backdrop-blur-sm">
+          <div className="max-w-sm rounded-xl border border-red-400/30 bg-surface p-6 text-center shadow-2xl">
+            <p className="mb-2 font-medium text-text-primary">Camera & microphone required</p>
+            <p className="text-sm text-text-secondary">
+              {cameraError}. This is a voice interview, so both are needed to continue -
+              allow access in your browser's site settings, then reload this page.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Compact bottom bar - keeps the camera feed as the dominant element */}
+      <div className="absolute inset-x-0 bottom-0 z-10 px-3 pb-3 sm:px-6 sm:pb-6">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="mx-auto max-h-[38vh] w-full max-w-4xl overflow-y-auto rounded-xl border border-border bg-surface/95 p-4 shadow-2xl backdrop-blur-2xl sm:p-5"
         >
-          <p className="text-xs uppercase tracking-wide text-slate-300">Webcam Framing</p>
-          <p className="mt-1 leading-relaxed">
-            {cameraError
-              ? cameraError
-              : faceInFrame === null
-                ? "Checking face position..."
-                : faceInFrame
-                  ? "Face aligned well for interview capture."
-                  : "Move into center and improve lighting."}
-          </p>
-        </div>
-      </div>
-
-      <div className="absolute inset-0 z-10 flex items-center justify-center px-4 pt-20 sm:px-6">
-        <div className="w-full max-w-4xl rounded-2xl border border-white/15 bg-black/55 p-5 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl sm:p-7 md:p-8">
-          <div className={`mb-4 inline-flex items-center rounded-full border px-3 py-1.5 text-sm font-medium ${turnStateClass}`}>
-            <span className="mr-2">
-              {status === "ai-speaking" ? "🤖" : status === "processing" ? "⏳" : "🎙️"}
-            </span>
-            {turnStateLabel}
-          </div>
+          <StatusDot
+            tone={recording ? "danger" : turnStateTone}
+            label={recording ? "Recording" : turnStateLabel}
+            pulse={recording || status === "listening"}
+            className="mb-3"
+          />
 
           <p
-            className={`text-xl leading-relaxed text-slate-100 transition-opacity duration-300 sm:text-2xl md:text-[1.8rem] ${
+            className={`text-base leading-relaxed text-text-primary transition-opacity duration-300 sm:text-lg ${
               questionVisible ? "opacity-100" : "opacity-30"
             }`}
           >
             {question || "Preparing your interview..."}
           </p>
 
-          {recording && (
-            <div className="mt-4 inline-flex items-center rounded-full border border-red-400/50 bg-red-500/10 px-3 py-1 text-sm text-red-300 motion-safe:animate-pulse">
-              <span className="mr-2">●</span>Recording
-            </div>
-          )}
-
-          <div
-            className={`mt-4 rounded-lg border px-3 py-2 text-sm md:hidden ${
-              faceInFrame === null
-                ? "border-slate-500/40 text-slate-300"
-                : faceInFrame
-                  ? "border-emerald-400/40 text-emerald-300"
+          {(cameraError || faceInFrame === false) && (
+            <div
+              className={`mt-3 rounded-lg border px-3 py-2 text-sm md:hidden ${
+                cameraError
+                  ? "border-red-400/40 text-red-300"
                   : "border-amber-400/40 text-amber-300"
-            }`}
-          >
-            {cameraError
-              ? cameraError
-              : faceInFrame === null
-                ? "Checking webcam framing..."
-                : faceInFrame
-                  ? "Face detected and centered."
-                  : "Face not clearly detected. Center your face and improve lighting."}
-          </div>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              onClick={requestRepeat}
-              className={`${baseActionBtn} ${subtleActionBtn}`}
-            >
-              Repeat Question
-            </button>
-            <button
-              onClick={submitCurrentAnswer}
-              disabled={!recording}
-              className={`${baseActionBtn} ${
-                recording
-                  ? activeActionBtn
-                  : "cursor-not-allowed border-white/10 bg-white/5 text-slate-500"
               }`}
             >
+              {cameraError || "Face not clearly detected. Center your face and improve lighting."}
+            </div>
+          )}
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Button variant="secondary" size="sm" onClick={requestRepeat}>
+              Repeat Question
+            </Button>
+            <Button size="sm" onClick={submitCurrentAnswer} disabled={!recording}>
               Done Speaking
-            </button>
-            <button
-              onClick={skipCurrentQuestion}
-              className={`${baseActionBtn} ${subtleActionBtn}`}
-            >
+            </Button>
+            <Button variant="secondary" size="sm" onClick={skipCurrentQuestion}>
               Skip This Question
-            </button>
-            <button
-              onClick={finishAndViewReport}
-              className={`${baseActionBtn} ${subtleActionBtn}`}
-            >
+            </Button>
+            <Button variant="secondary" size="sm" onClick={finishAndViewReport}>
               End Interview & View Report
-            </button>
+            </Button>
           </div>
-          <p className="mt-4 text-xs text-slate-400">
-            Shortcuts: <span className="text-slate-200">R</span> Repeat,{" "}
-            <span className="text-slate-200">Enter</span> Done,{" "}
-            <span className="text-slate-200">S</span> Skip,{" "}
-            <span className="text-slate-200">E</span> End & Report
+          <p className="mt-3 text-xs text-text-tertiary">
+            Shortcuts: <span className="text-text-secondary">R</span> Repeat,{" "}
+            <span className="text-text-secondary">Enter</span> Done,{" "}
+            <span className="text-text-secondary">S</span> Skip,{" "}
+            <span className="text-text-secondary">E</span> End & Report
           </p>
-        </div>
+        </motion.div>
       </div>
       {toast && (
         <div className="pointer-events-none absolute bottom-5 left-1/2 z-30 -translate-x-1/2">
           <div
-            className={`rounded-full border px-4 py-2 text-sm shadow-lg backdrop-blur ${
+            className={`rounded-lg border bg-surface px-4 py-2 text-sm shadow-lg backdrop-blur ${
               toast.tone === "success"
-                ? "border-emerald-400/50 bg-emerald-500/15 text-emerald-100"
+                ? "border-emerald-400/40 text-emerald-300"
                 : toast.tone === "error"
-                  ? "border-red-400/50 bg-red-500/15 text-red-100"
-                  : "border-white/30 bg-black/45 text-slate-100"
+                  ? "border-red-400/40 text-red-300"
+                  : "border-border text-text-primary"
             }`}
           >
             {toast.message}

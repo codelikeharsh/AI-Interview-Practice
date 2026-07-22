@@ -1,29 +1,32 @@
+import logging
 import re
 import os
 import random
-from google import genai
+from groq import Groq
 from dotenv import load_dotenv
 
 load_dotenv()
 
-API_KEY = os.getenv("GEMINI_API_KEY")
-MODEL_NAME = "gemini-2.0-flash"
-client = genai.Client(api_key=API_KEY) if API_KEY else None
+logger = logging.getLogger(__name__)
+
+API_KEY = os.getenv("GROQ_API_KEY")
+MODEL_NAME = "llama-3.3-70b-versatile"
+client = Groq(api_key=API_KEY) if API_KEY else None
 
 def _run_llm(prompt: str) -> str:
     try:
         if not client:
-            print("❌ GEMINI_API_KEY not configured")
+            logger.warning("GROQ_API_KEY not configured; using fallback question bank")
             return ""
 
-        response = client.models.generate_content(
+        response = client.chat.completions.create(
             model=MODEL_NAME,
-            contents=prompt,
+            messages=[{"role": "user", "content": prompt}],
         )
-        return (response.text or "").strip()
+        return (response.choices[0].message.content or "").strip()
 
     except Exception as e:
-        print("❌ Gemini question generation error:", e)
+        logger.error("Groq question generation error: %s", e)
         return ""
 
 
@@ -58,9 +61,34 @@ def _normalize(s: str) -> str:
     return re.sub(r"\s+", " ", (s or "").strip().lower())
 
 
+def _contains_code(text: str) -> bool:
+    """
+    Detects code/pseudocode leaking into a question, which is unspeakable
+    by TTS and breaks the voice interview flow.
+    """
+    if not text:
+        return False
+    if "```" in text or "`" in text:
+        return True
+    # multi-line snippet (question should be a single spoken sentence)
+    if "\n" in text.strip():
+        return True
+    code_patterns = [
+        r"[{};]",                          # braces/semicolons
+        r"\bdef\s+\w+\s*\(",               # python function
+        r"\bfunction\s*\(",                # js function
+        r"=>",                              # arrow function
+        r"\b(int|void|const|let|var)\s+\w+\s*=",
+        r"^\s*(#|//)\s",                    # comment lines
+    ]
+    return any(re.search(p, text) for p in code_patterns)
+
+
 def _is_low_quality(question: str, history: str) -> bool:
     q = _normalize(question)
     if not q or len(q.split()) < 8:
+        return True
+    if _contains_code(question):
         return True
     banned_starts = [
         "explain ",
@@ -133,11 +161,69 @@ def _fallback_question(role: str, topic: str, difficulty: str, history: str) -> 
     return random.choice(bank) + suffix
 
 
-def generate_question(role, topic, difficulty, history=""):
+WARMUP_QUESTION = "Tell me about yourself and walk me through your background relevant to this role."
+
+
+def _behavioral_fallback(role: str) -> str:
+    r = (role or "this").strip()
+    bank = [
+        f"Tell me about a time you disagreed with a teammate on a {r} project and how you handled it.",
+        f"Describe a situation where you had to meet a tight deadline in a {r} role. What did you do?",
+        "Tell me about a time you made a mistake at work and how you recovered from it.",
+        "Describe a time you had to learn something completely new very quickly to get a task done.",
+    ]
+    return random.choice(bank)
+
+
+def _generate_behavioral_question(role: str, history: str) -> str:
+    prompt = f"""
+You are a senior interviewer running the behavioral portion of a real interview.
+
+STRICT RULES:
+- Output ONLY ONE question
+- Output ONLY the question text
+- DO NOT add explanations, greetings, or commentary
+- DO NOT number the question
+- Ask a realistic behavioral or situational question, in the style of
+  "Tell me about a time when..." or "How would you handle a situation
+  where..."
+- Do NOT ask about specific technical topics, code, or systems - this is
+  about soft skills: teamwork, conflict, ownership, communication,
+  handling pressure, or learning from failure
+- Keep length between 15 and 30 words
+- This question will be READ ALOUD by a text-to-speech voice, so it MUST
+  be a single spoken sentence
+- Avoid repeating intent from previous questions
+
+Role: {role}
+
+Previous questions (for context, do not repeat):
+{history}
+
+Question:
+"""
+    for _ in range(3):
+        raw = _run_llm(prompt)
+        cleaned = _clean_question(raw)
+        if not _is_low_quality(cleaned, history):
+            return cleaned
+    return _behavioral_fallback(role)
+
+
+def generate_question(role, topic, difficulty, history="", question_kind="technical"):
     """
     Generates ONE clean interview question.
     Output MUST be ONLY the question text.
+
+    question_kind: "warmup" (fixed intro question, no LLM call),
+    "behavioral" (situational/soft-skills), or "technical" (default,
+    adaptive-difficulty, topic-anchored - the original behavior).
     """
+    if question_kind == "warmup":
+        return WARMUP_QUESTION
+
+    if question_kind == "behavioral":
+        return _generate_behavioral_question(role, history)
 
     prompt = f"""
 You are a senior interviewer running a real technical interview.
@@ -154,6 +240,11 @@ STRICT RULES:
 - Avoid repeating intent from previous questions
 - Do not use generic templates like "common mistakes beginners make"
 - Anchor question to the role and topic with practical technical detail
+- This question will be READ ALOUD by a text-to-speech voice, so it MUST be a
+  single spoken sentence
+- NEVER include code, pseudocode, syntax examples, function signatures, or any
+  multi-line snippet in the question — describe the scenario in plain spoken
+  English instead of showing code
 
 Role: {role}
 Difficulty: {difficulty}

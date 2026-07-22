@@ -1,6 +1,20 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { apiFetch } from "../services/apiClient";
+import AppHeader from "../components/AppHeader";
+import Card from "../components/ui/Card";
+import Button from "../components/ui/Button";
 
-const API = "http://127.0.0.1:8000";
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0 },
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+};
 
 export default function Result() {
   const [loading, setLoading] = useState(true);
@@ -12,25 +26,19 @@ export default function Result() {
   const sessionId = params.get("session");
 
   useEffect(() => {
-    if (!sessionId) {
-      setError("Invalid interview session");
-      setLoading(false);
-      return;
-    }
+    if (!sessionId) return;
 
-    // ✅ CORRECT ENDPOINT
-    fetch(`${API}/interview/summary/${sessionId}`)
+    apiFetch(`/interview/summary/${sessionId}`)
       .then((res) => {
+        if (res.status === 403) throw new Error("This interview belongs to a different account");
         if (!res.ok) throw new Error("Failed to fetch results");
         return res.json();
       })
       .then((data) => {
-        // ✅ Handle both response shapes safely
         if (data.summary) {
           setSummary(data.summary);
           setTimeline(data.timeline || []);
         } else {
-          // backend returned summary directly
           setSummary(data);
           setTimeline([]);
         }
@@ -42,9 +50,17 @@ export default function Result() {
       });
   }, [sessionId]);
 
+  if (!sessionId) {
+    return (
+      <div className="flex min-h-screen items-center justify-center text-red-400">
+        Invalid interview session
+      </div>
+    );
+  }
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-zinc-950 to-zinc-900 flex items-center justify-center text-gray-300">
+      <div className="flex min-h-screen items-center justify-center text-text-secondary">
         Analyzing interview performance…
       </div>
     );
@@ -52,7 +68,7 @@ export default function Result() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-zinc-950 to-zinc-900 flex items-center justify-center text-red-400">
+      <div className="flex min-h-screen items-center justify-center text-red-400">
         {error}
       </div>
     );
@@ -66,6 +82,7 @@ export default function Result() {
     avg_confidence = 0,
     recommendation = "N/A",
     total_questions = 0,
+    unscored_answers = 0,
   } = summary || {};
 
   const strengths = [];
@@ -84,122 +101,133 @@ export default function Result() {
   else improvements.push("Speaking confidence");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-950 to-zinc-900 text-white px-6 py-10 flex justify-center">
-      <div className="w-full max-w-5xl space-y-10">
+    <div className="min-h-screen text-text-primary">
+      <AppHeader />
 
-        {/* HEADER */}
-        <div>
-          <h1 className="text-4xl font-semibold mb-2">Interview Report</h1>
-          <p className="text-gray-400">
-            Performance summary and detailed feedback
-          </p>
-        </div>
+      <motion.div
+        variants={stagger}
+        initial="hidden"
+        animate="show"
+        className="flex justify-center px-6 pb-16"
+      >
+        <div className="w-full max-w-5xl space-y-10">
 
-        {/* SUMMARY CARD */}
-        <Card>
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-sm text-gray-400">Overall Score</p>
-              <p className="text-5xl font-bold mt-1">
-                {overall_score}
-                <span className="text-xl text-gray-400"> / 10</span>
+          {/* HEADER */}
+          <motion.div variants={fadeUp} className="pt-10">
+            <h1 className="mb-2 text-3xl font-semibold tracking-tight">Interview Report</h1>
+            <p className="text-text-secondary">
+              Performance summary and detailed feedback
+              {total_questions > 0 && ` · based on ${total_questions} question${total_questions === 1 ? "" : "s"}`}
+            </p>
+            {unscored_answers > 0 && (
+              <p className="mt-2 text-sm text-amber-300">
+                {unscored_answers} answer{unscored_answers === 1 ? "" : "s"} couldn't be scored
+                (a temporary evaluation issue) and {unscored_answers === 1 ? "was" : "were"} excluded
+                from these averages.
               </p>
+            )}
+          </motion.div>
+
+          {/* SUMMARY CARD */}
+          <Card variants={fadeUp} className="p-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-text-secondary">Overall Score</p>
+                <p className="mt-1 text-5xl font-semibold">
+                  {overall_score}
+                  <span className="text-xl text-text-tertiary"> / 10</span>
+                </p>
+              </div>
+
+              <span
+                className={`rounded-lg px-4 py-2 text-sm font-medium
+                ${recommendation === "Strong Hire" && "bg-emerald-500/10 text-emerald-400"}
+                ${recommendation === "Hire" && "bg-blue-500/10 text-blue-400"}
+                ${recommendation === "Needs Improvement" && "bg-yellow-500/10 text-yellow-400"}
+                ${recommendation === "Not enough data" && "bg-surface-hover text-text-secondary"}
+              `}
+              >
+                {recommendation}
+              </span>
             </div>
 
-            <span
-              className={`px-4 py-2 rounded-full text-sm font-medium
-              ${recommendation === "Strong Hire" && "bg-emerald-500/20 text-emerald-400"}
-              ${recommendation === "Hire" && "bg-blue-500/20 text-blue-400"}
-              ${recommendation === "Needs Improvement" && "bg-yellow-500/20 text-yellow-400"}
-            `}
-            >
-              {recommendation}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-6 mt-8">
-            <Metric label="Relevance" value={avg_relevance} />
-            <Metric label="Clarity" value={avg_clarity} />
-            <Metric label="Depth" value={avg_depth} />
-            <Metric label="Confidence" value={avg_confidence} />
-          </div>
-        </Card>
-
-        {/* CONFIDENCE GRAPH */}
-        {timeline.length > 0 && (
-          <Card>
-            <h2 className="text-xl font-semibold mb-4">
-              Confidence Over Time
-            </h2>
-            <ConfidenceGraph timeline={timeline} />
-          </Card>
-        )}
-
-        {/* STRENGTHS / WEAKNESSES */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card>
-            <h2 className="text-lg font-semibold mb-3">Strengths</h2>
-            <ul className="space-y-2 text-sm text-emerald-400">
-              {strengths.map((s, i) => (
-                <li key={i}>• {s}</li>
-              ))}
-            </ul>
+            <div className="mt-8 grid grid-cols-2 gap-6">
+              <Metric label="Relevance" value={avg_relevance} />
+              <Metric label="Clarity" value={avg_clarity} />
+              <Metric label="Depth" value={avg_depth} />
+              <Metric label="Confidence" value={avg_confidence} />
+            </div>
           </Card>
 
-          <Card>
-            <h2 className="text-lg font-semibold mb-3">
-              Needs Improvement
-            </h2>
-            <ul className="space-y-2 text-sm text-yellow-400">
-              {improvements.map((s, i) => (
-                <li key={i}>• {s}</li>
-              ))}
-            </ul>
-          </Card>
+          {/* CONFIDENCE GRAPH */}
+          {timeline.length > 0 && (
+            <Card variants={fadeUp} className="p-8">
+              <h2 className="mb-4 text-xl font-semibold">
+                Confidence Over Time
+              </h2>
+              <ConfidenceGraph timeline={timeline} />
+            </Card>
+          )}
+
+          {/* STRENGTHS / WEAKNESSES */}
+          <motion.div variants={fadeUp} className="grid gap-6 md:grid-cols-2">
+            <Card className="p-8">
+              <h2 className="mb-3 text-lg font-semibold">Strengths</h2>
+              <ul className="space-y-2 text-sm text-emerald-400">
+                {strengths.map((s, i) => (
+                  <li key={i}>• {s}</li>
+                ))}
+              </ul>
+            </Card>
+
+            <Card className="p-8">
+              <h2 className="mb-3 text-lg font-semibold">
+                Needs Improvement
+              </h2>
+              <ul className="space-y-2 text-sm text-yellow-400">
+                {improvements.map((s, i) => (
+                  <li key={i}>• {s}</li>
+                ))}
+              </ul>
+            </Card>
+          </motion.div>
+
+          {/* ACTIONS */}
+          <motion.div variants={fadeUp} className="flex items-center justify-between">
+            <div className="flex gap-3">
+              <Button onClick={() => window.print()}>
+                Download PDF Report
+              </Button>
+              <Button as={Link} to="/history" variant="secondary">
+                View All Interviews
+              </Button>
+            </div>
+
+            <Button as={Link} to="/" variant="secondary">
+              Back to Home
+            </Button>
+          </motion.div>
         </div>
-
-        {/* ACTIONS */}
-        <div className="flex justify-between items-center">
-          <button
-            onClick={() => window.print()}
-            className="px-6 py-2 rounded-full bg-white text-black font-medium hover:bg-gray-200 transition"
-          >
-            Download PDF Report
-          </button>
-
-          <button
-            onClick={() => (window.location.href = "/")}
-            className="px-6 py-2 rounded-full border border-white/20 text-gray-300 hover:bg-white/5"
-          >
-            Back to Home
-          </button>
-        </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
 
 /* ---------------- COMPONENTS ---------------- */
 
-function Card({ children }) {
-  return (
-    <div className="bg-zinc-900/80 backdrop-blur rounded-2xl p-8 shadow-lg">
-      {children}
-    </div>
-  );
-}
-
 function Metric({ label, value }) {
   return (
     <div>
-      <div className="flex justify-between text-sm mb-1">
-        <span className="text-gray-300">{label}</span>
-        <span className="text-gray-400">{value}/10</span>
+      <div className="mb-1 flex justify-between text-sm">
+        <span className="text-text-secondary">{label}</span>
+        <span className="text-text-tertiary">{value}/10</span>
       </div>
-      <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-indigo-400 to-cyan-400"
-          style={{ width: `${value * 10}%` }}
+      <div className="h-1.5 overflow-hidden rounded-full bg-surface-hover">
+        <motion.div
+          className="h-full rounded-full bg-accent"
+          initial={{ width: 0 }}
+          animate={{ width: `${value * 10}%` }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         />
       </div>
     </div>
@@ -225,14 +253,8 @@ function ConfidenceGraph({ timeline }) {
     .join(" ");
 
   return (
-    <svg viewBox="0 0 100 100" className="w-full h-32">
-      <path d={path} fill="none" stroke="url(#grad)" strokeWidth="3" />
-      <defs>
-        <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#818cf8" />
-          <stop offset="100%" stopColor="#22d3ee" />
-        </linearGradient>
-      </defs>
+    <svg viewBox="0 0 100 100" className="h-32 w-full">
+      <path d={path} fill="none" stroke="#FF6152" strokeWidth="2" />
     </svg>
   );
 }

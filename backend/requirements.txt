@@ -1,7 +1,15 @@
 fastapi
 uvicorn
 python-multipart
-google-genai
+groq
 python-dotenv
 openai-whisper
-gTTS
+edge-tts
+sqlalchemy[asyncio]>=2.0
+asyncpg
+alembic
+pyjwt>=2
+google-auth
+pytest
+pytest-asyncio
+httpx

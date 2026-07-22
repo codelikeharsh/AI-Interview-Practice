@@ -1,47 +1,55 @@
+import logging
 import os
+import re
 import uuid
 
-from gtts import gTTS
+import edge_tts
 
-try:
-    from TTS.api import TTS
-    coqui_tts = TTS("tts_models/en/vctk/vits", progress_bar=False)
-    print("✅ Coqui TTS loaded")
-except Exception as e:
-    # Coqui is optional; fallback to gTTS for Python 3.12 compatibility.
-    print(f"⚠️ Coqui TTS unavailable, using gTTS fallback: {e}")
-    coqui_tts = None
+logger = logging.getLogger(__name__)
 
 AUDIO_DIR = "generated_audio"
 os.makedirs(AUDIO_DIR, exist_ok=True)
 
-def generate_tts(text: str) -> str:
+# Natural neural voice (Microsoft Edge read-aloud) - free, no API key.
+# Full voice list: `edge-tts --list-voices`
+VOICE = "en-US-AndrewNeural"
+
+
+def _sanitize_for_speech(text: str) -> str:
     """
-    Generates TTS audio and returns a PUBLIC audio URL
+    Strips anything the TTS engine can't/shouldn't speak: code fences,
+    backticks, control characters, and symbol runs that would otherwise
+    be read out character by character or crash synthesis.
     """
-    if not text or not text.strip():
+    if not text:
+        return ""
+
+    t = text.replace("```", " ").replace("`", " ")
+    t = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", " ", t)  # control chars
+    t = re.sub(r"[{}<>|~^_*#]+", " ", t)                  # code/markdown symbols
+    t = re.sub(r"\s+", " ", t).strip()
+
+    MAX_LEN = 500
+    if len(t) > MAX_LEN:
+        t = t[:MAX_LEN].rsplit(" ", 1)[0].strip()
+
+    return t
+
+
+async def generate_tts(text: str) -> str | None:
+    """
+    Generates TTS audio via Edge-TTS and returns a PUBLIC audio URL.
+    """
+    clean = _sanitize_for_speech(text)
+    if not clean:
         return None
 
-    # Prefer local Coqui voice when available.
-    if coqui_tts:
-        try:
-            filename = f"{uuid.uuid4().hex}.wav"
-            filepath = os.path.join(AUDIO_DIR, filename)
-            coqui_tts.tts_to_file(
-                text=text,
-                file_path=filepath,
-                speaker="p230"
-            )
-            return f"/tts/{filename}"
-        except Exception as e:
-            print(f"⚠️ Coqui TTS generation failed, falling back to gTTS: {e}")
-
-    # Network fallback: gTTS generates MP3, still served from /tts.
     try:
         filename = f"{uuid.uuid4().hex}.mp3"
         filepath = os.path.join(AUDIO_DIR, filename)
-        gTTS(text=text, lang="en").save(filepath)
+        communicate = edge_tts.Communicate(clean, voice=VOICE)
+        await communicate.save(filepath)
         return f"/tts/{filename}"
     except Exception as e:
-        print(f"❌ gTTS generation failed: {e}")
+        logger.error("Edge-TTS generation failed: %s", e)
         return None

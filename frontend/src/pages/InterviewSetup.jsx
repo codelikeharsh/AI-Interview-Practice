@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import Card from "../components/ui/Card";
+import Button from "../components/ui/Button";
 
 const PRESETS = [
   {
@@ -28,6 +32,11 @@ const PRESETS = [
   },
 ];
 
+const SEGMENT_BASE =
+  "rounded-lg px-5 py-2 text-sm transition border";
+const SEGMENT_ACTIVE = "border-accent bg-accent text-bg";
+const SEGMENT_INACTIVE = "border-border bg-surface text-text-secondary hover:bg-surface-hover";
+
 export default function InterviewSetup({ onStart, onCancel }) {
   const [domain, setDomain] = useState("");
   const [topics, setTopics] = useState("");
@@ -56,48 +65,57 @@ export default function InterviewSetup({ onStart, onCancel }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#0B0F1A]/80 backdrop-blur-xl flex items-center justify-center px-6">
-      <div className="w-full max-w-5xl rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[0_40px_120px_rgba(0,0,0,0.6)] flex">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-bg/80 px-6 backdrop-blur-sm"
+    >
+      <Card
+        initial={{ opacity: 0, scale: 0.96, y: 12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="flex w-full max-w-5xl overflow-hidden shadow-2xl"
+      >
 
         {/* LEFT – PRESETS */}
-        <div className="w-1/2 p-8 border-r border-white/10">
-          <h2 className="text-2xl font-bold text-slate-100 mb-2">
+        <div className="w-1/2 border-r border-border p-8">
+          <h2 className="mb-2 text-2xl font-semibold tracking-tight text-text-primary">
             Interview Presets
           </h2>
-          <p className="text-sm text-slate-400 mb-6">
+          <p className="mb-6 text-sm text-text-secondary">
             Start fast with curated roles and topics
           </p>
 
           <div className="flex flex-col gap-3">
             {PRESETS.map((p) => (
-              <button
+              <motion.button
                 key={p.label}
                 onClick={() => handlePreset(p)}
-                className="group text-left rounded-2xl px-5 py-4
-                  bg-white/5 border border-white/10
-                  hover:bg-white/10 hover:border-indigo-400/40
-                  transition"
+                whileHover={{ x: 4, borderColor: "rgba(255,97,82,0.4)" }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.15 }}
+                className="group rounded-lg border border-border bg-surface px-5 py-4 text-left transition-colors hover:bg-surface-hover"
               >
-                <div className="font-semibold text-slate-100 group-hover:text-indigo-300">
+                <div className="font-medium text-text-primary group-hover:text-accent">
                   {p.label}
                 </div>
-                <div className="text-xs text-slate-400 mt-1 line-clamp-2">
+                <div className="mt-1 text-xs text-text-secondary line-clamp-2">
                   {p.topics}
                 </div>
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
 
         {/* RIGHT – FORM */}
         <div className="w-1/2 p-8">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-semibold text-slate-100">
+          <div className="mb-6 flex items-center justify-between">
+            <h3 className="text-xl font-semibold text-text-primary">
               Interview Setup
             </h3>
             <button
               onClick={onCancel}
-              className="text-slate-400 hover:text-slate-200 text-2xl"
+              className="text-2xl text-text-tertiary hover:text-text-primary"
             >
               ×
             </button>
@@ -105,42 +123,40 @@ export default function InterviewSetup({ onStart, onCancel }) {
 
           {/* DOMAIN */}
           <div className="mb-5">
-            <label className="block text-sm font-medium text-slate-300 mb-1">
+            <label className="mb-1 block text-sm font-medium text-text-secondary">
               Target Role *
             </label>
             <input
               value={domain}
               onChange={e => setDomain(e.target.value)}
               placeholder="e.g. AI / ML Engineer"
-              className="w-full rounded-full px-4 py-2
-                bg-white/5 border border-white/10
-                text-slate-100 placeholder-slate-500
-                focus:outline-none focus:ring-2 focus:ring-indigo-400/50"
+              className="w-full rounded-lg border border-border bg-surface px-4 py-2
+                text-text-primary placeholder-text-tertiary
+                focus:outline-none focus:ring-2 focus:ring-accent/50"
             />
           </div>
 
           {/* TOPICS */}
           <div className="mb-5">
-            <label className="block text-sm font-medium text-slate-300 mb-1">
+            <label className="mb-1 block text-sm font-medium text-text-secondary">
               Topics *
             </label>
             <input
               value={topics}
               onChange={e => setTopics(e.target.value)}
               placeholder="DSA, CNN, SQL, APIs"
-              className="w-full rounded-full px-4 py-2
-                bg-white/5 border border-white/10
-                text-slate-100 placeholder-slate-500
-                focus:outline-none focus:ring-2 focus:ring-indigo-400/50"
+              className="w-full rounded-lg border border-border bg-surface px-4 py-2
+                text-text-primary placeholder-text-tertiary
+                focus:outline-none focus:ring-2 focus:ring-accent/50"
             />
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="mt-1 text-xs text-text-tertiary">
               Comma separated (e.g. System Design, Databases)
             </p>
           </div>
 
           {/* EXPERIENCE */}
           <div className="mb-5">
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="mb-2 block text-sm font-medium text-text-secondary">
               Experience Level *
             </label>
             <div className="flex gap-2">
@@ -148,11 +164,7 @@ export default function InterviewSetup({ onStart, onCancel }) {
                 <button
                   key={l}
                   onClick={() => setLevel(l)}
-                  className={`px-5 py-2 rounded-full text-sm transition ${
-                    level === l
-                      ? "bg-indigo-400 text-black"
-                      : "bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10"
-                  }`}
+                  className={`${SEGMENT_BASE} ${level === l ? SEGMENT_ACTIVE : SEGMENT_INACTIVE}`}
                 >
                   {l.charAt(0).toUpperCase() + l.slice(1)}
                 </button>
@@ -162,7 +174,7 @@ export default function InterviewSetup({ onStart, onCancel }) {
 
           {/* DURATION */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="mb-2 block text-sm font-medium text-text-secondary">
               Interview Duration *
             </label>
             <div className="flex gap-2">
@@ -170,11 +182,7 @@ export default function InterviewSetup({ onStart, onCancel }) {
                 <button
                   key={d}
                   onClick={() => setDuration(d)}
-                  className={`px-5 py-2 rounded-full text-sm transition ${
-                    duration === d
-                      ? "bg-indigo-400 text-black"
-                      : "bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10"
-                  }`}
+                  className={`${SEGMENT_BASE} ${duration === d ? SEGMENT_ACTIVE : SEGMENT_INACTIVE}`}
                 >
                   {d} mins
                 </button>
@@ -183,41 +191,37 @@ export default function InterviewSetup({ onStart, onCancel }) {
           </div>
 
           {/* CONSENT */}
-          <div className="flex items-start gap-3 mb-8">
+          <div className="mb-8 flex items-start gap-3">
             <input
               type="checkbox"
               checked={agreed}
               onChange={e => setAgreed(e.target.checked)}
-              className="mt-1 accent-indigo-400"
+              className="mt-1 accent-accent"
             />
-            <p className="text-sm text-slate-400">
-              I agree to the Terms & Conditions and allow camera and microphone access.
+            <p className="text-sm text-text-secondary">
+              I agree to the{" "}
+              <Link to="/terms" target="_blank" className="text-accent hover:text-accent-hover underline">
+                Terms & Conditions
+              </Link>{" "}
+              and{" "}
+              <Link to="/privacy" target="_blank" className="text-accent hover:text-accent-hover underline">
+                Privacy Policy
+              </Link>
+              , and allow camera and microphone access.
             </p>
           </div>
 
           {/* ACTIONS */}
-          <div className="flex justify-between items-center">
-            <button
-              onClick={handleStart}
-              disabled={!canStart}
-              className={`px-8 py-2.5 rounded-full font-semibold transition ${
-                canStart
-                  ? "bg-indigo-400 text-black hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(99,102,241,0.4)]"
-                  : "bg-white/10 text-slate-500 cursor-not-allowed"
-              }`}
-            >
+          <div className="flex items-center justify-between">
+            <Button onClick={handleStart} disabled={!canStart}>
               Start Interview
-            </button>
-
-            <button
-              onClick={onCancel}
-              className="px-6 py-2 rounded-full border border-white/10 text-slate-400 hover:bg-white/10"
-            >
+            </Button>
+            <Button variant="ghost" onClick={onCancel}>
               Cancel
-            </button>
+            </Button>
           </div>
         </div>
-      </div>
-    </div>
+      </Card>
+    </motion.div>
   );
 }
