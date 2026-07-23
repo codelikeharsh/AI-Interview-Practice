@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import Button from "./ui/Button";
+import logoIcon from "../assets/brand/icon-512.png";
 
 export default function AppHeader({ extraLinks }) {
   const { user, logout } = useAuth();
@@ -9,7 +10,7 @@ export default function AppHeader({ extraLinks }) {
     <nav className="relative z-10 border-b border-border">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-10">
         <Link to="/" className="flex items-center gap-2 text-base font-semibold tracking-tight text-text-primary">
-          <span className="h-2 w-2 rounded-full bg-accent" />
+          <img src={logoIcon} alt="" className="h-5 w-auto" />
           Anteroom
         </Link>
 

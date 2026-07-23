@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Inter Variable"', "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
+      },
       colors: {
         bg: "#0A0A0B",
         surface: "#131316",

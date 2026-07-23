@@ -6,6 +6,7 @@ import AppHeader from "../components/AppHeader";
 import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 import StatusDot from "../components/ui/StatusDot";
+import logoIcon from "../assets/brand/icon-512.png";
 
 function IconMic({ className = "" }) {
   return (
@@ -38,6 +39,26 @@ function IconChart({ className = "" }) {
   );
 }
 
+function IconDocument({ className = "" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="5" y="3" width="14" height="18" rx="2" />
+      <line x1="8" y1="8" x2="16" y2="8" />
+      <line x1="8" y1="12" x2="16" y2="12" />
+      <line x1="8" y1="16" x2="12" y2="16" />
+    </svg>
+  );
+}
+
+function IconLayers({ className = "" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M12 3l9 5-9 5-9-5 9-5z" />
+      <path d="M3 13l9 5 9-5" />
+    </svg>
+  );
+}
+
 const HOW_IT_WORKS_ITEMS = [
   {
     step: "1",
@@ -54,13 +75,6 @@ const HOW_IT_WORKS_ITEMS = [
     title: "Review Report",
     body: "End anytime to see a detailed performance breakdown.",
   },
-];
-
-const SAMPLE_METRICS = [
-  { label: "Relevance", value: 8.5 },
-  { label: "Clarity", value: 7.8 },
-  { label: "Depth", value: 9.1 },
-  { label: "Confidence", value: 8.0 },
 ];
 
 const fadeUp = {
@@ -136,41 +150,64 @@ export default function Home() {
       />
 
       {/* HERO */}
-      <main className="flex flex-col items-center px-6 pt-20 pb-16 text-center">
+      <main className="relative flex flex-col items-center overflow-hidden px-6 pb-16 pt-24 text-center">
+        {/* background depth: soft radial glow + faint dot grid, faded at the edges */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div
+            className="absolute left-1/2 top-0 h-[560px] w-[900px] -translate-x-1/2 -translate-y-1/3 rounded-full opacity-40 blur-3xl"
+            style={{ background: "radial-gradient(circle, rgba(255,97,82,0.25), transparent 70%)" }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: "radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px)",
+              backgroundSize: "28px 28px",
+              maskImage: "radial-gradient(ellipse 60% 50% at 50% 20%, black 0%, transparent 75%)",
+              WebkitMaskImage: "radial-gradient(ellipse 60% 50% at 50% 20%, black 0%, transparent 75%)",
+            }}
+          />
+        </div>
+
         <motion.div
           variants={stagger}
           initial="hidden"
           animate="show"
           className="flex flex-col items-center"
         >
+          <motion.img
+            variants={fadeUp}
+            src={logoIcon}
+            alt=""
+            className="mb-6 h-12 w-auto drop-shadow-[0_0_24px_rgba(255,97,82,0.35)]"
+          />
+
           <motion.span
             variants={fadeUp}
-            className="mb-6 inline-block rounded-full border border-border bg-surface px-4 py-1 text-sm text-text-secondary"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-4 py-1.5 text-sm text-text-secondary backdrop-blur"
           >
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             AI mock interviews, on demand
           </motion.span>
 
           <motion.h1
             variants={fadeUp}
-            className="mb-6 max-w-3xl text-5xl font-semibold leading-[1.1] tracking-tight md:text-6xl"
+            className="mb-6 max-w-4xl text-6xl font-semibold leading-[1.05] tracking-tight md:text-7xl"
           >
-            Interview with an AI that actually listens
+            Interview with an AI
+            <br className="hidden sm:block" /> that actually listens
           </motion.h1>
 
-          <motion.p variants={fadeUp} className="mb-10 max-w-2xl text-lg text-text-secondary">
+          <motion.p variants={fadeUp} className="mb-10 max-w-xl text-lg text-text-secondary">
             Real-time voice interaction, adaptive questioning, and intelligent
             feedback — built for serious candidates.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-3">
+          <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-4">
             <Button size="lg" onClick={startFull}>
               Start Interview
             </Button>
-            <Button size="lg" variant="secondary" onClick={startDemo}>
-              Try Demo
-            </Button>
-            <Button size="lg" variant="secondary" as={Link} to="/interview/resume">
-              Resume-Based Interview
+            <Button size="lg" variant="ghost" onClick={startDemo}>
+              Try Demo →
             </Button>
           </motion.div>
 
@@ -178,47 +215,9 @@ export default function Home() {
             Demo requires camera and microphone permissions.
           </motion.p>
         </motion.div>
-
-        {/* SAMPLE SCORECARD PREVIEW */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}
-          className="mt-16 w-full max-w-md"
-        >
-          <Card className="p-6 text-left">
-            <div className="mb-5 flex items-center justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-wide text-text-tertiary">Sample Report</p>
-                <p className="text-sm font-medium text-text-primary">Frontend Developer · 5 questions</p>
-              </div>
-              <span className="rounded-lg bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
-                Strong Hire
-              </span>
-            </div>
-            <div className="space-y-3">
-              {SAMPLE_METRICS.map((m, i) => (
-                <div key={m.label}>
-                  <div className="mb-1 flex justify-between text-xs">
-                    <span className="text-text-secondary">{m.label}</span>
-                    <span className="text-text-tertiary">{m.value}/10</span>
-                  </div>
-                  <div className="h-1.5 overflow-hidden rounded-full bg-surface-hover">
-                    <motion.div
-                      className="h-full rounded-full bg-accent"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${m.value * 10}%` }}
-                      transition={{ delay: 0.7 + i * 0.1, duration: 0.6, ease: "easeOut" }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
-        </motion.div>
       </main>
 
-      {/* PRODUCT SECTION — bento grid */}
+      {/* PRODUCT SECTION — even grid, no featured/oversized tile */}
       <section ref={productRef} className="px-6 pb-20 pt-8">
         <div className="mx-auto max-w-5xl">
           <h2 className="mb-8 text-center text-2xl font-semibold tracking-tight md:text-3xl">
@@ -229,15 +228,14 @@ export default function Home() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
-            className="grid gap-4 md:grid-cols-2"
+            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
-            <motion.div variants={fadeUp} className="md:col-span-2">
-              <Card className="p-6">
+            <motion.div variants={fadeUp}>
+              <Card className="h-full p-6">
                 <IconMic className="mb-4 h-6 w-6 text-accent" />
-                <h3 className="mb-2 text-lg font-medium text-text-primary">Live Voice Interview</h3>
-                <p className="max-w-md text-sm text-text-secondary">
-                  AI asks and follows up in real time with natural pacing, adjusting difficulty
-                  as you answer.
+                <h3 className="mb-2 font-medium text-text-primary">Live Voice Interview</h3>
+                <p className="text-sm text-text-secondary">
+                  AI asks and follows up in real time, adjusting difficulty as you answer.
                 </p>
               </Card>
             </motion.div>
@@ -255,6 +253,22 @@ export default function Home() {
                 <IconChart className="mb-4 h-6 w-6 text-accent" />
                 <h3 className="mb-2 font-medium text-text-primary">Instant Score Report</h3>
                 <p className="text-sm text-text-secondary">See relevance, clarity, depth, and confidence metrics.</p>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={fadeUp}>
+              <Card as={Link} to="/interview/resume" interactive className="h-full p-6">
+                <IconDocument className="mb-4 h-6 w-6 text-accent" />
+                <h3 className="mb-2 font-medium text-text-primary">Resume-Based Interview</h3>
+                <p className="text-sm text-text-secondary">Upload your resume for questions built around your real experience.</p>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={fadeUp}>
+              <Card as={Link} to="/questions" interactive className="h-full p-6">
+                <IconLayers className="mb-4 h-6 w-6 text-accent" />
+                <h3 className="mb-2 font-medium text-text-primary">Question Bank</h3>
+                <p className="text-sm text-text-secondary">Browse and practice real questions by category and difficulty.</p>
               </Card>
             </motion.div>
           </motion.div>

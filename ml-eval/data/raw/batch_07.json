@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given strings s and t, find the smallest substring of s containing every character of t with the required duplicate counts. Return an empty string if none exists.",
+    "quality_tier": "excellent",
+    "answer": "I'd use a sliding window with a frequency map for t, a window map, and a count of how many required character groups are satisfied. Expand right until all requirements are met, then move left while preserving validity and record the shortest window. Each pointer moves forward at most n times, so it is O(|s|+|t|).",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly tracks duplicate requirements and shrinks only valid windows."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given strings s and t, find the smallest substring of s containing every character of t with the required duplicate counts. Return an empty string if none exists.",
+    "quality_tier": "good",
+    "answer": "I'd use two pointers and character counts. Once the current window contains all characters from t, I'd shrink it from the left and keep the shortest valid result. The approach is linear aside from map operations.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly tracks duplicate requirements and shrinks only valid windows."
+    ],
+    "improvements": [
+      "Should explain the satisfied-requirement counter and duplicate handling more precisely."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given strings s and t, find the smallest substring of s containing every character of t with the required duplicate counts. Return an empty string if none exists.",
+    "quality_tier": "mediocre",
+    "answer": "I'd start at every index and extend until all characters from t are present, then compare lengths. It works but can take O(n squared) or worse.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Repeatedly restarts work instead of maintaining one window.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given strings s and t, find the smallest substring of s containing every character of t with the required duplicate counts. Return an empty string if none exists.",
+    "quality_tier": "poor",
+    "answer": "I'd sort both strings and compare characters, then choose the matching part of s.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Sorting destroys contiguity and cannot identify the original substring.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given strings s and t, find the smallest substring of s containing every character of t with the required duplicate counts. Return an empty string if none exists.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use a regular expression that includes all letters from t.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Regex construction does not solve minimum-window ordering and counts.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design serialization and deserialization for a binary tree so the original structure, including missing children, is reconstructed exactly.",
+    "quality_tier": "excellent",
+    "answer": "I'd use preorder traversal and write a null marker for every missing child, for example value,left,right with # for null. Deserialization consumes tokens recursively in the same order. Both operations are O(n), and the null markers make the representation unambiguous even when values repeat.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses explicit null markers to preserve exact topology and repeated values."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design serialization and deserialization for a binary tree so the original structure, including missing children, is reconstructed exactly.",
+    "quality_tier": "good",
+    "answer": "I'd serialize with preorder and include a marker for null children, then rebuild recursively by consuming tokens. This preserves structure in O(n).",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses explicit null markers to preserve exact topology and repeated values."
+    ],
+    "improvements": [
+      "Could mention escaping delimiters or using a length-prefixed format."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design serialization and deserialization for a binary tree so the original structure, including missing children, is reconstructed exactly.",
+    "quality_tier": "mediocre",
+    "answer": "I'd serialize only node values in preorder and rebuild by inserting them into a new tree.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Preorder values alone do not uniquely determine an arbitrary tree.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design serialization and deserialization for a binary tree so the original structure, including missing children, is reconstructed exactly.",
+    "quality_tier": "poor",
+    "answer": "I'd store inorder traversal because it shows the left-to-right structure.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Inorder traversal alone is also ambiguous.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design serialization and deserialization for a binary tree so the original structure, including missing children, is reconstructed exactly.",
+    "quality_tier": "off_topic",
+    "answer": "I'd convert the tree into a JSON array of sorted values.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Sorting removes the original structure completely.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core object model for a chess game, including pieces, legal moves, turns, check, checkmate, castling, and promotion.",
+    "quality_tier": "excellent",
+    "answer": "I'd separate Board, Game, Player, Move, and Piece responsibilities. Piece subclasses or movement strategies generate candidate moves, while a RulesEngine validates board-wide constraints such as leaving the king in check, castling rights, and promotion. Game owns turn order, history, and terminal states; Move objects capture enough state for undo and simulation.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates local piece movement from global legality and reversible move state."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core object model for a chess game, including pieces, legal moves, turns, check, checkmate, castling, and promotion.",
+    "quality_tier": "good",
+    "answer": "I'd model Board, Game, Move, and piece types, with a rules service checking legal movement and check conditions. Game tracks turns and move history, and promotion replaces the pawn with the selected piece.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Separates local piece movement from global legality and reversible move state."
+    ],
+    "improvements": [
+      "Could describe en passant and efficient attacked-square calculation."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core object model for a chess game, including pieces, legal moves, turns, check, checkmate, castling, and promotion.",
+    "quality_tier": "mediocre",
+    "answer": "I'd give every piece a canMove method and let the Game class loop through pieces to decide check and checkmate.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "CanMove alone does not handle king safety, castling, or game-state transitions cleanly.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core object model for a chess game, including pieces, legal moves, turns, check, checkmate, castling, and promotion.",
+    "quality_tier": "poor",
+    "answer": "I'd put all movement rules in one large switch based on piece type.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "A central switch becomes hard to extend and test.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core object model for a chess game, including pieces, legal moves, turns, check, checkmate, castling, and promotion.",
+    "quality_tier": "off_topic",
+    "answer": "I'd focus on drawing the board with SVG and animations.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Board rendering is unrelated to the requested domain model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a multi-channel notification delivery service supporting email, SMS, and push, user preferences, scheduling, retries, deduplication, and provider failures.",
+    "quality_tier": "excellent",
+    "answer": "I'd store a durable notification request with recipient, template, channels, schedule, and idempotency key. A scheduler enqueues due channel deliveries; workers apply preferences, render templates, and call provider adapters. Each channel attempt has a unique delivery ID, retry policy, and status. Provider callbacks update attempts idempotently, while circuit breakers and fallback providers isolate outages.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses durable scheduling, preferences, idempotency, retries, callbacks, and provider isolation."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a multi-channel notification delivery service supporting email, SMS, and push, user preferences, scheduling, retries, deduplication, and provider failures.",
+    "quality_tier": "good",
+    "answer": "I'd persist notification jobs, use a queue per channel, and have provider adapters for email, SMS, and push. Workers retry transient failures and store delivery status; user preferences are checked before sending.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses durable scheduling, preferences, idempotency, retries, callbacks, and provider isolation."
+    ],
+    "improvements": [
+      "Could explain ordering guarantees and quiet-hour handling."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a multi-channel notification delivery service supporting email, SMS, and push, user preferences, scheduling, retries, deduplication, and provider failures.",
+    "quality_tier": "mediocre",
+    "answer": "I'd send all notifications through one queue and retry any failure three times.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "A single generic retry path ignores channel-specific failures and duplicate prevention.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a multi-channel notification delivery service supporting email, SMS, and push, user preferences, scheduling, retries, deduplication, and provider failures.",
+    "quality_tier": "poor",
+    "answer": "I'd call every provider directly from the API request and return only after all sends finish.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Synchronous fan-out creates latency and partial-failure problems.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a multi-channel notification delivery service supporting email, SMS, and push, user preferences, scheduling, retries, deduplication, and provider failures.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design a settings page where users choose notification colors.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "UI colors do not address delivery architecture.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two users may try to reserve the same seat for an event at the same time. Design the schema and transaction flow so the seat is never sold twice, while temporary holds can expire.",
+    "quality_tier": "excellent",
+    "answer": "I'd model seats and reservations with a unique constraint on event_id and seat_id for active or confirmed ownership. Creating a hold occurs in one transaction using a conditional insert or row lock, with an expiry timestamp and reservation ID. Confirmation changes only an unexpired hold owned by that reservation. Expiry cleanup is idempotent, and the database constraint remains the final concurrency guard.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses a database-enforced uniqueness invariant and explicit hold lifecycle."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two users may try to reserve the same seat for an event at the same time. Design the schema and transaction flow so the seat is never sold twice, while temporary holds can expire.",
+    "quality_tier": "good",
+    "answer": "I'd create a reservations table with event, seat, status, and expires_at, and enforce a unique active reservation per seat. The hold and confirmation updates run in transactions.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses a database-enforced uniqueness invariant and explicit hold lifecycle."
+    ],
+    "improvements": [
+      "Could specify the exact partial-index or exclusion-constraint implementation."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two users may try to reserve the same seat for an event at the same time. Design the schema and transaction flow so the seat is never sold twice, while temporary holds can expire.",
+    "quality_tier": "mediocre",
+    "answer": "I'd first query whether the seat is free and insert a reservation if no row exists.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Check-then-insert can race without a constraint.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two users may try to reserve the same seat for an event at the same time. Design the schema and transaction flow so the seat is never sold twice, while temporary holds can expire.",
+    "quality_tier": "poor",
+    "answer": "I'd keep reserved seat IDs in application memory and clear them after ten minutes.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Process-local state fails across instances and restarts.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two users may try to reserve the same seat for an event at the same time. Design the schema and transaction flow so the seat is never sold twice, while temporary holds can expire.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a red Sold label to unavailable seats.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Visual labels do not prevent duplicate sales.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Implement an accessible drag-and-drop Kanban board in React with optimistic card movement, keyboard support, and rollback when the server rejects an update.",
+    "quality_tier": "excellent",
+    "answer": "I'd keep canonical columns and card order in state, apply a local move immediately, and send a versioned set-position mutation. Responses are accepted only for the latest mutation; rejection restores the last confirmed ordering or refetches. I would support keyboard pick-up, move, and drop commands with clear announcements, visible focus, and non-drag alternatives.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Combines optimistic concurrency with concrete keyboard and screen-reader behavior."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Implement an accessible drag-and-drop Kanban board in React with optimistic card movement, keyboard support, and rollback when the server rejects an update.",
+    "quality_tier": "good",
+    "answer": "I'd optimistically move the card, call the API with the destination column and position, and roll back on failure. I'd use an accessible drag-and-drop library and support keyboard movement.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Combines optimistic concurrency with concrete keyboard and screen-reader behavior."
+    ],
+    "improvements": [
+      "Could explain how concurrent edits from other users are merged."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Implement an accessible drag-and-drop Kanban board in React with optimistic card movement, keyboard support, and rollback when the server rejects an update.",
+    "quality_tier": "mediocre",
+    "answer": "I'd update state during pointer movement and save after drop, but disable the board until the request finishes.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Disabling the board conflicts with continued interaction and does not solve stale responses.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Implement an accessible drag-and-drop Kanban board in React with optimistic card movement, keyboard support, and rollback when the server rejects an update.",
+    "quality_tier": "poor",
+    "answer": "I'd rely only on HTML drag events and color changes.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Pointer-only interaction is inaccessible and race handling is absent.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Implement an accessible drag-and-drop Kanban board in React with optimistic card movement, keyboard support, and rollback when the server rejects an update.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add smoother card shadows and animations.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Styling does not address correctness or accessibility.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an idempotent POST /orders endpoint so client retries after timeouts cannot create duplicate orders.",
+    "quality_tier": "excellent",
+    "answer": "I'd require or accept an idempotency key scoped to the authenticated customer. In one transaction, insert a key record with a unique constraint, create the order, and store the final response reference. A retry with the same key and equivalent request returns the original result; a different payload returns a conflict. In-progress keys can return a retryable status or wait briefly.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Defines durable key scope, atomic creation, response replay, and payload mismatch behavior."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an idempotent POST /orders endpoint so client retries after timeouts cannot create duplicate orders.",
+    "quality_tier": "good",
+    "answer": "I'd store an idempotency key with each created order and enforce uniqueness per user. Retries return the existing order instead of inserting another.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Defines durable key scope, atomic creation, response replay, and payload mismatch behavior."
+    ],
+    "improvements": [
+      "Could discuss retention and cleanup of old idempotency records."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an idempotent POST /orders endpoint so client retries after timeouts cannot create duplicate orders.",
+    "quality_tier": "mediocre",
+    "answer": "I'd query for a recent order with the same customer and total before creating one.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Heuristic matching can merge legitimate repeated purchases or miss duplicates.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an idempotent POST /orders endpoint so client retries after timeouts cannot create duplicate orders.",
+    "quality_tier": "poor",
+    "answer": "I'd generate a new random order ID on every retry and later remove duplicates.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Creating duplicates and cleaning later violates the requirement.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an idempotent POST /orders endpoint so client retries after timeouts cannot create duplicate orders.",
+    "quality_tier": "off_topic",
+    "answer": "I'd disable the submit button after one click.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Client UI cannot protect against network retries or multiple devices.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you had to deliver a feature when the requirements were ambiguous. How did you reduce uncertainty and avoid building the wrong thing?",
+    "quality_tier": "excellent",
+    "answer": "On a reporting feature, the request said users needed flexible exports but did not define formats or priority fields. I interviewed support and two target users, wrote example outputs, and asked product to rank must-haves. We shipped CSV with saved filters first, instrumented usage, and postponed PDF. Adoption was strong and the avoided PDF work saved roughly a sprint.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows concrete discovery, scoped delivery, validation, and measurable outcome."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you had to deliver a feature when the requirements were ambiguous. How did you reduce uncertainty and avoid building the wrong thing?",
+    "quality_tier": "good",
+    "answer": "I clarified the unclear parts with product, created a small prototype, and confirmed acceptance criteria before full implementation. We delivered the highest-priority workflow first.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows concrete discovery, scoped delivery, validation, and measurable outcome."
+    ],
+    "improvements": [
+      "Could explain how conflicting stakeholder answers were resolved."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you had to deliver a feature when the requirements were ambiguous. How did you reduce uncertainty and avoid building the wrong thing?",
+    "quality_tier": "mediocre",
+    "answer": "I asked several questions in chat and then started coding based on the answers I received.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Some clarification occurred, but validation and outcome are vague.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you had to deliver a feature when the requirements were ambiguous. How did you reduce uncertainty and avoid building the wrong thing?",
+    "quality_tier": "poor",
+    "answer": "I made reasonable assumptions and built the full feature so stakeholders could react afterward.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Building first without alignment risks expensive rework.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you had to deliver a feature when the requirements were ambiguous. How did you reduce uncertainty and avoid building the wrong thing?",
+    "quality_tier": "off_topic",
+    "answer": "I prefer projects with detailed requirements because ambiguity slows development.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Preference statements do not answer the behavioral example.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

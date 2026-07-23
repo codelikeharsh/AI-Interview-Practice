@@ -1,3 +1,5 @@
+@import "@fontsource-variable/inter";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,5 +7,7 @@
 @layer base {
   body {
     @apply bg-bg text-text-primary antialiased;
+    font-family: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-feature-settings: "cv11", "ss01";
   }
 }

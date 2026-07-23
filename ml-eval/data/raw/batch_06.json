@@ -1,0 +1,1039 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "A delivery app receives an array where each value is the number of minutes until the next available courier in that zone. For every position, return how many steps you must move to the right to find a strictly smaller value; return 0 if none exists. How would you solve it efficiently?",
+    "quality_tier": "excellent",
+    "answer": "I'd use a monotonic increasing stack of indices. As I scan from left to right, the stack holds positions whose next smaller value hasn't been found yet, and their values are in nondecreasing order from bottom to top. For each new value, while the stack isn't empty and the new value is strictly smaller than the value at the top index, I'd pop that index and set its answer to currentIndex minus poppedIndex. Then I'd push the current index. Anything left in the stack at the end keeps answer 0. Each index is pushed and popped at most once, so the time is O(n) and the extra space is O(n). I'd use a strict comparison so equal values don't count as smaller.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Chooses the correct monotonic-stack pattern for next-smaller-element distances.",
+      "Stores indices rather than only values, allowing direct distance calculation.",
+      "States the stack invariant and explains why unresolved positions remain on it.",
+      "Correctly uses a strict comparison so equal values are not treated as smaller.",
+      "Provides accurate O(n) time and O(n) auxiliary-space complexity."
+    ],
+    "improvements": [
+      "Could include a short example showing how multiple earlier indices may be resolved by one new value.",
+      "Could mention that the output array is initialized with zeros."
+    ],
+    "feedback": "This is a complete fresher-level answer. It gives the expected linear-time algorithm and handles the strict-smaller requirement correctly."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "A delivery app receives an array where each value is the number of minutes until the next available courier in that zone. For every position, return how many steps you must move to the right to find a strictly smaller value; return 0 if none exists. How would you solve it efficiently?",
+    "quality_tier": "good",
+    "answer": "I'd keep a stack of indices. When I reach a new value, I'd compare it with the values for indices on the stack. While the new value is smaller, I'd pop the old index and store the difference between the two indices. Then I'd push the current index. The remaining stack entries have no smaller value to the right, so their result stays 0. This is O(n) because each index enters and leaves the stack once.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses indices and a stack to compute distances efficiently.",
+      "Correctly resolves several pending positions when a smaller value arrives.",
+      "Explains why unresolved entries receive 0.",
+      "Provides the correct linear-time argument."
+    ],
+    "improvements": [
+      "Should state the monotonic ordering maintained by the stack.",
+      "Does not provide the O(n) worst-case space complexity.",
+      "Could explicitly note that equal values must remain unresolved because the question asks for strictly smaller."
+    ],
+    "feedback": "The solution is correct and efficient. A clearer invariant and explicit equal-value handling would make it stronger."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "A delivery app receives an array where each value is the number of minutes until the next available courier in that zone. For every position, return how many steps you must move to the right to find a strictly smaller value; return 0 if none exists. How would you solve it efficiently?",
+    "quality_tier": "mediocre",
+    "answer": "I'd start from each position and scan to the right until I find a smaller number. Then I'd store how far away it is and stop that scan. If I reach the end, I'd store 0. The worst case would be O(n squared), like when the array is increasing.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 5,
+      "confidence": 7
+    },
+    "strengths": [
+      "Provides a correct brute-force solution.",
+      "Stops each inner scan as soon as the first smaller value is found.",
+      "Accurately identifies the quadratic worst case."
+    ],
+    "improvements": [
+      "Does not meet the efficient-solution expectation for a medium question.",
+      "Should recognize the next-smaller-element pattern and use a monotonic stack.",
+      "Could explain how a stack reuses comparisons across positions instead of restarting each search."
+    ],
+    "feedback": "The answer is correct as a baseline but not efficient enough. An interviewer would expect an O(n) monotonic-stack improvement."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "A delivery app receives an array where each value is the number of minutes until the next available courier in that zone. For every position, return how many steps you must move to the right to find a strictly smaller value; return 0 if none exists. How would you solve it efficiently?",
+    "quality_tier": "poor",
+    "answer": "I'd sort a copy of the values and use binary search to find the next smaller number for each item. Since sorting is O(n log n), it should be faster than checking everything.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that the brute-force approach may be too slow.",
+      "Attempts to use sorting and binary search to improve complexity."
+    ],
+    "improvements": [
+      "Sorting destroys the original positional order needed to find the first smaller value to the right.",
+      "Binary search can find a smaller value by magnitude but not the nearest qualifying index.",
+      "Does not explain how distances would be calculated correctly.",
+      "Should use a monotonic stack over the original array."
+    ],
+    "feedback": "The proposed method loses the ordering information that defines the problem, so it cannot produce correct distances."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "A delivery app receives an array where each value is the number of minutes until the next available courier in that zone. For every position, return how many steps you must move to the right to find a strictly smaller value; return 0 if none exists. How would you solve it efficiently?",
+    "quality_tier": "off_topic",
+    "answer": "I'd use the average courier wait time for the zone and show that to the user. If the wait is too high, the app can suggest another delivery location.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests a plausible product behavior for high delivery wait times."
+    ],
+    "improvements": [
+      "The question asks for an array algorithm, not a product recommendation.",
+      "Does not find the next strictly smaller value to the right.",
+      "Does not provide a data structure, distance calculation, or complexity analysis."
+    ],
+    "feedback": "The response discusses user experience rather than solving the stated DSA problem."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A search service stores millions of documents, each with a relevance score that changes over time. It must support updating a document's score and returning the current top k documents in descending score order. How would you design the data structure, including tie-breaking and complexity?",
+    "quality_tier": "excellent",
+    "answer": "I'd first clarify the update and query ratio and whether k varies. For fully dynamic scores with arbitrary top-k queries, I'd maintain an ordered balanced tree keyed by score descending and then document ID ascending as a deterministic tie-breaker, plus a hash map from document ID to its current score or tree node. An update removes the old composite key and inserts the new one in O(log n). A top-k query iterates from the tree's maximum side for k entries, so it's O(k plus log n), or O(k) after obtaining the first iterator depending on the implementation. The hash map gives O(1) expected lookup of the old score. If k is fixed and tiny while updates dominate, a heap alone is awkward because arbitrary score changes require locating and repairing entries; an indexed heap could work, but it gives the top element more naturally than a sorted top-k list. In a distributed service, I'd partition documents and merge each shard's local top k with a heap, but exact global updates still need a defined consistency model.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Clarifies that the optimal structure depends on update frequency and whether k is fixed.",
+      "Combines an ordered balanced tree with a hash map for efficient arbitrary updates.",
+      "Defines deterministic score ties using document ID.",
+      "Provides accurate update and top-k query complexity.",
+      "Explains why a plain heap is insufficient for arbitrary score changes.",
+      "Extends the reasoning to sharded top-k aggregation without confusing local and global ordering."
+    ],
+    "improvements": [
+      "Could discuss duplicate document IDs and whether score updates are absolute values or deltas.",
+      "Could mention an order-statistics tree if rank queries beyond top k are also required."
+    ],
+    "feedback": "This is a strong experienced-level answer. It chooses a structure that supports both arbitrary updates and ordered iteration, and it explains trade-offs rather than defaulting to a heap."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A search service stores millions of documents, each with a relevance score that changes over time. It must support updating a document's score and returning the current top k documents in descending score order. How would you design the data structure, including tie-breaking and complexity?",
+    "quality_tier": "good",
+    "answer": "I'd use a balanced binary search tree ordered by score and document ID, together with a hash map from document ID to its current score. When a score changes, I'd remove the old tree entry and insert the new one. That makes updates O(log n). To return top k, I'd iterate from the largest score downward and collect k documents, with document ID breaking ties. The map lets me find the old key quickly.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Chooses an ordered structure that supports both updates and top-k iteration.",
+      "Uses a hash map to locate the old score before updating.",
+      "Defines stable tie-breaking using document ID.",
+      "Provides the correct O(log n) update complexity."
+    ],
+    "improvements": [
+      "Could state the top-k query complexity explicitly.",
+      "Does not discuss why a normal heap is inconvenient for arbitrary updates.",
+      "Could address how the design changes if k is fixed and very small.",
+      "Distributed or concurrent access considerations are not covered."
+    ],
+    "feedback": "The core data-structure design is correct. The answer needs fuller complexity and trade-off discussion for a hard experienced-level question."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A search service stores millions of documents, each with a relevance score that changes over time. It must support updating a document's score and returning the current top k documents in descending score order. How would you design the data structure, including tie-breaking and complexity?",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep all documents in a max-heap. The root is the highest score, so for top k I'd pop k items, save them, and then insert them back. For score updates, I'd search the heap for the document, change the value, and heapify.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Recognizes that a max-heap exposes the highest-scoring document.",
+      "Understands that score changes require restoring the heap property.",
+      "Provides a way to retrieve multiple top elements."
+    ],
+    "improvements": [
+      "Searching a normal heap for a document is O(n), making updates inefficient.",
+      "Popping and reinserting k elements mutates shared state and costs O(k log n).",
+      "Concurrent top-k queries would require synchronization around temporary removals.",
+      "An indexed heap or ordered tree plus a document lookup map is more appropriate.",
+      "Tie-breaking is not defined."
+    ],
+    "feedback": "The answer uses a relevant structure but overlooks the cost of locating arbitrary documents and the complications of destructive top-k queries."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A search service stores millions of documents, each with a relevance score that changes over time. It must support updating a document's score and returning the current top k documents in descending score order. How would you design the data structure, including tie-breaking and complexity?",
+    "quality_tier": "poor",
+    "answer": "I'd store the scores in a hash map. Updates would be O(1), and whenever someone asks for top k, I'd sort the whole map and return the first k entries.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 8,
+      "depth": 3,
+      "confidence": 5
+    },
+    "strengths": [
+      "Provides efficient expected-time score updates.",
+      "Would return the correct top k after sorting."
+    ],
+    "improvements": [
+      "Sorting all millions of documents on every query costs O(n log n).",
+      "The design does not maintain ordering incrementally.",
+      "Tie-breaking is not specified.",
+      "It does not discuss query frequency or memory and concurrency implications.",
+      "Should combine a lookup map with an ordered structure."
+    ],
+    "feedback": "The solution is correct only as a simple baseline and is too expensive for repeated top-k queries over millions of documents."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A search service stores millions of documents, each with a relevance score that changes over time. It must support updating a document's score and returning the current top k documents in descending score order. How would you design the data structure, including tie-breaking and complexity?",
+    "quality_tier": "off_topic",
+    "answer": "I'd use Elasticsearch and increase the number of shards. Its relevance scoring can rank search results, and replicas would improve availability.",
+    "scores": {
+      "relevance": 3,
+      "clarity": 7,
+      "depth": 3,
+      "confidence": 5
+    },
+    "strengths": [
+      "Identifies a real system that supports relevance-ranked search.",
+      "Mentions sharding and replication as scalability concepts."
+    ],
+    "improvements": [
+      "The question asks for the underlying dynamic data-structure design and complexity.",
+      "Does not explain arbitrary score updates, top-k retrieval, or tie-breaking.",
+      "Product selection does not substitute for algorithmic reasoning."
+    ],
+    "feedback": "The response names a search platform but does not answer the data-structure question."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a reusable application logging framework that supports log levels, multiple outputs such as console and files, different message formats, asynchronous delivery, and runtime configuration changes. Explain the main classes and how new outputs can be added safely.",
+    "quality_tier": "excellent",
+    "answer": "I'd keep the public Logger API small, with methods such as debug, info, warn, and error that create an immutable LogEvent containing timestamp, level, message, context, exception, and logger name. A LogFilter or LevelPolicy decides whether the event is accepted. Accepted events go to a Dispatcher, which can be synchronous or asynchronous. Output destinations implement an Appender or Sink interface, while formatting is a separate Formatter strategy, so a JSON formatter can be reused by file, console, or network sinks. The asynchronous dispatcher should use a bounded queue and an explicit overflow policy such as block, drop low-priority events, or fall back synchronously for errors. Runtime configuration should be published as an immutable snapshot and swapped atomically so logging threads don't observe partially updated state. Each sink owns its lifecycle, flushing, rotation, and failure policy. New sinks are registered through configuration or dependency injection rather than editing the Logger. I'd also prevent recursive logging when a sink itself fails.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates event creation, filtering, formatting, dispatch, and output responsibilities.",
+      "Uses sink and formatter interfaces to support extension without modifying the logger.",
+      "Models asynchronous logging with a bounded queue and explicit backpressure policy.",
+      "Handles runtime configuration through immutable atomic snapshots.",
+      "Addresses sink lifecycle concerns such as flushing, rotation, and failures.",
+      "Recognizes recursive-logging risks when the framework reports its own errors."
+    ],
+    "improvements": [
+      "Could describe correlation-ID propagation and structured context inheritance.",
+      "Could mention ordering guarantees when several asynchronous sinks are configured."
+    ],
+    "feedback": "This is a mature OOP design. It identifies the framework's independent change points and includes concurrency and failure concerns that are often missed."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a reusable application logging framework that supports log levels, multiple outputs such as console and files, different message formats, asynchronous delivery, and runtime configuration changes. Explain the main classes and how new outputs can be added safely.",
+    "quality_tier": "good",
+    "answer": "I'd create a Logger that builds LogEvent objects and sends them to one or more Appender implementations. ConsoleAppender and FileAppender would implement a common interface. A Formatter interface would handle plain text or JSON formatting, so appenders don't need formatting conditionals. I'd add a level filter before dispatching. For asynchronous logging, a dispatcher thread could consume events from a queue. Configuration would create a new set of appenders and then replace the old configuration once it's ready.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Defines clear Logger, LogEvent, Appender, Formatter, and Dispatcher responsibilities.",
+      "Uses interfaces to support new output destinations and formats.",
+      "Places level filtering before expensive delivery work.",
+      "Treats configuration replacement as a staged operation rather than mutating objects incompletely."
+    ],
+    "improvements": [
+      "Could discuss bounded queues and behavior when producers outpace the logging thread.",
+      "Does not explain sink flushing and shutdown.",
+      "Appender failure isolation and recursive-error handling are missing.",
+      "Could describe thread safety during configuration replacement."
+    ],
+    "feedback": "The design is correct and extensible. More depth around asynchronous overload and sink failures would improve it."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a reusable application logging framework that supports log levels, multiple outputs such as console and files, different message formats, asynchronous delivery, and runtime configuration changes. Explain the main classes and how new outputs can be added safely.",
+    "quality_tier": "mediocre",
+    "answer": "I'd make a Logger base class and subclasses like ConsoleLogger and FileLogger. Each subclass would override log. For JSON or text, I'd add a format parameter. An async option could start a thread that writes messages later.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Recognizes that console and file output behavior should be separated.",
+      "Includes support for multiple formats and asynchronous delivery.",
+      "Uses polymorphism for output-specific behavior."
+    ],
+    "improvements": [
+      "Subclassing Logger by destination makes using multiple outputs at once awkward.",
+      "A format parameter will lead to conditionals rather than a formatter abstraction.",
+      "Starting an unspecified thread per logger or message can be unsafe and expensive.",
+      "Does not address level filtering, bounded queues, runtime configuration, flushing, or failures.",
+      "Composition with sink and formatter interfaces is more extensible than Logger subclasses."
+    ],
+    "feedback": "The answer contains basic polymorphism but couples concerns and leaves the hard concurrency and configuration requirements largely undefined."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a reusable application logging framework that supports log levels, multiple outputs such as console and files, different message formats, asynchronous delivery, and runtime configuration changes. Explain the main classes and how new outputs can be added safely.",
+    "quality_tier": "poor",
+    "answer": "I'd create one log method with switches for level, output type, and format. If output is file, it writes to a file, otherwise it prints to console. When we add another output, we can add another switch case.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Includes the requested concepts of levels, output destinations, and formatting."
+    ],
+    "improvements": [
+      "The central switch must change for every new sink or format.",
+      "Combines event creation, filtering, formatting, and I/O in one method.",
+      "Does not support multiple outputs cleanly.",
+      "Asynchronous delivery and runtime configuration are not designed.",
+      "The structure violates the requested extensibility goal."
+    ],
+    "feedback": "The response creates a growing conditional implementation rather than a reusable logging framework."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a reusable application logging framework that supports log levels, multiple outputs such as console and files, different message formats, asynchronous delivery, and runtime configuration changes. Explain the main classes and how new outputs can be added safely.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use a cloud logging dashboard with charts and alerts. Developers could search logs by service name and receive a notification when errors increase.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests useful operational features for consuming application logs."
+    ],
+    "improvements": [
+      "The question asks for the object model of a logging library.",
+      "Does not define logger, events, outputs, formatting, asynchronous dispatch, or configuration.",
+      "A dashboard consumes logs but does not explain how the application framework produces them."
+    ],
+    "feedback": "The answer discusses log analysis rather than designing the requested logging framework."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the home feed for a social-network application. Users follow other users, celebrities may have millions of followers, posts can be deleted, and the feed should load quickly while being approximately reverse chronological. Explain feed generation, storage, caching, pagination, and failure handling.",
+    "quality_tier": "excellent",
+    "answer": "I'd use a hybrid fan-out model. For normal authors, publishing a post writes the post to durable post storage and asynchronously fans a lightweight post reference into each follower's inbox or timeline store. For celebrity accounts, fan-out-on-write is too expensive, so I'd keep their posts in an author outbox and merge them into the reader's feed at read time. The feed service reads the user's precomputed inbox, fetches recent celebrity outboxes, merges candidates by timestamp and post ID, filters deleted or blocked content, and returns a cursor based on the last sort key. A cache can hold the first page and hot author outboxes, but the timeline store remains recoverable from the follow graph and post log. Deletion should mark the post unavailable in the authoritative store and publish an invalidation or tombstone so cached and precomputed references are removed eventually; the read path must still filter tombstoned IDs immediately. Queue lag can make fan-out eventually consistent, so new posts may appear after a short delay. If fan-out workers fail, events remain in a durable queue and are retried idempotently using author and post IDs. I'd monitor fan-out lag, inbox size, cache hit rate, merge latency, and deletion propagation.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses a hybrid fan-out strategy that handles both ordinary users and high-fan-out celebrities.",
+      "Separates durable post content from lightweight feed references.",
+      "Defines a read-time merge with deterministic timestamp and post-ID ordering.",
+      "Uses cursor pagination suitable for a changing reverse-chronological feed.",
+      "Handles deletion through authoritative tombstones plus asynchronous invalidation.",
+      "Includes idempotent fan-out retries, recoverability, consistency expectations, and observability."
+    ],
+    "improvements": [
+      "Could discuss follow and unfollow changes and whether historical posts are added or removed from inboxes.",
+      "Could explain how ranking signals would be introduced if the product later moves beyond approximate chronology."
+    ],
+    "feedback": "This is a strong experienced-level feed design. It addresses the celebrity problem, fast reads, deletion correctness, pagination, and asynchronous failure recovery."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the home feed for a social-network application. Users follow other users, celebrities may have millions of followers, posts can be deleted, and the feed should load quickly while being approximately reverse chronological. Explain feed generation, storage, caching, pagination, and failure handling.",
+    "quality_tier": "good",
+    "answer": "I'd precompute feeds for most users by pushing a new post ID into follower timeline lists through a queue. For celebrity accounts, I'd avoid writing to millions of timelines and instead merge their recent posts during feed reads. The feed API would read a cached first page or the timeline store, fetch post details, remove deleted posts, and paginate with a timestamp and post ID cursor. Fan-out jobs should be idempotent so retries don't insert duplicates. If the queue is delayed, feeds may be temporarily stale but posting should still succeed.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Chooses the standard hybrid push-and-pull feed architecture.",
+      "Uses asynchronous fan-out to keep post creation responsive.",
+      "Handles celebrity scale through read-time merging.",
+      "Uses stable cursor pagination and filters deleted posts.",
+      "Includes idempotent fan-out and a reasonable eventual-consistency statement."
+    ],
+    "improvements": [
+      "Could explain the storage model for timeline references and author posts.",
+      "Deletion invalidation from caches and precomputed timelines is underspecified.",
+      "Does not discuss recovering missed fan-out events or rebuilding timelines.",
+      "Cache behavior and hot-key concerns need more detail."
+    ],
+    "feedback": "The main architecture is correct and scalable. More precision around deletion propagation, recovery, and caching would strengthen it."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the home feed for a social-network application. Users follow other users, celebrities may have millions of followers, posts can be deleted, and the feed should load quickly while being approximately reverse chronological. Explain feed generation, storage, caching, pagination, and failure handling.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store posts in a table and query the newest posts from everyone the user follows. The query could join follows with posts, sort by created time descending, and limit to twenty. I'd cache the result for a minute so it loads faster.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 8,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Defines a straightforward source-of-truth query for a reverse-chronological feed.",
+      "Uses the follow relationship and creation time correctly.",
+      "Adds caching to reduce repeated computation."
+    ],
+    "improvements": [
+      "Joining and sorting posts across many followed accounts is expensive for every feed request.",
+      "A one-minute cache does not solve celebrity scale or deep pagination.",
+      "Offset or simple limit pagination is not fully specified for changing data.",
+      "Deletion, cache invalidation, queueing, and failure recovery are missing.",
+      "Should consider precomputed timelines or a hybrid fan-out model."
+    ],
+    "feedback": "The answer is a reasonable small-scale baseline but does not satisfy the scale and operational requirements of a hard feed-design question."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the home feed for a social-network application. Users follow other users, celebrities may have millions of followers, posts can be deleted, and the feed should load quickly while being approximately reverse chronological. Explain feed generation, storage, caching, pagination, and failure handling.",
+    "quality_tier": "poor",
+    "answer": "I'd copy every new post into every follower's database row. Then the home page can read one field containing all post IDs. For celebrities, we'd just use a bigger database server.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Recognizes that precomputing follower feeds can make reads fast."
+    ],
+    "improvements": [
+      "Storing an ever-growing list inside one user row is difficult to update, index, and paginate.",
+      "Celebrity posts create millions of synchronous writes and hot partitions.",
+      "Scaling one database server does not solve fan-out volume.",
+      "Does not address deletion, retries, cache invalidation, or duplicate writes.",
+      "The write path needs asynchronous fan-out and a different strategy for high-follower accounts."
+    ],
+    "feedback": "The proposal captures fast reads but is operationally unsafe and cannot handle celebrity-scale fan-out."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the home feed for a social-network application. Users follow other users, celebrities may have millions of followers, posts can be deleted, and the feed should load quickly while being approximately reverse chronological. Explain feed generation, storage, caching, pagination, and failure handling.",
+    "quality_tier": "off_topic",
+    "answer": "I'd improve the feed design by using larger images, autoplaying short videos, and adding reaction buttons below every post. Infinite scrolling would make the experience smoother.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests recognizable user-facing feed features."
+    ],
+    "improvements": [
+      "The question asks for feed-generation and distributed-system architecture.",
+      "Does not discuss fan-out, storage, caching, pagination correctness, deletion, or failures.",
+      "Infinite scrolling still requires a stable backend pagination design."
+    ],
+    "feedback": "The response focuses on feed presentation rather than the requested backend system design."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a relational schema and query strategy for threaded comments on articles. Comments can have arbitrary nesting, users need to load top-level comments with direct reply counts, and individual threads must be paginated without issuing one query per comment.",
+    "quality_tier": "excellent",
+    "answer": "I'd use an adjacency-list comments table with id, article_id, parent_id, author_id, body, created_at, deleted_at, and possibly a materialized path or root_id for efficient thread access. parent_id references comments.id, and I'd enforce that the parent belongs to the same article in application logic or with a composite key design. An index on article_id, parent_id, created_at, and id supports top-level and direct-reply pagination. Top-level comments are rows where parent_id is null. Their direct reply counts can come from a grouped subquery or a maintained reply_count column updated transactionally if reads dominate. To load one thread without N+1 queries, I'd use a recursive CTE starting from the selected root and return descendants with depth and path ordering, or query by root_id and materialized path if deep threads are frequent. Pagination should use created_at plus id rather than OFFSET. Soft-deleted comments can keep their position while displaying a placeholder so replies remain reachable.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses an adjacency-list schema appropriate for relational comment trees.",
+      "Provides indexes tailored to top-level comments and direct replies.",
+      "Offers both computed and denormalized reply-count strategies with trade-offs.",
+      "Avoids N+1 queries through recursive CTEs or root and path metadata.",
+      "Uses deterministic keyset pagination.",
+      "Handles soft deletion without disconnecting descendant replies."
+    ],
+    "improvements": [
+      "Could discuss a maximum nesting depth if the product wants to limit recursive-query cost.",
+      "Could specify how cycles are prevented when comments are moved or parent IDs are edited."
+    ],
+    "feedback": "This is a strong database design. It addresses hierarchy, pagination, counts, indexing, deletion semantics, and the N+1 problem."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a relational schema and query strategy for threaded comments on articles. Comments can have arbitrary nesting, users need to load top-level comments with direct reply counts, and individual threads must be paginated without issuing one query per comment.",
+    "quality_tier": "good",
+    "answer": "I'd create a comments table where parent_id points to another comment and is null for top-level comments. I'd index article_id, parent_id, created_at, and id. Top-level comments can be fetched with parent_id is null, and direct reply counts can be calculated with a grouped query joined back to those comments. For a selected thread, I'd use a recursive CTE to fetch all descendants instead of querying replies one comment at a time. Pagination would use created_at and id as a cursor.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Models nested comments with a self-referencing parent ID.",
+      "Uses suitable indexing for article and parent-based retrieval.",
+      "Computes direct reply counts in a set-based query.",
+      "Uses a recursive CTE to avoid N+1 thread loading.",
+      "Applies stable keyset pagination."
+    ],
+    "improvements": [
+      "Could include root_id or path data if large thread reads are frequent.",
+      "Does not discuss soft-deleted parent comments.",
+      "Could explain how parent and child comments are constrained to the same article.",
+      "Very deep recursion and cycle prevention are not addressed."
+    ],
+    "feedback": "The answer is correct and practical. A few integrity and deep-thread considerations are missing."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a relational schema and query strategy for threaded comments on articles. Comments can have arbitrary nesting, users need to load top-level comments with direct reply counts, and individual threads must be paginated without issuing one query per comment.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store id, article_id, parent_id, and text in a comments table. To show the page, I'd first query top-level comments and then run another query for the replies under each one. Reply counts could be the length of each reply query.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 4,
+      "confidence": 6
+    },
+    "strengths": [
+      "Uses a standard parent_id representation for nested comments.",
+      "Correctly identifies null parent IDs as top-level comments.",
+      "Can retrieve direct replies for a selected comment."
+    ],
+    "improvements": [
+      "Running one reply query per top-level comment creates the N+1 problem explicitly prohibited by the question.",
+      "Counting replies by fetching them wastes bandwidth and database work.",
+      "Does not support arbitrary nesting efficiently.",
+      "Indexes and pagination are not described.",
+      "Should use grouped counts and recursive or path-based thread queries."
+    ],
+    "feedback": "The schema is a reasonable start, but the query strategy is inefficient and does not meet the no-N+1 requirement."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a relational schema and query strategy for threaded comments on articles. Comments can have arbitrary nesting, users need to load top-level comments with direct reply counts, and individual threads must be paginated without issuing one query per comment.",
+    "quality_tier": "poor",
+    "answer": "I'd add columns reply1, reply2, reply3, and reply4 to the article table. Each column could store a JSON array of comments for that nesting level.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Attempts to keep related comments grouped with the article."
+    ],
+    "improvements": [
+      "Fixed reply columns cannot support arbitrary nesting.",
+      "Large JSON arrays create write contention and poor pagination.",
+      "Individual comments cannot be indexed or constrained cleanly.",
+      "Concurrent replies would require rewriting the same article row.",
+      "Reply counts and thread queries become difficult and error-prone.",
+      "A normalized self-referencing comments table is needed."
+    ],
+    "feedback": "The proposed schema is not relationally scalable and fails the arbitrary-nesting requirement."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a relational schema and query strategy for threaded comments on articles. Comments can have arbitrary nesting, users need to load top-level comments with direct reply counts, and individual threads must be paginated without issuing one query per comment.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use a moderation model to detect toxic comments and hide them automatically. Users could also report comments for manual review.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests useful moderation features for a comment product."
+    ],
+    "improvements": [
+      "The question asks for relational schema design and efficient thread queries.",
+      "Does not model nesting, reply counts, indexing, or pagination.",
+      "Moderation is separate from solving the database retrieval problem."
+    ],
+    "feedback": "The response discusses comment moderation rather than the requested database design."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A React product card has a favorite button that should update immediately before the API responds. Users may click it repeatedly, requests can fail or complete out of order, and the control must remain accessible. How would you implement the interaction?",
+    "quality_tier": "excellent",
+    "answer": "I'd treat the server value as confirmed state and maintain a pending desired state or mutation sequence separately. On click, I'd immediately render the new desired value, update aria-pressed, and send an idempotent request that sets the favorite state to true or false rather than toggling blindly. Each mutation gets a monotonically increasing client sequence or request ID. A response updates confirmed state only if it belongs to the latest relevant mutation; older responses are ignored. I might coalesce rapid clicks so after one request finishes, I send only the latest desired state instead of every intermediate toggle. If the latest request fails, I'd either roll back to the last confirmed state or keep the desired state with a visible retry message, depending on product expectations. The control should be a real button with an accessible name, aria-pressed, keyboard support by default, and non-color feedback. I'd avoid disabling it for the full request if repeated clicks are a supported requirement.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates confirmed server state from the user's latest optimistic intent.",
+      "Uses idempotent set-state requests instead of race-prone toggle endpoints.",
+      "Prevents older responses from overwriting newer intent through mutation sequencing.",
+      "Coalesces rapid interactions to reduce unnecessary network requests.",
+      "Defines rollback or retry behavior for the latest failed mutation.",
+      "Uses native button semantics and aria-pressed for accessible toggle behavior."
+    ],
+    "improvements": [
+      "Could discuss cache synchronization if the same favorite count appears elsewhere on the page.",
+      "Could mention announcing save failures through an accessible live region."
+    ],
+    "feedback": "This is a strong intermediate frontend answer. It handles optimistic rendering, rapid repeated actions, out-of-order responses, failure recovery, and accessibility."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A React product card has a favorite button that should update immediately before the API responds. Users may click it repeatedly, requests can fail or complete out of order, and the control must remain accessible. How would you implement the interaction?",
+    "quality_tier": "good",
+    "answer": "I'd update the favorite state immediately and send a request that includes the final boolean value. I'd assign each request an incrementing ID and only apply a response if it matches the latest request. If the latest request fails, I'd restore the last server-confirmed value and show an error. The button would be a native button with aria-pressed and a label that changes between Add to favorites and Remove from favorites.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Implements an immediate optimistic update.",
+      "Sends the desired boolean value rather than an ambiguous toggle command.",
+      "Protects against out-of-order responses using request IDs.",
+      "Defines rollback behavior for failure.",
+      "Uses appropriate native and ARIA toggle semantics."
+    ],
+    "improvements": [
+      "Could reduce network traffic by coalescing repeated clicks.",
+      "Does not discuss what happens when an earlier request fails after a later one succeeds.",
+      "Could add accessible non-blocking error announcement.",
+      "Shared application cache updates are not covered."
+    ],
+    "feedback": "The main interaction design is correct. Request coalescing and broader state synchronization would make it more robust."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A React product card has a favorite button that should update immediately before the API responds. Users may click it repeatedly, requests can fail or complete out of order, and the control must remain accessible. How would you implement the interaction?",
+    "quality_tier": "mediocre",
+    "answer": "I'd flip the local state immediately and call the API. If the request fails, I'd flip the state back. I'd disable the button until the request finishes so users can't cause multiple requests. I'd add an aria-label to the icon button.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Uses optimistic UI and a rollback on failure.",
+      "Prevents simultaneous requests by disabling the control.",
+      "Adds an accessible name to an icon-only button."
+    ],
+    "improvements": [
+      "Disabling the button contradicts the requirement that users may click repeatedly.",
+      "Flipping state back can be wrong if several mutations are in flight or responses arrive out of order.",
+      "Should send an explicit desired state and track request ordering.",
+      "An aria-label alone does not communicate pressed state; aria-pressed is appropriate.",
+      "Does not describe user-visible error handling."
+    ],
+    "feedback": "The answer covers a simple one-request optimistic toggle but does not handle the concurrency behavior specified in the question."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A React product card has a favorite button that should update immediately before the API responds. Users may click it repeatedly, requests can fail or complete out of order, and the control must remain accessible. How would you implement the interaction?",
+    "quality_tier": "poor",
+    "answer": "I'd wait for the API to finish and then change the heart icon. That prevents the UI from showing the wrong value. If users click multiple times, the browser will just send multiple toggle requests.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to keep the displayed state aligned with server responses."
+    ],
+    "improvements": [
+      "Waiting for the server violates the immediate-update requirement.",
+      "Multiple blind toggle requests can produce an unpredictable final state.",
+      "Out-of-order responses are not handled.",
+      "Failure behavior and accessible toggle semantics are missing.",
+      "Should use optimistic desired-state updates with request sequencing."
+    ],
+    "feedback": "The proposed implementation is neither optimistic nor safe under repeated clicks and reordered responses."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A React product card has a favorite button that should update immediately before the API responds. Users may click it repeatedly, requests can fail or complete out of order, and the control must remain accessible. How would you implement the interaction?",
+    "quality_tier": "off_topic",
+    "answer": "I'd animate the heart with a bounce effect and change it from gray to red. A tooltip could say Favorite when users hover over it.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests visual feedback for a favorite interaction."
+    ],
+    "improvements": [
+      "The question asks about optimistic state, request ordering, failures, and accessibility.",
+      "Hover tooltips do not help keyboard or touch users by themselves.",
+      "Color changes do not communicate the state to all users.",
+      "Does not define API or state-management behavior."
+    ],
+    "feedback": "The response focuses on styling rather than the required interaction correctness."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A reporting API must export up to 10 million transaction rows as CSV. Generating the file can take several minutes, users may cancel, and the service must avoid loading all rows into memory or holding an HTTP request open. Design the backend flow.",
+    "quality_tier": "excellent",
+    "answer": "I'd make export creation asynchronous. The client posts an export request with filters and an idempotency key. The API validates authorization, stores an ExportJob row with a stable job ID and a snapshot boundary such as an as-of timestamp or database snapshot reference, then enqueues the job and returns 202 with a status URL. A worker claims the job with a lease, reads rows using keyset pagination or a server-side cursor in bounded batches, serializes CSV incrementally, and streams multipart chunks directly to object storage. It never builds the full dataset in memory or on local disk. Cancellation sets a durable flag or version; the worker checks it between batches, aborts the multipart upload, and marks the job cancelled. On success, the worker completes the object, stores row count and checksum, and publishes a short-lived signed download URL. Retries must resume safely or restart under the same job identity without creating multiple completed exports. I'd enforce quotas, maximum retention, formula-injection escaping, and metrics for queue age, rows per second, failures, and abandoned multipart uploads.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Moves long-running generation out of the request-response lifecycle.",
+      "Creates a durable, idempotent export job and returns an appropriate asynchronous status resource.",
+      "Uses keyset pagination or cursors and bounded batches to control memory.",
+      "Streams multipart output directly to object storage.",
+      "Defines durable cancellation and cleanup of incomplete uploads.",
+      "Addresses consistent snapshots, retries, secure downloads, quotas, CSV injection, and observability."
+    ],
+    "improvements": [
+      "Could discuss database read-replica usage and the consistency trade-off it introduces.",
+      "Could explain a resumable checkpoint format if restarting a multi-hour export is too expensive."
+    ],
+    "feedback": "This is a production-grade backend design. It covers asynchronous execution, bounded memory, consistency, cancellation, retries, storage, and security."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A reporting API must export up to 10 million transaction rows as CSV. Generating the file can take several minutes, users may cancel, and the service must avoid loading all rows into memory or holding an HTTP request open. Design the backend flow.",
+    "quality_tier": "good",
+    "answer": "I'd create an export job instead of keeping the request open. The API would store the filters, return a job ID, and send the work to a queue. A worker would read transactions in batches using a cursor, write CSV chunks directly to cloud object storage, and update progress. The status endpoint would return queued, running, completed, failed, or cancelled. Cancellation would set a database flag that the worker checks between batches. When complete, the API returns a signed download URL that expires.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses an asynchronous job model suitable for multi-minute exports.",
+      "Reads database rows in bounded batches rather than loading everything.",
+      "Streams output to object storage.",
+      "Provides durable status and cancellation states.",
+      "Uses expiring signed download URLs."
+    ],
+    "improvements": [
+      "Could specify keyset pagination or snapshot semantics to prevent duplicate or missing rows during concurrent writes.",
+      "Idempotent job creation and worker retries are not covered.",
+      "Could mention cleanup of partial uploads and expired completed files.",
+      "CSV injection and authorization checks need attention."
+    ],
+    "feedback": "The architecture is correct and scalable. Data consistency, retry idempotency, and output cleanup are the main missing details."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A reporting API must export up to 10 million transaction rows as CSV. Generating the file can take several minutes, users may cancel, and the service must avoid loading all rows into memory or holding an HTTP request open. Design the backend flow.",
+    "quality_tier": "mediocre",
+    "answer": "I'd start a background thread after receiving the request and have it query the database in pages of ten thousand rows. It would append each page to a CSV file on the server. The client could poll an endpoint until the file is ready. For cancellation, I'd keep a boolean in memory that the thread checks.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Moves generation out of the original HTTP request.",
+      "Processes rows in pages rather than loading all records at once.",
+      "Provides polling for completion.",
+      "Checks for cancellation between units of work."
+    ],
+    "improvements": [
+      "An in-process background thread is lost if the server restarts or deploys.",
+      "Local files are unavailable to other instances and can exhaust disk.",
+      "An in-memory cancellation flag is not durable or shared.",
+      "Offset-style pages can become inconsistent while transactions are inserted.",
+      "Should use a durable queue, job table, keyset or snapshot reads, and object storage."
+    ],
+    "feedback": "The answer contains the basic asynchronous idea but relies on fragile process-local state and storage."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A reporting API must export up to 10 million transaction rows as CSV. Generating the file can take several minutes, users may cancel, and the service must avoid loading all rows into memory or holding an HTTP request open. Design the backend flow.",
+    "quality_tier": "poor",
+    "answer": "I'd increase the HTTP timeout and stream all query results back in one response. The database driver can return rows one by one, so memory should be okay. If the user closes the browser, the request will stop.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 7,
+      "depth": 3,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that row streaming can reduce application memory use.",
+      "Attempts to avoid materializing all query results at once."
+    ],
+    "improvements": [
+      "Keeping an HTTP request open for several minutes violates the requirement.",
+      "Load balancers, proxies, and client networks may terminate the connection.",
+      "Browser disconnect does not guarantee prompt cancellation of database work.",
+      "There is no resumability, status tracking, retry handling, or reusable download artifact.",
+      "Should use an asynchronous export job and object storage."
+    ],
+    "feedback": "The response partially addresses memory but ignores the required asynchronous workflow and reliable cancellation."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A reporting API must export up to 10 million transaction rows as CSV. Generating the file can take several minutes, users may cancel, and the service must avoid loading all rows into memory or holding an HTTP request open. Design the backend flow.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add filters to the report page so users can reduce the number of rows before exporting. We could also let them choose Excel or PDF instead of CSV.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests product features that may reduce export size in some cases."
+    ],
+    "improvements": [
+      "The system must still support exports containing up to 10 million rows.",
+      "Does not design asynchronous processing, batching, cancellation, storage, or status tracking.",
+      "Additional formats may increase rather than solve backend complexity."
+    ],
+    "feedback": "The response changes the user interface instead of designing the required export backend."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time two important stakeholders gave you conflicting urgent requests. How did you decide what to prioritize, communicate the decision, and manage the work that was delayed?",
+    "quality_tier": "excellent",
+    "answer": "At one company, the sales lead asked for a customer-specific reporting change before a contract renewal, while the security lead needed an authentication patch completed before an external audit. Both were described as urgent and both had executive visibility. I first gathered the actual deadlines, business impact, and reversibility instead of accepting the urgency labels. The security issue affected every customer and had a fixed audit date, while the report had a temporary manual workaround. I proposed completing the patch first, assigning one engineer to prepare the report's data query, and giving sales a manual export for the renewal meeting. I documented the trade-off in a shared message and asked both leads to confirm that I had represented the risks correctly. We passed the audit, sales completed the renewal using the manual report, and the automated feature shipped the following week. Afterward, we added a simple escalation template requiring deadline, impact, workaround, and owner for urgent requests.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Provides a concrete conflict between two legitimately important requests.",
+      "Evaluates urgency using deadlines, breadth of impact, and available workarounds.",
+      "Creates a partial parallel plan rather than treating prioritization as all-or-nothing.",
+      "Communicates the decision transparently and verifies stakeholder understanding.",
+      "Explains how the delayed request was supported and later completed.",
+      "Introduces a repeatable process for future urgent-priority conflicts."
+    ],
+    "improvements": [
+      "Could quantify the security risk or contract value without revealing confidential details.",
+      "Could mention how engineering capacity and existing commitments affected the plan."
+    ],
+    "feedback": "This is a strong experienced-level behavioral answer. It demonstrates structured prioritization, stakeholder management, mitigation for delayed work, and process improvement."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time two important stakeholders gave you conflicting urgent requests. How did you decide what to prioritize, communicate the decision, and manage the work that was delayed?",
+    "quality_tier": "good",
+    "answer": "A product manager needed a checkout experiment launched that week, while support wanted an urgent fix for customers whose invoices were displaying the wrong tax label. I reviewed the impact with both teams and found that the invoice issue affected existing paying customers and could create compliance confusion, while the experiment could move by a few days without losing a fixed opportunity. I prioritized the invoice fix, explained the decision and revised dates in one shared thread, and kept the experiment moving by completing its review and test plan in parallel. The fix shipped in two days, and the experiment launched three days later.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses customer impact and schedule flexibility to compare conflicting work.",
+      "Communicates the prioritization in a shared channel rather than separately giving inconsistent messages.",
+      "Continues preparatory work on the delayed request.",
+      "Provides clear outcomes and revised delivery timing."
+    ],
+    "improvements": [
+      "Could explain the candidate's exact decision authority and who approved the trade-off.",
+      "Does not describe whether the affected invoice customers received proactive communication.",
+      "Could include a lesson or process change from the situation."
+    ],
+    "feedback": "The answer shows sound prioritization and communication. More detail about authority, customer handling, and learning would strengthen it."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time two important stakeholders gave you conflicting urgent requests. How did you decide what to prioritize, communicate the decision, and manage the work that was delayed?",
+    "quality_tier": "mediocre",
+    "answer": "My manager and another team both asked me for urgent changes. I told them I could only do one at a time and asked my manager which one should come first. I completed that request and then worked on the other one. Both were eventually finished.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 4,
+      "confidence": 6
+    },
+    "strengths": [
+      "Sets a realistic limit instead of promising both requests simultaneously.",
+      "Escalates the priority decision to the candidate's manager.",
+      "Completes both pieces of work sequentially."
+    ],
+    "improvements": [
+      "Does not independently gather impact, deadline, or workaround information.",
+      "Provides no details about the conflicting requests or why one was selected.",
+      "Communication with the stakeholder whose work was delayed is not described.",
+      "The outcome is vague and unmeasured.",
+      "For an experienced candidate, the response shows limited ownership of prioritization."
+    ],
+    "feedback": "The answer is relevant but shallow. It delegates the decision without demonstrating structured analysis or active management of the delayed stakeholder."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time two important stakeholders gave you conflicting urgent requests. How did you decide what to prioritize, communicate the decision, and manage the work that was delayed?",
+    "quality_tier": "poor",
+    "answer": "I usually start with whichever stakeholder asks first. If the other person complains, I tell them I already committed to something else. Changing priorities too often just creates confusion.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that frequent unstructured priority changes can disrupt delivery."
+    ],
+    "improvements": [
+      "First-come-first-served ignores business impact, fixed deadlines, risk, and available workarounds.",
+      "Does not provide a specific example.",
+      "The response treats stakeholder communication as defensive rather than collaborative.",
+      "Does not explain how delayed work is mitigated or rescheduled.",
+      "An experienced candidate should demonstrate judgment rather than a rigid queue."
+    ],
+    "feedback": "The answer offers a simplistic rule and no evidence of effective stakeholder or priority management."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time two important stakeholders gave you conflicting urgent requests. How did you decide what to prioritize, communicate the decision, and manage the work that was delayed?",
+    "quality_tier": "off_topic",
+    "answer": "I prefer using Jira boards with high, medium, and low priorities. During stand-up, the team can move urgent tickets to the top of the sprint.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Mentions common tools for visualizing work priority."
+    ],
+    "improvements": [
+      "The question asks for a specific experience with conflicting stakeholders.",
+      "Does not describe the requests, decision criteria, communication, or delayed work.",
+      "Moving tickets on a board does not resolve a real priority conflict by itself."
+    ],
+    "feedback": "The response discusses project-tracking mechanics rather than the requested behavioral example."
+  }
+]

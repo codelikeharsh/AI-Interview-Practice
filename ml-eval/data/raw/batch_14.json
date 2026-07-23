@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Compute the minimum number of insertions, deletions, and replacements needed to transform one string into another.",
+    "quality_tier": "excellent",
+    "answer": "I'd use dynamic programming where dp[i][j] is the edit distance between the first i and j characters. Matching characters copy dp[i-1][j-1]; otherwise take one plus the minimum of insert, delete, and replace states. Time is O(mn), space can be reduced to O(min(m,n)).",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Defines the correct state, transitions, complexity, and memory optimization."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Compute the minimum number of insertions, deletions, and replacements needed to transform one string into another.",
+    "quality_tier": "good",
+    "answer": "I'd build a two-dimensional DP table using insert, delete, and replace transitions.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Defines the correct state, transitions, complexity, and memory optimization."
+    ],
+    "improvements": [
+      "Could mention reconstructing the actual edit sequence."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Compute the minimum number of insertions, deletions, and replacements needed to transform one string into another.",
+    "quality_tier": "mediocre",
+    "answer": "I'd greedily replace mismatched characters and then add or remove the length difference.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Greedy local edits do not always minimize total operations.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Compute the minimum number of insertions, deletions, and replacements needed to transform one string into another.",
+    "quality_tier": "poor",
+    "answer": "I'd compare only the character counts of the strings.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Counts ignore order and position.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Compute the minimum number of insertions, deletions, and replacements needed to transform one string into another.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use a spell-check score.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Spell-check scoring is not exact edit distance.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a set supporting insert, remove, and getRandom, all in O(1) average time.",
+    "quality_tier": "excellent",
+    "answer": "I'd combine an array with a hash map from value to array index. Insert appends; getRandom selects a random array index. Remove swaps the target with the last array element, updates that element's map index, pops the array, and deletes the target mapping.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Explains the exact swap-delete invariant enabling all operations."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a set supporting insert, remove, and getRandom, all in O(1) average time.",
+    "quality_tier": "good",
+    "answer": "I'd use an array and index map, swapping with the last element on removal.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Explains the exact swap-delete invariant enabling all operations."
+    ],
+    "improvements": [
+      "Could discuss duplicate support as a separate RandomizedCollection problem."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a set supporting insert, remove, and getRandom, all in O(1) average time.",
+    "quality_tier": "mediocre",
+    "answer": "I'd use a hash set and convert it to an array whenever getRandom is called.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Conversion makes getRandom O(n).",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a set supporting insert, remove, and getRandom, all in O(1) average time.",
+    "quality_tier": "poor",
+    "answer": "I'd use a linked list for constant-time removal.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Linked-list random access is O(n).",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a set supporting insert, remove, and getRandom, all in O(1) average time.",
+    "quality_tier": "off_topic",
+    "answer": "I'd call a random-number API with all values.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "External selection does not define the data structure.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a configurable workflow engine with steps, branching conditions, retries, compensation, and persisted execution state.",
+    "quality_tier": "excellent",
+    "answer": "I'd separate immutable WorkflowDefinition from WorkflowExecution. Step implementations expose execute and optional compensate behavior; transitions are driven by condition objects. An ExecutionEngine persists each state transition before scheduling the next step, uses idempotent step attempt IDs, and applies retry policies. Compensation runs in reverse successful order for saga-style workflows.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates definitions from executions and covers persistence, idempotency, branching, retries, and compensation."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a configurable workflow engine with steps, branching conditions, retries, compensation, and persisted execution state.",
+    "quality_tier": "good",
+    "answer": "I'd model workflow definitions, step types, transitions, executions, and retry policies. Execution state is persisted so workers can resume safely.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Separates definitions from executions and covers persistence, idempotency, branching, retries, and compensation."
+    ],
+    "improvements": [
+      "Could discuss versioning definitions for running workflows."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a configurable workflow engine with steps, branching conditions, retries, compensation, and persisted execution state.",
+    "quality_tier": "mediocre",
+    "answer": "I'd represent the workflow as one long method with try-catch around each operation.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "A long method is hard to configure and resume.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a configurable workflow engine with steps, branching conditions, retries, compensation, and persisted execution state.",
+    "quality_tier": "poor",
+    "answer": "I'd keep execution state only in worker memory.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Memory-only state is lost on crash.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a configurable workflow engine with steps, branching conditions, retries, compensation, and persisted execution state.",
+    "quality_tier": "off_topic",
+    "answer": "I'd create a visual workflow editor.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "An editor is not the execution model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design real-time location tracking for delivery drivers, including frequent updates, customer maps, historical routes, privacy, and poor connectivity.",
+    "quality_tier": "excellent",
+    "answer": "I'd accept authenticated batched location updates through regional endpoints, write recent state to a low-latency store, and append history to a partitioned event log. Customers subscribe to authorized delivery channels over WebSockets. Clients buffer and resend with sequence numbers during poor connectivity; the server deduplicates and rejects stale updates. Retention, precision reduction, and access controls protect privacy.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses ingestion scale, latest state, history, reconnects, authorization, deduplication, and privacy."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design real-time location tracking for delivery drivers, including frequent updates, customer maps, historical routes, privacy, and poor connectivity.",
+    "quality_tier": "good",
+    "answer": "I'd ingest driver coordinates with timestamps and sequence IDs, keep the latest location in a fast store, archive history separately, and stream authorized updates to customers.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses ingestion scale, latest state, history, reconnects, authorization, deduplication, and privacy."
+    ],
+    "improvements": [
+      "Could discuss map matching and update-frequency adaptation."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design real-time location tracking for delivery drivers, including frequent updates, customer maps, historical routes, privacy, and poor connectivity.",
+    "quality_tier": "mediocre",
+    "answer": "I'd update the driver's row in the main database every second and keep all history there.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "One hot relational row and unlimited history create load and bloat.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design real-time location tracking for delivery drivers, including frequent updates, customer maps, historical routes, privacy, and poor connectivity.",
+    "quality_tier": "poor",
+    "answer": "I'd broadcast every driver's position to every customer.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Global broadcasting violates privacy and scales poorly.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design real-time location tracking for delivery drivers, including frequent updates, customer maps, historical routes, privacy, and poor connectivity.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a moving vehicle icon.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Animation does not define tracking architecture.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Plan deletion of a user's personal data across many relational tables and services while retaining legally required records.",
+    "quality_tier": "excellent",
+    "answer": "I'd maintain a data inventory and classify fields by deletion, anonymization, or legal retention. A deletion request creates a durable workflow with per-system tasks, idempotent status, and audit evidence. Relational rows use cascades only where safe; financial records retain required facts while removing direct identifiers. Backups expire under documented retention rather than being edited in place.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Combines data classification, cross-service workflow, legal retention, idempotency, and auditability."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Plan deletion of a user's personal data across many relational tables and services while retaining legally required records.",
+    "quality_tier": "good",
+    "answer": "I'd create a deletion job that calls each owning service, anonymizes legally retained rows, tracks completion, and supports retries.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Combines data classification, cross-service workflow, legal retention, idempotency, and auditability."
+    ],
+    "improvements": [
+      "Could discuss restoring from backups without resurrecting deleted identities."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Plan deletion of a user's personal data across many relational tables and services while retaining legally required records.",
+    "quality_tier": "mediocre",
+    "answer": "I'd run one large SQL cascade from the users table.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Cascades can remove required records or miss external systems.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Plan deletion of a user's personal data across many relational tables and services while retaining legally required records.",
+    "quality_tier": "poor",
+    "answer": "I'd mark the account deleted but keep all underlying data.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Soft deletion alone does not satisfy erasure.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Plan deletion of a user's personal data across many relational tables and services while retaining legally required records.",
+    "quality_tier": "off_topic",
+    "answer": "I'd hide the user's profile page.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "UI hiding does not delete personal data.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Build an offline-first notes application in the browser that synchronizes changes after reconnecting and handles concurrent edits from multiple devices.",
+    "quality_tier": "excellent",
+    "answer": "I'd store notes and an operation queue in IndexedDB, apply local edits immediately, and sync queued mutations with stable IDs and base versions after reconnect. The server returns conflicts when the base version is stale; the client can merge simple field changes or show conflict copies. Service workers cache the application shell, and sync status is visible and accessible.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses durable local state, queued mutations, versions, conflicts, app-shell caching, and user feedback."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Build an offline-first notes application in the browser that synchronizes changes after reconnecting and handles concurrent edits from multiple devices.",
+    "quality_tier": "good",
+    "answer": "I'd save notes locally in IndexedDB, queue offline changes, and synchronize them with versions when online. Conflicts should be surfaced instead of overwritten silently.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses durable local state, queued mutations, versions, conflicts, app-shell caching, and user feedback."
+    ],
+    "improvements": [
+      "Could discuss CRDTs for simultaneous text edits."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Build an offline-first notes application in the browser that synchronizes changes after reconnecting and handles concurrent edits from multiple devices.",
+    "quality_tier": "mediocre",
+    "answer": "I'd use localStorage and upload the latest complete note after reconnecting.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Whole-note sync and localStorage are limited and conflict-prone.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Build an offline-first notes application in the browser that synchronizes changes after reconnecting and handles concurrent edits from multiple devices.",
+    "quality_tier": "poor",
+    "answer": "I'd always accept whichever device syncs last.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Last-write-wins silently loses edits.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Build an offline-first notes application in the browser that synchronizes changes after reconnecting and handles concurrent edits from multiple devices.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add an offline icon.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "An icon does not implement offline behavior.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design request handling for a multi-tenant backend so every query and mutation is restricted to the authenticated tenant.",
+    "quality_tier": "excellent",
+    "answer": "I'd derive tenant identity only from authenticated claims, attach it to a request context, and require repositories to accept tenant scope explicitly. Queries include tenant_id and composite keys or row-level security provide defense in depth. Background jobs and caches also carry tenant scope. Authorization tests attempt cross-tenant identifiers, and logs avoid leaking tenant data.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Treats tenant context as trusted identity and applies defense in depth across DB, jobs, caches, and tests."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design request handling for a multi-tenant backend so every query and mutation is restricted to the authenticated tenant.",
+    "quality_tier": "good",
+    "answer": "I'd read tenant ID from the authenticated session, add it to every repository query, and enforce row-level security or tenant-aware database constraints.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Treats tenant context as trusted identity and applies defense in depth across DB, jobs, caches, and tests."
+    ],
+    "improvements": [
+      "Could discuss per-tenant encryption keys and admin impersonation."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design request handling for a multi-tenant backend so every query and mutation is restricted to the authenticated tenant.",
+    "quality_tier": "mediocre",
+    "answer": "I'd trust a tenant_id field sent in the request body.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Client-provided tenant IDs can be forged.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design request handling for a multi-tenant backend so every query and mutation is restricted to the authenticated tenant.",
+    "quality_tier": "poor",
+    "answer": "I'd filter tenant data only in the frontend.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Frontend filtering provides no security.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design request handling for a multi-tenant backend so every query and mutation is restricted to the authenticated tenant.",
+    "quality_tier": "off_topic",
+    "answer": "I'd give every tenant a different theme.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Themes are unrelated to authorization.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Tell me about a time you had to learn an unfamiliar technology quickly to complete a project.",
+    "quality_tier": "excellent",
+    "answer": "For a college project, I needed WebSockets but had only used REST. I read the protocol basics, built a tiny chat prototype, and then implemented reconnect and message IDs before integrating it. I asked a senior student to review the design. We finished the live-update feature and I documented the setup for teammates.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows structured learning, experimentation, review, application, and team documentation."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Tell me about a time you had to learn an unfamiliar technology quickly to complete a project.",
+    "quality_tier": "good",
+    "answer": "I built a small prototype, used official documentation, asked for a review, and then applied the technology to the project.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows structured learning, experimentation, review, application, and team documentation."
+    ],
+    "improvements": [
+      "Could quantify the learning timeline."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Tell me about a time you had to learn an unfamiliar technology quickly to complete a project.",
+    "quality_tier": "mediocre",
+    "answer": "I watched several tutorials and copied an example until it worked.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Shows effort but limited evidence of understanding or adaptation.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Tell me about a time you had to learn an unfamiliar technology quickly to complete a project.",
+    "quality_tier": "poor",
+    "answer": "I told the team I could not take the task because I had not used the technology.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Avoidance does not demonstrate learning ability.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Tell me about a time you had to learn an unfamiliar technology quickly to complete a project.",
+    "quality_tier": "off_topic",
+    "answer": "I enjoy learning new technologies in general.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "General interest is not a concrete example.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given points on a plane, return the k points closest to the origin.",
+    "quality_tier": "excellent",
+    "answer": "I'd keep a max-heap of size k keyed by squared distance. For each point, push it and remove the farthest when the heap exceeds k. That is O(n log k) time and O(k) space; squared distance avoids unnecessary square roots.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses the optimal bounded-heap approach and exact distance comparison."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given points on a plane, return the k points closest to the origin.",
+    "quality_tier": "good",
+    "answer": "I'd use a size-k max-heap based on x squared plus y squared.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses the optimal bounded-heap approach and exact distance comparison."
+    ],
+    "improvements": [
+      "Could mention quickselect for expected O(n) when output ordering is irrelevant."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given points on a plane, return the k points closest to the origin.",
+    "quality_tier": "mediocre",
+    "answer": "I'd sort all points by distance and take the first k.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Correct but O(n log n) rather than O(n log k).",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given points on a plane, return the k points closest to the origin.",
+    "quality_tier": "poor",
+    "answer": "I'd compare only the x coordinate.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Ignores vertical distance.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given points on a plane, return the k points closest to the origin.",
+    "quality_tier": "off_topic",
+    "answer": "I'd plot the points and select them visually.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Visual selection is not an algorithm.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Connect all points in a plane with minimum total Manhattan distance.",
+    "quality_tier": "excellent",
+    "answer": "I'd model a complete weighted graph and compute a minimum spanning tree using Prim's algorithm. Without geometric optimization, generate edge costs on demand and choose the next minimum connection in O(n squared) time and O(n) memory, which is often acceptable for moderate n. For very large n, use Manhattan-MST candidate-edge techniques.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly identifies MST and gives a practical dense-graph implementation and scaling caveat."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Connect all points in a plane with minimum total Manhattan distance.",
+    "quality_tier": "good",
+    "answer": "I'd use Prim's or Kruskal's MST algorithm with Manhattan distance as edge weight.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly identifies MST and gives a practical dense-graph implementation and scaling caveat."
+    ],
+    "improvements": [
+      "Could explain Kruskal's O(n squared log n) edge cost."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Connect all points in a plane with minimum total Manhattan distance.",
+    "quality_tier": "mediocre",
+    "answer": "I'd repeatedly connect each point to its nearest unconnected point.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Greedy nearest-neighbor construction does not always produce an MST.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Connect all points in a plane with minimum total Manhattan distance.",
+    "quality_tier": "poor",
+    "answer": "I'd sort points by x coordinate and connect consecutive points only.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Optimal edges may not be adjacent in x order.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Connect all points in a plane with minimum total Manhattan distance.",
+    "quality_tier": "off_topic",
+    "answer": "I'd draw lines that look shortest.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Visual judgment is not exact.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core model for a food-delivery order from cart through restaurant acceptance, preparation, driver assignment, pickup, delivery, cancellation, and refund.",
+    "quality_tier": "excellent",
+    "answer": "I'd model Order as an explicit state machine with validated transitions and immutable history. Cart, RestaurantOrder, DeliveryTask, Payment, and Refund are separate aggregates coordinated by an application service or saga. CancellationPolicy depends on state and elapsed time; events trigger kitchen and driver workflows idempotently.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates aggregates, state transitions, policies, events, and distributed coordination."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core model for a food-delivery order from cart through restaurant acceptance, preparation, driver assignment, pickup, delivery, cancellation, and refund.",
+    "quality_tier": "good",
+    "answer": "I'd create Order, Payment, Restaurant, DriverAssignment, and Refund classes, with clear order states and transition methods.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Separates aggregates, state transitions, policies, events, and distributed coordination."
+    ],
+    "improvements": [
+      "Could discuss partial refunds and failed delivery."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core model for a food-delivery order from cart through restaurant acceptance, preparation, driver assignment, pickup, delivery, cancellation, and refund.",
+    "quality_tier": "mediocre",
+    "answer": "I'd use one status string and allow any service to update it.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Unrestricted status writes allow invalid transitions and races.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core model for a food-delivery order from cart through restaurant acceptance, preparation, driver assignment, pickup, delivery, cancellation, and refund.",
+    "quality_tier": "poor",
+    "answer": "I'd put restaurant, driver, payment, and refund behavior into one Order class.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "One class becomes tightly coupled to every subsystem.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core model for a food-delivery order from cart through restaurant acceptance, preparation, driver assignment, pickup, delivery, cancellation, and refund.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design the order-tracking map.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Tracking UI is not the domain model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a live-video streaming platform supporting broadcasters, millions of viewers, adaptive bitrate, chat, recording, and regional failures.",
+    "quality_tier": "excellent",
+    "answer": "I'd ingest streams regionally, transcode into multiple bitrates, segment them into HLS or DASH, and distribute through a CDN. A control plane manages stream sessions and failover; origin storage records segments for replay. Chat uses a separate low-latency service. Health checks and redundant ingest paths support regional recovery, while signed playback tokens enforce access.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses ingest, transcoding, ABR, CDN fan-out, recording, chat separation, security, and regional resilience."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a live-video streaming platform supporting broadcasters, millions of viewers, adaptive bitrate, chat, recording, and regional failures.",
+    "quality_tier": "good",
+    "answer": "I'd use regional ingest, transcoding, segmented adaptive streams, CDN delivery, object storage recording, and a separate chat system.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses ingest, transcoding, ABR, CDN fan-out, recording, chat separation, security, and regional resilience."
+    ],
+    "improvements": [
+      "Could discuss low-latency streaming trade-offs."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a live-video streaming platform supporting broadcasters, millions of viewers, adaptive bitrate, chat, recording, and regional failures.",
+    "quality_tier": "mediocre",
+    "answer": "I'd send the broadcaster's raw video directly from one server to every viewer.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "One server cannot fan out to millions or adapt bitrate.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a live-video streaming platform supporting broadcasters, millions of viewers, adaptive bitrate, chat, recording, and regional failures.",
+    "quality_tier": "poor",
+    "answer": "I'd upload the full recording before viewers can watch.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "That is video-on-demand, not live streaming.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a live-video streaming platform supporting broadcasters, millions of viewers, adaptive bitrate, chat, recording, and regional failures.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add reactions over the video.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Reactions do not define streaming architecture.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a relational schema for subscriptions, billing periods, invoices, payments, credits, plan changes, and failed-payment retries.",
+    "quality_tier": "excellent",
+    "answer": "I'd separate Subscription, SubscriptionItem or PlanVersion, BillingPeriod, Invoice, InvoiceLine, PaymentAttempt, CreditMemo, and LedgerEntry. Plan changes create effective-dated versions rather than rewriting history. Invoices become immutable after finalization; retries create new payment attempts linked to the same invoice. Credits offset balances through explicit lines or ledger postings.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Preserves effective-dated plans, immutable invoices, repeated attempts, credits, and auditability."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a relational schema for subscriptions, billing periods, invoices, payments, credits, plan changes, and failed-payment retries.",
+    "quality_tier": "good",
+    "answer": "I'd model subscriptions, effective plan versions, invoices and lines, payment attempts, and credits separately, preserving historical prices.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Preserves effective-dated plans, immutable invoices, repeated attempts, credits, and auditability."
+    ],
+    "improvements": [
+      "Could discuss proration and tax calculation snapshots."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a relational schema for subscriptions, billing periods, invoices, payments, credits, plan changes, and failed-payment retries.",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep current plan, last payment, and total due directly on the customer row.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Customer-level fields cannot represent periods or detailed billing history.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a relational schema for subscriptions, billing periods, invoices, payments, credits, plan changes, and failed-payment retries.",
+    "quality_tier": "poor",
+    "answer": "I'd overwrite invoices when plans or payments change.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Overwriting destroys financial audit history.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a relational schema for subscriptions, billing periods, invoices, payments, credits, plan changes, and failed-payment retries.",
+    "quality_tier": "off_topic",
+    "answer": "I'd generate invoice PDFs only.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "PDF generation is not the billing schema.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an accessible virtualized data grid with sorting, selection, keyboard navigation, and thousands of rows.",
+    "quality_tier": "excellent",
+    "answer": "I'd use semantic grid roles only if the interaction truly matches a grid, with row and column counts, headers, and roving focus or aria-activedescendant. Virtualization must preserve logical row indices and announce offscreen counts. Arrow keys navigate cells, Space selects, sorting state is exposed on headers, and focus remains stable as rows recycle. A non-virtual fallback may be needed for assistive-technology issues.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Combines virtualization with logical semantics, stable focus, keyboard interaction, sorting, and selection."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an accessible virtualized data grid with sorting, selection, keyboard navigation, and thousands of rows.",
+    "quality_tier": "good",
+    "answer": "I'd virtualize visible rows, preserve stable row IDs and logical indices, implement grid keyboard patterns, and expose sort and selection state through ARIA.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Combines virtualization with logical semantics, stable focus, keyboard interaction, sorting, and selection."
+    ],
+    "improvements": [
+      "Could discuss column virtualization and screen-reader testing."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an accessible virtualized data grid with sorting, selection, keyboard navigation, and thousands of rows.",
+    "quality_tier": "mediocre",
+    "answer": "I'd add tabindex zero to every visible cell and recycle DOM rows freely.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Many tab stops and recycled focus can become confusing.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an accessible virtualized data grid with sorting, selection, keyboard navigation, and thousands of rows.",
+    "quality_tier": "poor",
+    "answer": "I'd use divs with click handlers and no keyboard support.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Pointer-only divs are inaccessible.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an accessible virtualized data grid with sorting, selection, keyboard navigation, and thousands of rows.",
+    "quality_tier": "off_topic",
+    "answer": "I'd make rows change color on hover.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Hover styling does not provide grid behavior.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Rotate a database credential or API secret across many service instances without downtime.",
+    "quality_tier": "excellent",
+    "answer": "I'd support overlapping old and new credentials. Create the new secret, distribute it through the secret manager, and deploy clients that can reload or reconnect without restart. Verify usage, switch the server to prefer or require the new secret, then revoke the old one after all instances and long-lived jobs have rotated. Audit and rollback remain available.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses overlap, staged rollout, live reload, verification, revocation, rollback, and auditing."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Rotate a database credential or API secret across many service instances without downtime.",
+    "quality_tier": "good",
+    "answer": "I'd create a new secret, deploy it while the old one still works, verify adoption, then revoke the old secret.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses overlap, staged rollout, live reload, verification, revocation, rollback, and auditing."
+    ],
+    "improvements": [
+      "Could discuss connection-pool refresh and cached credentials."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Rotate a database credential or API secret across many service instances without downtime.",
+    "quality_tier": "mediocre",
+    "answer": "I'd replace the secret in configuration and restart all instances at once.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Simultaneous restarts create outage risk.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Rotate a database credential or API secret across many service instances without downtime.",
+    "quality_tier": "poor",
+    "answer": "I'd revoke the old secret first and then deploy the new one.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Revoking first immediately breaks running services.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Rotate a database credential or API secret across many service instances without downtime.",
+    "quality_tier": "off_topic",
+    "answer": "I'd rename the secret variable.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Renaming does not rotate the credential.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you had to balance delivery speed against engineering quality.",
+    "quality_tier": "excellent",
+    "answer": "For a partner launch, we needed a webhook integration in ten days. I separated non-negotiable quality—signature verification, idempotency, monitoring, and tests—from deferrable convenience features. We shipped the secure core on time, documented two follow-ups, and scheduled them in the next sprint. The launch succeeded without incidents and the follow-ups were completed.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows risk-based trade-offs, explicit scope, follow-through, and successful outcome."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you had to balance delivery speed against engineering quality.",
+    "quality_tier": "good",
+    "answer": "I identified which quality controls protected correctness and security, reduced optional scope, and tracked the deferred work explicitly.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows risk-based trade-offs, explicit scope, follow-through, and successful outcome."
+    ],
+    "improvements": [
+      "Could quantify the testing and monitoring coverage."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you had to balance delivery speed against engineering quality.",
+    "quality_tier": "mediocre",
+    "answer": "I wrote fewer tests so the feature could ship faster, then planned to improve it later.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Deferring tests without a risk framework can create hidden debt.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you had to balance delivery speed against engineering quality.",
+    "quality_tier": "poor",
+    "answer": "I insisted on a complete redesign even though a safe incremental solution existed.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Overengineering can miss the business objective.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you had to balance delivery speed against engineering quality.",
+    "quality_tier": "off_topic",
+    "answer": "I always choose speed because deadlines matter most.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Absolute prioritization ignores context and risk.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

@@ -1,0 +1,1043 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a string representing a user's keystrokes, find the longest contiguous substring that contains no repeated characters. Return the substring's start and end indices as well as its length. How would you solve it efficiently?",
+    "quality_tier": "excellent",
+    "answer": "I'd use a sliding window with a map from character to its most recent index. I'd keep a left pointer for the start of the current valid window. As I move the right pointer, if the current character was already seen inside the current window, I'd move left to one position after that previous index. The important part is using max of the current left and previous index plus one, so left never moves backward. After each character, I'd compare the current window length with the best one and store the best start and end indices. That gives O(n) time because each character is processed once, and O(min of n and the character-set size) space.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Selects the optimal sliding-window approach for finding a longest substring without repeated characters.",
+      "Correctly uses the character's most recent index to jump the left boundary forward.",
+      "Highlights the important rule that the left pointer must never move backward.",
+      "Explains how to preserve the required start and end indices in addition to the length.",
+      "Provides accurate time and space complexity."
+    ],
+    "improvements": [
+      "Could clarify whether the end index is inclusive or exclusive.",
+      "Could mention how Unicode characters would be treated if the programming language iterates over bytes or UTF-16 code units."
+    ],
+    "feedback": "This is a complete fresher-level answer. It gives the expected linear-time algorithm and correctly handles repeated characters that occurred outside the current window."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a string representing a user's keystrokes, find the longest contiguous substring that contains no repeated characters. Return the substring's start and end indices as well as its length. How would you solve it efficiently?",
+    "quality_tier": "good",
+    "answer": "I'd use two pointers and a hash map. The right pointer moves through the string, and the map stores the last index of each character. If I see a repeated character, I'd move the left pointer after its previous position. Then I'd calculate the current window length and update the best start, end, and length. It should run in O(n) time with O(n) space in the worst case.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses the correct two-pointer and last-seen-index technique.",
+      "Tracks all three requested outputs: start index, end index, and length.",
+      "Provides the expected linear time complexity.",
+      "Keeps the explanation focused on the core algorithm."
+    ],
+    "improvements": [
+      "Should state that left becomes the maximum of its current value and the previous index plus one.",
+      "Without that maximum rule, a repeated character outside the current window could incorrectly move left backward.",
+      "Could define whether end is inclusive or exclusive."
+    ],
+    "feedback": "The solution is essentially correct. The missing left-boundary safeguard is an important implementation detail that should be stated explicitly."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a string representing a user's keystrokes, find the longest contiguous substring that contains no repeated characters. Return the substring's start and end indices as well as its length. How would you solve it efficiently?",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep a set for the characters in the current substring. I'd move the right pointer forward, and when I find a duplicate, I'd remove characters from the left until the duplicate is gone. Then I'd continue and remember the longest window. Since both pointers only move forward, I think it's O(n).",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 6,
+      "confidence": 7
+    },
+    "strengths": [
+      "Provides a correct sliding-window solution using a set.",
+      "Correctly shrinks the window until it becomes valid after encountering a duplicate.",
+      "Recognizes that both pointers move monotonically, giving linear time.",
+      "Mentions retaining the longest window."
+    ],
+    "improvements": [
+      "Does not explicitly explain how the best start and end indices are stored.",
+      "The set-based version may perform multiple removals where a last-seen map can jump the left pointer directly.",
+      "Could give precise space complexity.",
+      "Should clarify the handling of an empty string."
+    ],
+    "feedback": "This is a correct solution, but it is less fully specified than the strongest answer and does not directly address every requested output."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a string representing a user's keystrokes, find the longest contiguous substring that contains no repeated characters. Return the substring's start and end indices as well as its length. How would you solve it efficiently?",
+    "quality_tier": "poor",
+    "answer": "I'd start at every character and keep extending until I find a duplicate. Then I'd start again from the next character and compare all the lengths. I'd probably use a list to check whether the character already exists. It would be around O(n squared).",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 3,
+      "confidence": 5
+    },
+    "strengths": [
+      "Describes a brute-force method that can eventually find the correct longest substring.",
+      "Recognizes that duplicate detection is required.",
+      "Acknowledges the quadratic nature of repeatedly restarting."
+    ],
+    "improvements": [
+      "The approach is too slow for the expected medium-level solution.",
+      "Using a list for membership checks can make the implementation O(n cubed) in the worst case.",
+      "Should reuse information between adjacent starting positions through a sliding window.",
+      "Does not clearly explain how start and end indices are returned."
+    ],
+    "feedback": "The answer is relevant but inefficient. An interviewer would expect the candidate to improve it to an O(n) sliding-window solution."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a string representing a user's keystrokes, find the longest contiguous substring that contains no repeated characters. Return the substring's start and end indices as well as its length. How would you solve it efficiently?",
+    "quality_tier": "off_topic",
+    "answer": "I'd remove duplicate characters from the string using a set and then return the remaining string. A set automatically keeps every character only once.",
+    "scores": {
+      "relevance": 2,
+      "clarity": 7,
+      "depth": 1,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that a set can identify duplicate character values."
+    ],
+    "improvements": [
+      "Removing duplicates globally does not preserve a contiguous substring.",
+      "The resulting character order may be lost depending on the set implementation.",
+      "Does not find the longest valid window or return its original indices.",
+      "Should use a sliding window over the original string."
+    ],
+    "feedback": "The response solves global deduplication rather than the longest contiguous substring problem."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "You have k event streams, and each stream produces events in ascending timestamp order. The streams are too large to load fully into memory. Produce one globally sorted stream while using limited memory, and explain how you would handle equal timestamps and a temporarily slow stream.",
+    "quality_tier": "excellent",
+    "answer": "I'd treat every input as an iterator and keep only its current head event in a min-heap. The heap entry would contain the timestamp, a deterministic tie-breaker such as stream ID and per-stream sequence number, the event, and the stream it came from. I'd pop the smallest event, emit it, then request the next event from that same stream and push it into the heap. That uses O(k) memory and takes O(N log k) time for N total events. Equal timestamps remain deterministic because of the secondary ordering fields. The harder part is a temporarily slow stream: if the streams are finite sorted files, the merge can block until every non-exhausted stream has a known head. If they're live streams, I can't guarantee a globally complete timestamp order without a watermark or bounded-lateness contract. I'd either wait for per-stream watermarks, emit only events earlier than the minimum watermark, or explicitly allow late events and define correction behavior.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses a min-heap containing only one current event from each stream.",
+      "Provides the optimal O(N log k) processing time and O(k) memory bound.",
+      "Defines deterministic tie-breaking for events with equal timestamps.",
+      "Correctly distinguishes merging finite sorted inputs from live distributed streams.",
+      "Recognizes that globally correct live ordering requires watermarks or a bounded-lateness assumption."
+    ],
+    "improvements": [
+      "Could describe backpressure if the output consumer is slower than the merged input.",
+      "Could explain how stream errors and retries preserve per-stream sequence ordering."
+    ],
+    "feedback": "This is a strong experienced-level answer. It solves the core external merge and correctly identifies the additional ordering contract required for temporarily delayed live streams."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "You have k event streams, and each stream produces events in ascending timestamp order. The streams are too large to load fully into memory. Produce one globally sorted stream while using limited memory, and explain how you would handle equal timestamps and a temporarily slow stream.",
+    "quality_tier": "good",
+    "answer": "I'd keep one event from every stream in a min-heap. I pop the earliest event, write it to the output, and then fetch the next event from whichever stream produced it. The heap never has more than k items, so memory is O(k), and processing is O(N log k). For equal timestamps, I'd compare stream IDs so the result is stable. If a stream is slow, the merge may need to wait because we can't know whether its next event should come before events from the other streams.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Chooses the expected heap-based k-way merge.",
+      "Correctly keeps memory proportional to the number of streams rather than total events.",
+      "Provides accurate time complexity.",
+      "Includes deterministic equal-timestamp ordering.",
+      "Recognizes that waiting may be necessary to preserve strict global order."
+    ],
+    "improvements": [
+      "Could distinguish finite streams from live streams.",
+      "Does not mention watermarks or bounded lateness as an alternative to indefinite waiting.",
+      "Could include a per-stream sequence number if events from one stream can share a timestamp.",
+      "Does not discuss output backpressure or stream failure."
+    ],
+    "feedback": "The core algorithm is correct and well explained. The answer needs more depth around live-stream semantics and operational failure handling."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "You have k event streams, and each stream produces events in ascending timestamp order. The streams are too large to load fully into memory. Produce one globally sorted stream while using limited memory, and explain how you would handle equal timestamps and a temporarily slow stream.",
+    "quality_tier": "mediocre",
+    "answer": "I'd read a chunk from each stream, combine those chunks into an array, sort the array, and output it. Then I'd read the next chunks and repeat. This limits memory because we only load chunks instead of every event.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 4,
+      "confidence": 6
+    },
+    "strengths": [
+      "Recognizes that the complete streams cannot be loaded into memory.",
+      "Attempts to use bounded chunks to control memory consumption.",
+      "Uses sorting to combine events from multiple inputs."
+    ],
+    "improvements": [
+      "Sorting independent batches does not guarantee global order across chunk boundaries.",
+      "A later chunk from one stream can contain an event earlier than events already emitted from another stream's current chunk.",
+      "Should keep the current smallest head from each stream in a min-heap.",
+      "Does not address equal timestamps or a slow stream.",
+      "Provides no accurate overall complexity analysis."
+    ],
+    "feedback": "The batching idea controls memory but does not preserve a globally sorted output. The missing concept is a k-way merge driven by stream heads."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "You have k event streams, and each stream produces events in ascending timestamp order. The streams are too large to load fully into memory. Produce one globally sorted stream while using limited memory, and explain how you would handle equal timestamps and a temporarily slow stream.",
+    "quality_tier": "poor",
+    "answer": "I'd put every event into a list and sort it by timestamp after all streams finish. If memory is an issue, we can increase the server memory or use a bigger machine.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Sorting all events would produce a correct order if the full dataset fit in memory."
+    ],
+    "improvements": [
+      "Directly violates the requirement that the streams are too large to load fully.",
+      "Does not produce output incrementally.",
+      "Scaling hardware does not address potentially unbounded stream size.",
+      "Does not handle slow streams or deterministic equal-timestamp ordering.",
+      "Should use an iterator-based min-heap merge with O(k) memory."
+    ],
+    "feedback": "The proposed approach ignores the central memory constraint and is unsuitable for large or continuous streams."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "You have k event streams, and each stream produces events in ascending timestamp order. The streams are too large to load fully into memory. Produce one globally sorted stream while using limited memory, and explain how you would handle equal timestamps and a temporarily slow stream.",
+    "quality_tier": "off_topic",
+    "answer": "I'd send all the events to Kafka and partition them by customer ID. Kafka will keep them ordered inside each partition, and consumers can process the partitions independently.",
+    "scores": {
+      "relevance": 3,
+      "clarity": 7,
+      "depth": 3,
+      "confidence": 5
+    },
+    "strengths": [
+      "Recognizes that Kafka preserves order within an individual partition."
+    ],
+    "improvements": [
+      "Partition ordering does not produce one globally timestamp-sorted output across partitions.",
+      "The question asks for an algorithm and memory analysis, not only an infrastructure choice.",
+      "Does not explain equal timestamps, heap merging, or slow-stream handling.",
+      "Partitioning by customer ID changes the ordering domain."
+    ],
+    "feedback": "The answer proposes a streaming platform but does not solve the requested global merge."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the core object model for a text editor that supports insert, delete, replace, undo, redo, grouped operations such as paste formatting, and a configurable limit on undo history. Explain how your design remains extensible.",
+    "quality_tier": "excellent",
+    "answer": "I'd represent user actions as Command objects. Each command has execute and undo methods and stores only the state needed to reverse itself, such as the inserted text and position or the deleted text captured during execution. The editor owns an undo stack and redo stack. Executing a new command pushes it onto undo and clears redo because the user has created a new history branch. Undo pops from undo, reverses the command, and pushes it to redo; redo executes it again and moves it back. A CompositeCommand can group operations like paste plus formatting into one user-visible undo step. I'd keep the document model separate from command history so commands operate through a stable editing interface. For expensive operations, I might combine commands with periodic snapshots, but I wouldn't snapshot the full document for every keystroke. The history manager would enforce limits by command count or memory usage and discard the oldest reversible operations safely.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses the Command pattern to model reversible editor operations.",
+      "Defines correct undo-stack and redo-stack behavior, including clearing redo after a new branch.",
+      "Uses CompositeCommand to group multiple low-level changes into one logical action.",
+      "Separates the document model from history-management responsibilities.",
+      "Discusses command deltas, periodic snapshots, and memory-bounded history.",
+      "Supports future operations through a stable editing abstraction."
+    ],
+    "improvements": [
+      "Could discuss command coalescing so consecutive character inserts form one undo step.",
+      "Could explain how cursor and selection state are restored during undo and redo."
+    ],
+    "feedback": "This is a mature OOP design. It models reversible behavior explicitly and handles grouping, branching history, extensibility, and memory constraints."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the core object model for a text editor that supports insert, delete, replace, undo, redo, grouped operations such as paste formatting, and a configurable limit on undo history. Explain how your design remains extensible.",
+    "quality_tier": "good",
+    "answer": "I'd use a Command interface with execute and undo methods. InsertCommand, DeleteCommand, and ReplaceCommand would store the position and text needed to reverse the operation. The editor would keep an undo stack and redo stack. A normal edit pushes to undo and clears redo. Undo moves a command from undo to redo after reversing it, while redo executes it again. For grouped operations, I'd create a command that contains multiple child commands and undoes them in reverse order. The history manager could remove old commands when it reaches a configured limit.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Selects the appropriate Command pattern.",
+      "Defines correct stack movement for undo and redo.",
+      "Stores operation-specific data needed for reversal.",
+      "Handles grouped edits with a composite command.",
+      "Includes configurable history limits."
+    ],
+    "improvements": [
+      "Could separate the document model and history manager more explicitly.",
+      "Does not discuss cursor, selection, or formatting-state restoration.",
+      "Could address grouping consecutive typing actions.",
+      "A fixed command-count limit may not control memory if commands vary greatly in size."
+    ],
+    "feedback": "The core design is correct and extensible. It is missing some editor-specific state and memory-management detail."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the core object model for a text editor that supports insert, delete, replace, undo, redo, grouped operations such as paste formatting, and a configurable limit on undo history. Explain how your design remains extensible.",
+    "quality_tier": "mediocre",
+    "answer": "I'd save the complete document text in a stack before every edit. Undo would replace the current text with the previous stack value, and redo would use another stack. Grouped operations could avoid saving intermediate versions. When the stack gets too large, I'd remove the oldest entry.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 8,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Provides a functional snapshot-based undo and redo strategy.",
+      "Recognizes that grouped operations should appear as one history entry.",
+      "Includes bounded history."
+    ],
+    "improvements": [
+      "Copying the entire document for every edit is memory-expensive for large files.",
+      "The design does not model operations as extensible behaviors.",
+      "Does not explain redo invalidation after a new edit.",
+      "Cursor, selection, and formatting state may not be restored correctly.",
+      "A command-delta approach would usually be more efficient."
+    ],
+    "feedback": "The solution can work for small documents but is inefficient and does not demonstrate the extensibility expected from a hard OOP question."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the core object model for a text editor that supports insert, delete, replace, undo, redo, grouped operations such as paste formatting, and a configurable limit on undo history. Explain how your design remains extensible.",
+    "quality_tier": "poor",
+    "answer": "I'd add if conditions for each action type. For undo, I'd check whether the last action was insert, delete, or replace and then run the opposite code. Redo would repeat the same switch in reverse.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that each edit type needs corresponding reverse behavior."
+    ],
+    "improvements": [
+      "A central conditional must change whenever a new operation is added.",
+      "The design duplicates operation logic across execute, undo, and redo branches.",
+      "Does not explain how operation-specific state is stored.",
+      "Does not support grouped operations cleanly.",
+      "Does not define history limits or redo-stack behavior.",
+      "Should encapsulate reversible behavior in command objects."
+    ],
+    "feedback": "The approach is procedural and difficult to extend. It does not provide the requested object model."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the core object model for a text editor that supports insert, delete, replace, undo, redo, grouped operations such as paste formatting, and a configurable limit on undo history. Explain how your design remains extensible.",
+    "quality_tier": "off_topic",
+    "answer": "I'd make the editor look similar to VS Code, with tabs, a minimap, syntax highlighting, and keyboard shortcuts. Users should also be able to change the theme.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests recognizable user-interface features for a text editor."
+    ],
+    "improvements": [
+      "The question asks for object-oriented modeling of editing and history behavior.",
+      "Does not define commands, document state, undo stacks, redo stacks, or grouped operations.",
+      "Visual features do not explain extensibility or history limits."
+    ],
+    "feedback": "The response focuses on product appearance rather than the requested OOP architecture."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the online-presence and typing-indicator portion of a chat application. A user may be signed in on multiple devices, connections can drop without a clean disconnect, and typing updates should feel real-time without creating excessive traffic.",
+    "quality_tier": "excellent",
+    "answer": "I'd use persistent WebSocket connections through a gateway layer. Each connection authenticates the user and registers a device or session ID. Presence is ephemeral state, so I'd store session heartbeats in a fast TTL-based store such as Redis rather than the primary user database. A user is online if at least one active session exists. Clients send heartbeats periodically, and an unclean disconnect becomes offline when the session TTL expires. The gateway publishes presence changes only when the user's aggregate state changes from zero to one sessions or one to zero. Typing indicators would be scoped to a conversation, throttled on the client, and stored only briefly, for example a few seconds. A typing-start event can refresh a TTL, while a typing-stop event removes it early. Pub-sub can fan these events to members currently viewing the conversation. I'd use sequence numbers or connection IDs to ignore stale stop events, and presence should degrade to unknown rather than incorrect if the ephemeral store is unavailable.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses WebSockets for low-latency bidirectional updates.",
+      "Models presence as multi-session ephemeral state rather than one boolean per user.",
+      "Handles unclean disconnects through heartbeat expiration.",
+      "Reduces traffic by publishing only aggregate presence transitions and throttling typing events.",
+      "Uses short TTLs and conversation-scoped pub-sub for typing indicators.",
+      "Addresses stale events and degraded behavior during store failures."
+    ],
+    "improvements": [
+      "Could discuss cross-region routing and how presence events propagate between regions.",
+      "Could mention privacy controls for users who disable online-status visibility."
+    ],
+    "feedback": "This is a strong intermediate system-design answer. It handles multi-device state, dropped connections, fan-out, event volume, and ephemeral-state failure semantics."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the online-presence and typing-indicator portion of a chat application. A user may be signed in on multiple devices, connections can drop without a clean disconnect, and typing updates should feel real-time without creating excessive traffic.",
+    "quality_tier": "good",
+    "answer": "I'd use WebSockets for client connections and keep active session keys in Redis with TTLs. Each device gets its own session key, so the user is online while at least one key exists. Clients send heartbeats to refresh the TTL, which also handles connections that disappear without sending a disconnect message. For typing, I'd send throttled start and stop events through pub-sub and expire the typing state after a few seconds in case the stop event is lost.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses session-level TTL state to support multiple devices.",
+      "Correctly handles unclean disconnects through heartbeat expiration.",
+      "Uses WebSockets and pub-sub for real-time updates.",
+      "Throttles typing traffic and includes automatic expiry."
+    ],
+    "improvements": [
+      "Could explain when aggregate online and offline events are published.",
+      "Does not discuss stale event ordering between multiple devices.",
+      "Could describe how conversation membership limits typing-event fan-out.",
+      "Failure behavior when Redis or pub-sub is unavailable is not covered."
+    ],
+    "feedback": "The main architecture is correct and practical. It needs more detail around aggregate state transitions, ordering, and degraded behavior."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the online-presence and typing-indicator portion of a chat application. A user may be signed in on multiple devices, connections can drop without a clean disconnect, and typing updates should feel real-time without creating excessive traffic.",
+    "quality_tier": "mediocre",
+    "answer": "I'd save an is_online boolean and last_seen time in the users table. When the WebSocket connects, I'd set is_online to true, and on disconnect I'd set it to false. Typing events can also be written into a typing table and deleted when the user stops typing.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 4,
+      "confidence": 6
+    },
+    "strengths": [
+      "Recognizes WebSocket connection events as relevant to presence.",
+      "Includes a last-seen value and explicit typing state.",
+      "Attempts to persist user-visible status."
+    ],
+    "improvements": [
+      "A single boolean fails when the same user has multiple active devices.",
+      "An unclean network drop may never trigger the disconnect update.",
+      "Writing frequent heartbeats and typing events to the primary database creates unnecessary load.",
+      "Typing-stop events can be lost, leaving stale rows.",
+      "Should use per-session TTL state and short-lived pub-sub events."
+    ],
+    "feedback": "The design captures the basic features but is not robust to multi-device sessions, dropped connections, or high event volume."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the online-presence and typing-indicator portion of a chat application. A user may be signed in on multiple devices, connections can drop without a clean disconnect, and typing updates should feel real-time without creating excessive traffic.",
+    "quality_tier": "poor",
+    "answer": "Every time a user presses a key, I'd send the keypress to the server and then broadcast that the user is typing to all connected users. When they close the chat page, I'd mark them offline.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Recognizes that typing indicators require client-to-server and server-to-client communication."
+    ],
+    "improvements": [
+      "Sending every keypress creates excessive traffic and potentially exposes typed content.",
+      "Broadcasting to all connected users ignores conversation membership.",
+      "Closing the page is not a reliable signal because connections can disappear unexpectedly.",
+      "Does not support multiple devices.",
+      "Should use throttled typing state, session heartbeats, TTLs, and scoped fan-out."
+    ],
+    "feedback": "The approach is inefficient, privacy-sensitive, and unreliable under the failure conditions described."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the online-presence and typing-indicator portion of a chat application. A user may be signed in on multiple devices, connections can drop without a clean disconnect, and typing updates should feel real-time without creating excessive traffic.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add read receipts and message reactions so users can see when a message was opened and respond with emojis.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests common chat-product features."
+    ],
+    "improvements": [
+      "The question asks specifically about online presence and typing indicators.",
+      "Does not address WebSocket sessions, dropped connections, multiple devices, TTLs, or event throttling.",
+      "Read receipts and reactions have different data and delivery requirements."
+    ],
+    "feedback": "The response discusses unrelated chat features rather than the requested subsystem."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A PostgreSQL orders table contains roughly 500 million rows and receives constant writes. You need to add a new non-nullable region_code column, backfill it from existing customer data, and eventually index it without causing significant downtime. Describe a safe migration plan.",
+    "quality_tier": "excellent",
+    "answer": "I'd use an expand-and-contract migration. First, I'd add region_code as nullable and avoid a table-rewriting default. Then I'd deploy application code that writes region_code for every new or updated order while still tolerating nulls on reads. I'd backfill old rows in small primary-key ranges, committing each batch separately, rate-limiting based on database load and replication lag. The backfill should be idempotent and update only rows where region_code is null. After coverage is complete, I'd validate with counts and sampled joins against customer data. I'd add the index concurrently so normal writes continue, while monitoring disk, WAL volume, and replica delay. For the non-null requirement, I'd add a NOT VALID check constraint for region_code is not null, validate it separately, and then convert or attach the validated constraint according to the PostgreSQL version and operational plan. Only after all writers are confirmed should the application require the field. Every phase should be independently deployable and reversible.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses an expand-and-contract process suitable for a large actively written table.",
+      "Avoids an immediate table rewrite or long blocking migration.",
+      "Introduces dual-writing before backfilling historical rows.",
+      "Uses small idempotent batches and monitors replication and WAL pressure.",
+      "Creates the index concurrently.",
+      "Separates constraint creation from validation to reduce locking risk.",
+      "Includes validation, staged enforcement, and rollback considerations."
+    ],
+    "improvements": [
+      "Could discuss how customer-region changes during the backfill are reconciled.",
+      "Could mention testing disk headroom because concurrent index creation temporarily requires substantial additional storage."
+    ],
+    "feedback": "This is a production-grade migration plan. It carefully separates schema expansion, writer rollout, controlled backfill, index creation, validation, and final enforcement."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A PostgreSQL orders table contains roughly 500 million rows and receives constant writes. You need to add a new non-nullable region_code column, backfill it from existing customer data, and eventually index it without causing significant downtime. Describe a safe migration plan.",
+    "quality_tier": "good",
+    "answer": "I'd first add the column as nullable. Then I'd deploy the application so all new orders include region_code. I'd backfill existing rows in small batches instead of one large update, and I'd pause or slow the backfill if replication lag or database load increases. After confirming there are no null values, I'd create the index concurrently and then add the non-null constraint in a low-lock way, such as validating a check constraint before making the final schema change.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Avoids immediately adding a blocking non-nullable column.",
+      "Updates application writers before the historical backfill.",
+      "Uses small batches with load-aware throttling.",
+      "Creates the index concurrently.",
+      "Recognizes that the non-null constraint should be validated separately."
+    ],
+    "improvements": [
+      "Could specify that the backfill updates only null rows and is safe to retry.",
+      "Does not discuss how backfill correctness is validated against customer data.",
+      "Could mention monitoring WAL generation, disk usage, and replica delay.",
+      "Rollback and handling of older application versions are not covered."
+    ],
+    "feedback": "The migration sequence is correct and safe at a high level. More operational and validation detail would make it stronger."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A PostgreSQL orders table contains roughly 500 million rows and receives constant writes. You need to add a new non-nullable region_code column, backfill it from existing customer data, and eventually index it without causing significant downtime. Describe a safe migration plan.",
+    "quality_tier": "mediocre",
+    "answer": "I'd add the new nullable column and run a background script to update all existing rows. Once the script finishes, I'd change the column to not null and create an index. I'd run the script at night when traffic is lower.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Correctly starts with a nullable column.",
+      "Separates historical backfilling from the initial schema change.",
+      "Recognizes that workload timing matters."
+    ],
+    "improvements": [
+      "Does not specify batching, transaction size, throttling, or retry safety.",
+      "Changing directly to NOT NULL may scan and lock the large table.",
+      "Creating a normal index can block writes; it should be created concurrently.",
+      "Does not ensure that new writes populate the column during the backfill.",
+      "No validation or replication-lag monitoring is described."
+    ],
+    "feedback": "The broad ordering is reasonable, but the plan is too risky and underspecified for a 500-million-row production table."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A PostgreSQL orders table contains roughly 500 million rows and receives constant writes. You need to add a new non-nullable region_code column, backfill it from existing customer data, and eventually index it without causing significant downtime. Describe a safe migration plan.",
+    "quality_tier": "poor",
+    "answer": "I'd stop the application, alter the table to add the non-null column, run one update joining customers, build the index, and then restart everything. It may take a while, but it guarantees consistency.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to keep application writes from changing data during the migration.",
+      "Includes the required backfill and index creation steps."
+    ],
+    "improvements": [
+      "Stopping the application violates the requirement to avoid significant downtime.",
+      "A single update across 500 million rows can create massive locks, WAL volume, and rollback risk.",
+      "Adding the column as immediately non-nullable may fail or require an expensive scan.",
+      "Normal index creation can block writes for a long period.",
+      "The plan has no incremental rollout, monitoring, throttling, or rollback path."
+    ],
+    "feedback": "The migration may be logically simple, but it is operationally unsafe for a large continuously written production table."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A PostgreSQL orders table contains roughly 500 million rows and receives constant writes. You need to add a new non-nullable region_code column, backfill it from existing customer data, and eventually index it without causing significant downtime. Describe a safe migration plan.",
+    "quality_tier": "off_topic",
+    "answer": "I'd take a full database backup before changing anything and make sure point-in-time recovery is enabled. We should also encrypt the backup and test restoring it.",
+    "scores": {
+      "relevance": 2,
+      "clarity": 8,
+      "depth": 3,
+      "confidence": 6
+    },
+    "strengths": [
+      "Suggests sensible backup and recovery precautions before a major schema change."
+    ],
+    "improvements": [
+      "Backups do not explain how to perform the migration without downtime.",
+      "Does not cover nullable expansion, dual writes, batching, index creation, or constraint validation.",
+      "Recovery planning is useful but is not the requested migration plan."
+    ],
+    "feedback": "The answer covers disaster recovery but not the actual online schema and data migration."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "You need to implement a reusable modal dialog for a web application. How would you make it accessible for keyboard and screen-reader users, including focus behavior when it opens and closes?",
+    "quality_tier": "excellent",
+    "answer": "I'd give the modal the correct dialog semantics, usually role dialog and aria-modal true, and connect it to a visible title using aria-labelledby. When it opens, I'd remember the element that triggered it and move focus into the modal, normally to the first meaningful control or the dialog container if it needs to be read first. Tab and Shift+Tab should stay within the modal while it's open. Escape should close it unless the workflow specifically prevents dismissal. Background content should be inert or otherwise unavailable to keyboard and screen-reader navigation, and page scrolling should be locked carefully. When the modal closes, focus should return to the original trigger if it still exists. I'd render it in a portal if necessary for stacking, but preserve logical accessibility behavior and remove all listeners during cleanup.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Provides appropriate dialog and labeling semantics.",
+      "Explains initial focus placement and restoration to the triggering element.",
+      "Includes a keyboard focus trap and Escape-key handling.",
+      "Prevents interaction with background content.",
+      "Considers scroll locking, portals, and cleanup.",
+      "Avoids relying on visual appearance alone."
+    ],
+    "improvements": [
+      "Could mention aria-describedby when explanatory content is important.",
+      "Could clarify how focus is handled if the original trigger is removed while the modal is open."
+    ],
+    "feedback": "This is an excellent fresher-level answer. It covers the complete keyboard and screen-reader interaction lifecycle of a modal."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "You need to implement a reusable modal dialog for a web application. How would you make it accessible for keyboard and screen-reader users, including focus behavior when it opens and closes?",
+    "quality_tier": "good",
+    "answer": "I'd use role dialog, aria-modal, and an accessible name linked to the modal heading. When it opens, I'd move focus to the first input or button. I'd trap Tab inside the modal, support Escape to close it, and return focus to the button that opened it. I'd also stop users from tabbing into the page behind the modal.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Includes the main dialog semantics.",
+      "Handles initial focus and focus restoration.",
+      "Supports keyboard trapping and Escape dismissal.",
+      "Prevents background keyboard interaction."
+    ],
+    "improvements": [
+      "Could mention visible labeling through aria-labelledby rather than only an unspecified accessible name.",
+      "Does not discuss screen-reader access to background content.",
+      "Could include scroll locking and event-listener cleanup.",
+      "The first interactive control is not always the best initial focus target."
+    ],
+    "feedback": "The response covers the essential accessible-modal behavior. It lacks some detail around background semantics and focus-target selection."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "You need to implement a reusable modal dialog for a web application. How would you make it accessible for keyboard and screen-reader users, including focus behavior when it opens and closes?",
+    "quality_tier": "mediocre",
+    "answer": "I'd add tabindex to the modal and focus it when it opens. I'd also listen for Escape so users can close it. The close button would have an aria-label, and I'd put the modal above the rest of the page using a high z-index.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Moves keyboard focus into the modal.",
+      "Supports Escape-key dismissal.",
+      "Provides an accessible label for an icon-only close button."
+    ],
+    "improvements": [
+      "Does not trap focus inside the dialog.",
+      "Does not restore focus to the triggering control when the dialog closes.",
+      "A high z-index changes visual stacking but does not hide background content from assistive technology.",
+      "Missing role dialog, aria-modal, and a connection to the modal title.",
+      "Does not prevent background scrolling or interaction."
+    ],
+    "feedback": "The answer includes a few accessible behaviors but misses the main focus-management and semantic requirements."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "You need to implement a reusable modal dialog for a web application. How would you make it accessible for keyboard and screen-reader users, including focus behavior when it opens and closes?",
+    "quality_tier": "poor",
+    "answer": "I'd display a div in the center of the screen and put a dark overlay behind it. Users can click outside the modal to close it. Since it looks like a popup, screen readers should understand it.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Includes a visually recognizable modal layout and backdrop."
+    ],
+    "improvements": [
+      "Visual appearance does not provide dialog semantics to screen readers.",
+      "Keyboard users may not be able to click the backdrop.",
+      "Does not move, trap, or restore focus.",
+      "Does not include keyboard dismissal or accessible labeling.",
+      "Background controls remain reachable."
+    ],
+    "feedback": "The implementation is visually modal but not accessibly modal."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "You need to implement a reusable modal dialog for a web application. How would you make it accessible for keyboard and screen-reader users, including focus behavior when it opens and closes?",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a blur effect to the background, rounded corners, and a fade-in animation. The modal should also support light and dark themes.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests clear visual styling for a modal."
+    ],
+    "improvements": [
+      "The question asks about keyboard and screen-reader accessibility.",
+      "Does not address semantics, focus movement, focus trapping, Escape handling, or restoration.",
+      "Animations may require reduced-motion handling but that is not discussed."
+    ],
+    "feedback": "The response focuses on appearance instead of accessibility behavior."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two administrators may edit the same customer record through a REST API at nearly the same time. The second save must not silently overwrite changes made by the first. How would you design the API and database update flow?",
+    "quality_tier": "excellent",
+    "answer": "I'd use optimistic concurrency control. Each customer row would have a version number or an updated-at value with enough precision, though a version integer is safer. A GET response would include that version, ideally through an ETag as well as the response body. When the client sends an update, it includes the version it originally read using If-Match or a request field. The database update becomes something like update customer set fields and version equals version plus one where id equals the customer ID and version equals the expected version. If zero rows are updated, someone else changed the record, so the API returns 412 Precondition Failed or 409 Conflict with the current representation. The client can then show the differences and let the administrator reload, merge, or retry. I'd use PATCH for field-level edits where appropriate and record an audit trail. A simple read followed by a normal update is not enough because the race happens between those operations.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses optimistic concurrency control, which fits interactive record editing.",
+      "Connects API-level ETags or versions with a conditional database update.",
+      "Makes conflict detection atomic through the update predicate.",
+      "Provides appropriate HTTP conflict behavior and a user-facing recovery path.",
+      "Explains why an ordinary check-then-update flow remains race-prone.",
+      "Includes field-level updates and auditing."
+    ],
+    "improvements": [
+      "Could discuss how related child records are versioned when an edit spans multiple tables.",
+      "Could mention that timestamps may be unreliable as versions if precision or clock semantics are insufficient."
+    ],
+    "feedback": "This is a complete intermediate backend answer. It protects against lost updates across both the REST and database layers."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two administrators may edit the same customer record through a REST API at nearly the same time. The second save must not silently overwrite changes made by the first. How would you design the API and database update flow?",
+    "quality_tier": "good",
+    "answer": "I'd add a version column to the customer table. The client gets the current version when it loads the customer and sends that version back when saving. The update query includes both the customer ID and expected version in its WHERE clause and increments the version if it succeeds. If no row is updated, the API returns a conflict because another user already changed the record. The UI can reload the latest data or ask the administrator to merge the changes.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses a version column for reliable optimistic locking.",
+      "Performs conflict detection atomically in the database update.",
+      "Returns a conflict instead of silently overwriting newer data.",
+      "Provides a reasonable UI recovery path."
+    ],
+    "improvements": [
+      "Could map the version to standard HTTP ETag and If-Match semantics.",
+      "Does not mention which status code or response details are returned.",
+      "Could discuss partial updates and audit history.",
+      "Does not address edits involving multiple related records."
+    ],
+    "feedback": "The core concurrency design is correct. The answer would be stronger with more REST-specific and multi-record details."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two administrators may edit the same customer record through a REST API at nearly the same time. The second save must not silently overwrite changes made by the first. How would you design the API and database update flow?",
+    "quality_tier": "mediocre",
+    "answer": "I'd compare updated_at from the request with updated_at in the database before saving. If they're different, I'd reject the update. If they're the same, I'd run the update and change updated_at to the current time.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Recognizes that the client must prove which version of the record it edited.",
+      "Attempts to detect changes made after the original read.",
+      "Rejects conflicting updates rather than automatically overwriting them."
+    ],
+    "improvements": [
+      "The comparison and update must occur in one conditional SQL statement or transaction to avoid another race.",
+      "Timestamp precision may allow distinct updates to share the same value.",
+      "Server clocks and serialization formats can make timestamp comparison fragile.",
+      "A monotonically increasing version column is generally safer.",
+      "Does not explain the API conflict response or merge workflow."
+    ],
+    "feedback": "The answer has the right idea but leaves an atomicity gap and relies on a weaker version identifier."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two administrators may edit the same customer record through a REST API at nearly the same time. The second save must not silently overwrite changes made by the first. How would you design the API and database update flow?",
+    "quality_tier": "poor",
+    "answer": "I'd allow both updates and treat the last request as the correct one. To reduce the chance of a collision, I'd disable the save button for a few seconds after it is clicked.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Recognizes that repeated saves from one client can be reduced through UI state."
+    ],
+    "improvements": [
+      "Last-write-wins is exactly the silent overwrite the question requires preventing.",
+      "Disabling one user's button does not coordinate different administrators.",
+      "The backend and database contain no concurrency check.",
+      "Does not provide conflict detection, versioning, or recovery behavior.",
+      "The protection must be enforced server-side."
+    ],
+    "feedback": "The proposed UI measure does not solve concurrent edits from different clients and permits data loss."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two administrators may edit the same customer record through a REST API at nearly the same time. The second save must not silently overwrite changes made by the first. How would you design the API and database update flow?",
+    "quality_tier": "off_topic",
+    "answer": "I'd use WebSockets so both administrators can see the customer form update in real time while the other person types.",
+    "scores": {
+      "relevance": 3,
+      "clarity": 7,
+      "depth": 3,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests a collaborative-editing feature that may reduce surprise between simultaneous editors."
+    ],
+    "improvements": [
+      "Real-time visibility does not guarantee that a stale save cannot overwrite newer data.",
+      "The database still requires an atomic version or conditional-update check.",
+      "Does not define REST conflict behavior or recovery.",
+      "WebSockets add communication but not correctness."
+    ],
+    "feedback": "The proposal may improve awareness, but it does not enforce the required lost-update protection."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a serious production incident you were involved in. How did you prioritize mitigation, communicate during the incident, determine the root cause, and prevent the same class of failure from recurring?",
+    "quality_tier": "excellent",
+    "answer": "During an on-call shift, a release caused our checkout API error rate to jump from under one percent to about eighteen percent. The first priority was reducing customer impact, so I paused the rollout, compared the new and old versions, and initiated a rollback while another engineer checked database health. I opened an incident channel, assigned one person to stakeholder updates, and posted a short status every fifteen minutes with confirmed facts rather than guesses. The rollback reduced errors within seven minutes. We later found that a new retry path reused a database transaction after it had already been marked failed, so every retry immediately failed as well. We fixed the transaction lifecycle, added an integration test for the original failure sequence, and changed the canary policy to include error-rate rollback thresholds. In the postmortem, I documented that I had approved the change without asking for a failure-path test, and we added that scenario to the review checklist.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Provides a concrete production incident with quantified impact.",
+      "Prioritizes mitigation and rollback before extended root-cause investigation.",
+      "Separates operational roles and communicates verified information regularly.",
+      "Identifies a specific technical root cause rather than stopping at the triggering release.",
+      "Implements several systemic preventive controls: tests, canary thresholds, and review changes.",
+      "Takes personal accountability without overstating individual responsibility."
+    ],
+    "improvements": [
+      "Could mention how affected customers or failed checkout attempts were reconciled after recovery.",
+      "Could briefly state the total incident duration and whether an external status page was updated."
+    ],
+    "feedback": "This is a strong experienced-level incident response answer. It demonstrates calm mitigation, structured communication, technical diagnosis, accountability, and durable prevention."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a serious production incident you were involved in. How did you prioritize mitigation, communicate during the incident, determine the root cause, and prevent the same class of failure from recurring?",
+    "quality_tier": "good",
+    "answer": "We had an incident where a background deployment caused duplicate customer emails. I disabled the affected worker and informed support and product that email delivery was paused while we investigated. We found that a queue visibility timeout was shorter than the processing time, so messages were being delivered to a second worker before the first one finished. We increased the timeout, added idempotency using the notification ID, and created an alert for duplicate-send attempts. We also documented the incident and added a load test for slow processing.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Describes a concrete customer-facing incident.",
+      "Takes an immediate containment action by stopping the affected worker.",
+      "Communicates impact to relevant internal teams.",
+      "Identifies a specific interaction between processing time and queue visibility.",
+      "Adds idempotency, configuration changes, alerting, and testing."
+    ],
+    "improvements": [
+      "Could quantify the incident's impact and recovery time.",
+      "Does not explain how already duplicated emails were handled with customers.",
+      "Could describe who coordinated the incident and how updates were structured.",
+      "Could include a deeper reason for why the timeout mismatch was not detected before release."
+    ],
+    "feedback": "The answer demonstrates sound incident handling and effective preventive changes. More detail around communication structure and impact would improve it."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a serious production incident you were involved in. How did you prioritize mitigation, communicate during the incident, determine the root cause, and prevent the same class of failure from recurring?",
+    "quality_tier": "mediocre",
+    "answer": "One time our API became very slow after a deployment. I checked the logs and saw a database query was taking too long, so we rolled back. Later we added an index and deployed again. I told my manager what happened, and the second deployment worked.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Provides a relevant production-performance incident.",
+      "Uses rollback to reduce impact.",
+      "Identifies a slow database query and applies an index.",
+      "Communicates the issue to a manager."
+    ],
+    "improvements": [
+      "The customer impact, severity, and timeline are not explained.",
+      "Communication during the active incident appears limited and unstructured.",
+      "Adding an index addresses the immediate query but not why the regression escaped testing.",
+      "Does not discuss monitoring, load tests, query-plan checks, or rollout safeguards.",
+      "The candidate's specific leadership role is unclear."
+    ],
+    "feedback": "The answer covers mitigation and a direct fix but lacks the depth, communication discipline, and systemic prevention expected from an experienced candidate."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a serious production incident you were involved in. How did you prioritize mitigation, communicate during the incident, determine the root cause, and prevent the same class of failure from recurring?",
+    "quality_tier": "poor",
+    "answer": "A teammate once deployed bad code and the service went down. I messaged them to fix it because they understood the code best. After they reverted it, things were normal again. I think developers should test more carefully before deploying.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes rollback as a possible way to restore service."
+    ],
+    "improvements": [
+      "Blames a teammate instead of describing shared incident ownership.",
+      "Delegates the response without explaining the candidate's actions.",
+      "Provides no structured prioritization, communication, or diagnosis.",
+      "The prevention lesson is generic and unsupported by a process change.",
+      "Does not quantify impact, timing, or outcome."
+    ],
+    "feedback": "The response shows little ownership or incident-management maturity and relies on blaming individual error rather than improving the system."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a serious production incident you were involved in. How did you prioritize mitigation, communicate during the incident, determine the root cause, and prevent the same class of failure from recurring?",
+    "quality_tier": "off_topic",
+    "answer": "I enjoy working under pressure because it helps me focus. I'm also flexible with working hours and can stay late when a release is important.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Communicates willingness to support important releases."
+    ],
+    "improvements": [
+      "The question asks for a specific production incident.",
+      "Does not describe mitigation, communication, root-cause analysis, or prevention.",
+      "Working longer hours is not evidence of effective incident response."
+    ],
+    "feedback": "The answer gives a general personal claim rather than the requested incident example."
+  }
+]

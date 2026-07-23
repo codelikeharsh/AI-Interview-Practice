@@ -1,0 +1,1045 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "A template parser receives strings containing normal text and the delimiters (), [], and {}. Determine whether the delimiters are correctly balanced and nested. If they are invalid, return the index of the first closing delimiter that causes the problem. How would you solve it?",
+    "quality_tier": "excellent",
+    "answer": "I'd scan the string from left to right and keep a stack of opening delimiters along with their indices. Normal characters can be ignored. When I see an opening bracket, I push it. When I see a closing bracket, I first check whether the stack is empty. If it is, that closing bracket is invalid, so I return its index. Otherwise, I pop the latest opening bracket and verify that the types match, like an opening square bracket with a closing square bracket. If they don't match, I return the current closing bracket's index. After the scan, the string is balanced only if the stack is empty. The time complexity is O(n), and the worst-case extra space is O(n).",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Chooses the standard stack-based solution for nested delimiters.",
+      "Correctly handles both unmatched closing delimiters and mismatched delimiter types.",
+      "Stores opening indices even though the requested error index concerns the invalid closing delimiter.",
+      "Ignores ordinary text characters as required by the scenario.",
+      "Provides accurate O(n) time and O(n) worst-case space complexity."
+    ],
+    "improvements": [
+      "Could clarify what should be returned when the scan ends with unmatched opening delimiters, since no invalid closing index exists.",
+      "Could mention using a map from closing delimiters to their expected opening delimiters to simplify comparisons."
+    ],
+    "feedback": "This is a complete and efficient fresher-level answer. It clearly explains the stack invariant and identifies the first invalid closing delimiter during a single pass."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "A template parser receives strings containing normal text and the delimiters (), [], and {}. Determine whether the delimiters are correctly balanced and nested. If they are invalid, return the index of the first closing delimiter that causes the problem. How would you solve it?",
+    "quality_tier": "good",
+    "answer": "I'd use a stack. Whenever I see an opening bracket, I'd push it. For a closing bracket, I'd check the top of the stack. If the stack is empty or the types don't match, I'd return the current character's index. If they match, I'd pop the opening bracket. At the end, the stack should be empty for the string to be valid. It takes O(n) time and O(n) space in the worst case.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses the correct stack data structure.",
+      "Returns the current closing delimiter's index when a mismatch occurs.",
+      "Checks for an empty stack before reading its top.",
+      "Provides correct complexity."
+    ],
+    "improvements": [
+      "Could explicitly state that non-delimiter characters are ignored.",
+      "Does not discuss what result should be returned for unmatched opening delimiters at the end.",
+      "Could explain why only the most recent unmatched opening delimiter matters."
+    ],
+    "feedback": "The answer is correct and concise. It covers the primary invalid-closing cases but could be more explicit about normal characters and leftover opening delimiters."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "A template parser receives strings containing normal text and the delimiters (), [], and {}. Determine whether the delimiters are correctly balanced and nested. If they are invalid, return the index of the first closing delimiter that causes the problem. How would you solve it?",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep three counters, one for round brackets, one for square brackets, and one for curly brackets. An opening bracket increases its counter, and a closing bracket decreases it. If a counter becomes negative, I'd return that index. At the end, all counters should be zero.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 8,
+      "depth": 4,
+      "confidence": 6
+    },
+    "strengths": [
+      "Detects a closing delimiter that appears before any opening delimiter of the same type.",
+      "Runs in O(n) time and uses constant additional storage.",
+      "Checks whether opening and closing delimiter counts balance overall."
+    ],
+    "improvements": [
+      "Counters cannot detect incorrect nesting such as an opening parenthesis followed by an opening square bracket and then a closing parenthesis.",
+      "The solution needs a stack to remember the order of unmatched opening delimiters.",
+      "Matching counts alone do not prove that delimiter types are properly nested.",
+      "Does not explicitly ignore non-delimiter characters."
+    ],
+    "feedback": "The approach handles counts but not nesting order, which is a central part of the problem. A stack is required for correctness."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "A template parser receives strings containing normal text and the delimiters (), [], and {}. Determine whether the delimiters are correctly balanced and nested. If they are invalid, return the index of the first closing delimiter that causes the problem. How would you solve it?",
+    "quality_tier": "poor",
+    "answer": "I'd count how many opening and closing brackets exist in the full string. If the total number of opening brackets equals the total number of closing brackets, I'd say it's valid. Otherwise, I'd return the index of the last bracket.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that opening and closing delimiters need to correspond in some way."
+    ],
+    "improvements": [
+      "Combining all delimiter types into one count cannot detect mismatched types.",
+      "Equal totals do not guarantee correct ordering or nesting.",
+      "Returning the last bracket does not identify the first closing delimiter that caused the error.",
+      "The approach fails on cases such as a closing delimiter before its opening delimiter.",
+      "Should process characters in order using a stack."
+    ],
+    "feedback": "The response checks only total counts and cannot determine structural validity or the correct error index."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "A template parser receives strings containing normal text and the delimiters (), [], and {}. Determine whether the delimiters are correctly balanced and nested. If they are invalid, return the index of the first closing delimiter that causes the problem. How would you solve it?",
+    "quality_tier": "off_topic",
+    "answer": "I'd use a regular expression to remove HTML tags and then display the remaining text. That should prevent malformed templates from being shown to users.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that malformed template input may need validation or sanitization."
+    ],
+    "improvements": [
+      "The question concerns balanced delimiters, not HTML-tag removal.",
+      "Does not explain nesting validation or first-error indexing.",
+      "Regular-expression sanitization does not replace a delimiter stack.",
+      "Does not provide relevant complexity analysis."
+    ],
+    "feedback": "The answer addresses content sanitization rather than the requested delimiter-validation algorithm."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Given a grid of letters and a dictionary containing thousands of words, return every dictionary word that can be formed by moving horizontally or vertically through adjacent cells without using the same cell twice in one word. How would you avoid searching the board separately for every word?",
+    "quality_tier": "excellent",
+    "answer": "I'd build a trie from the dictionary and run DFS from each board cell. During DFS, I'd follow the trie edge matching the current letter. If no edge exists, I stop that path immediately, which avoids exploring prefixes that don't belong to any dictionary word. When the trie node contains a completed word, I'd add it to the result and clear that stored word or mark it found so duplicate board paths don't produce duplicate output. I'd temporarily mark the board cell as visited, recurse in four directions, and restore it afterward. I can also prune trie nodes after all words below them are found, which helps on large dictionaries. Building the trie costs O(total dictionary characters). The search is bounded by the number of board paths that match valid trie prefixes, although the theoretical worst case is exponential in the maximum word length. Extra memory includes the trie and recursion depth up to the word length.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses a trie to share prefix work across the entire dictionary.",
+      "Prunes DFS immediately when the current board path is not a dictionary prefix.",
+      "Correctly enforces single-use cells through temporary visited marking and restoration.",
+      "Prevents duplicate outputs by clearing or marking completed trie words.",
+      "Includes optional trie pruning after words are exhausted.",
+      "Gives realistic preprocessing and search-complexity discussion without claiming an incorrect simple polynomial bound."
+    ],
+    "improvements": [
+      "Could mention deduplicating identical words before trie construction.",
+      "Could discuss recursion-stack limits and an iterative alternative for unusually long words."
+    ],
+    "feedback": "This is a strong experienced-level answer. It applies the standard trie-plus-backtracking optimization and explains both correctness and practical pruning."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Given a grid of letters and a dictionary containing thousands of words, return every dictionary word that can be formed by moving horizontally or vertically through adjacent cells without using the same cell twice in one word. How would you avoid searching the board separately for every word?",
+    "quality_tier": "good",
+    "answer": "I'd put all dictionary words into a trie and start DFS from every cell. At each step, I'd check whether the current board character exists as a child of the current trie node. If not, I'd stop exploring that route. I'd mark the cell visited, search the four neighboring cells, and then unmark it. When a trie node marks the end of a word, I'd add that word to a set so it isn't returned twice. This avoids running a full board search independently for every dictionary word.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Selects the correct trie and DFS combination.",
+      "Shares prefix exploration across dictionary words.",
+      "Correctly prevents reuse of a board cell during one search path.",
+      "Uses a set to prevent duplicate output.",
+      "Explains the key efficiency improvement over per-word searching."
+    ],
+    "improvements": [
+      "Could store the completed word at trie nodes to avoid rebuilding strings during DFS.",
+      "Does not provide preprocessing, space, or search-complexity analysis.",
+      "Could clear found words or prune exhausted trie branches for additional efficiency.",
+      "Could mention empty-board and duplicate-dictionary-word cases."
+    ],
+    "feedback": "The core algorithm is correct and well explained. Complexity and practical memory optimizations are the main missing details."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Given a grid of letters and a dictionary containing thousands of words, return every dictionary word that can be formed by moving horizontally or vertically through adjacent cells without using the same cell twice in one word. How would you avoid searching the board separately for every word?",
+    "quality_tier": "mediocre",
+    "answer": "I'd loop through every word and run backtracking on the board to see whether it exists. The backtracking checks all four directions and marks cells so they aren't reused. I'd stop checking a word once it's found.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Uses a correct backtracking method for checking one word.",
+      "Prevents the same cell from being reused within one path.",
+      "Stops the current search after successfully finding a word."
+    ],
+    "improvements": [
+      "Directly repeats similar board exploration for every dictionary word.",
+      "Does not answer the request to avoid searching separately for each word.",
+      "Should combine dictionary prefixes in a trie and search the board once.",
+      "Provides no complexity analysis.",
+      "Does not address duplicate dictionary entries or duplicate board paths."
+    ],
+    "feedback": "The solution is correct as a baseline but is inefficient for thousands of words. The expected optimization is trie-guided board traversal."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Given a grid of letters and a dictionary containing thousands of words, return every dictionary word that can be formed by moving horizontally or vertically through adjacent cells without using the same cell twice in one word. How would you avoid searching the board separately for every word?",
+    "quality_tier": "poor",
+    "answer": "I'd convert each row and column into strings and check whether a dictionary word is a substring of any of them. That would find words going left, right, up, or down.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that words may be formed horizontally or vertically."
+    ],
+    "improvements": [
+      "Valid words may turn between horizontal and vertical directions, which row and column substrings cannot detect.",
+      "The method does not model cell adjacency beyond straight lines.",
+      "It does not enforce or reason about cell reuse.",
+      "It still performs repeated checks for dictionary words.",
+      "Should use DFS guided by a trie."
+    ],
+    "feedback": "The proposed method handles only straight-line words and misses most valid paths."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Given a grid of letters and a dictionary containing thousands of words, return every dictionary word that can be formed by moving horizontally or vertically through adjacent cells without using the same cell twice in one word. How would you avoid searching the board separately for every word?",
+    "quality_tier": "off_topic",
+    "answer": "I'd use a spell-checking API to compare the grid letters with English words. It could return likely words even when some letters are missing.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Identifies an external tool that can suggest dictionary words in a different application."
+    ],
+    "improvements": [
+      "The task requires exact paths through adjacent board cells.",
+      "A spell-checking service does not enforce movement or cell-reuse constraints.",
+      "Does not provide the requested algorithm or complexity.",
+      "Does not use the supplied dictionary efficiently."
+    ],
+    "feedback": "The response discusses approximate word suggestions rather than exact grid search."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core classes for an elevator system in a building with multiple elevators and floors. It must handle internal floor selections, external up and down requests, elevator scheduling, door states, overload conditions, and maintenance mode. Explain how scheduling policies can be changed without redesigning the whole system.",
+    "quality_tier": "excellent",
+    "answer": "I'd separate the physical elevator state from the scheduling logic. An ElevatorCar would track its current floor, direction, movement state, door state, load, capacity, pending stops, and maintenance status. Floor panels create HallRequest objects containing the floor and requested direction, while the car panel creates internal destination requests. An ElevatorController owns the fleet and passes new hall requests to a SchedulingPolicy interface. Policies like nearest-car, collective control, or zone-based scheduling can then be swapped without changing elevator classes. Each car would have a small state machine for IDLE, MOVING_UP, MOVING_DOWN, DOOR_OPEN, and OUT_OF_SERVICE. DoorController and SafetyController would enforce rules such as not moving with open doors and refusing movement while overloaded. Maintenance mode removes the car from scheduling, finishes or evacuates current passengers according to policy, and routes new requests elsewhere. Shared state changes need serialization so two controllers don't assign contradictory work to one car.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates elevator state, fleet coordination, request modeling, safety, and scheduling responsibilities.",
+      "Uses a scheduling-policy abstraction so dispatch algorithms can change independently.",
+      "Models elevator behavior through an explicit state machine.",
+      "Distinguishes hall requests from internal destination selections.",
+      "Addresses overload, door safety, maintenance mode, and concurrent assignment.",
+      "Avoids embedding all behavior inside one monolithic elevator class."
+    ],
+    "improvements": [
+      "Could describe how pending stops are ordered and modified while an elevator is already moving.",
+      "Could explain how emergency and fire-service modes differ from normal maintenance mode."
+    ],
+    "feedback": "This is a strong object-oriented design. It identifies stable entities, variable policies, safety invariants, and state transitions without overloading one class."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core classes for an elevator system in a building with multiple elevators and floors. It must handle internal floor selections, external up and down requests, elevator scheduling, door states, overload conditions, and maintenance mode. Explain how scheduling policies can be changed without redesigning the whole system.",
+    "quality_tier": "good",
+    "answer": "I'd create Elevator, ElevatorController, FloorRequest, and ElevatorPanel classes. Elevator would store its current floor, direction, destination list, door status, capacity, and whether it's under maintenance. The controller receives external requests and chooses an elevator through a Scheduler interface. Different scheduler implementations could choose the closest elevator or group elevators by floor zones. Internal button presses would be added to that elevator's destination list. The elevator shouldn't move if its doors are open or if the weight limit is exceeded.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Identifies the main elevator, controller, request, and panel concepts.",
+      "Uses a scheduler interface to make dispatch policies replaceable.",
+      "Includes core state such as floor, direction, destinations, doors, capacity, and maintenance.",
+      "States important movement-safety conditions."
+    ],
+    "improvements": [
+      "Could model elevator movement and door operation with explicit state objects or an enum-based state machine.",
+      "Does not explain how maintenance mode affects already assigned requests.",
+      "Could distinguish external direction requests from internal destination requests more clearly.",
+      "Concurrency and duplicate request handling are not addressed."
+    ],
+    "feedback": "The design is correct and extensible at a high level. More precise lifecycle and concurrency handling would improve it."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core classes for an elevator system in a building with multiple elevators and floors. It must handle internal floor selections, external up and down requests, elevator scheduling, door states, overload conditions, and maintenance mode. Explain how scheduling policies can be changed without redesigning the whole system.",
+    "quality_tier": "mediocre",
+    "answer": "I'd have an Elevator class with moveUp, moveDown, openDoor, closeDoor, and goToFloor methods. A Building class would contain a list of elevators and choose the one with the smallest distance from the requested floor. Each elevator would keep an array of requested floors.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Identifies basic elevator operations and fleet ownership.",
+      "Keeps requested destinations for each elevator.",
+      "Suggests a simple distance-based dispatch strategy."
+    ],
+    "improvements": [
+      "The closest elevator may be moving in the wrong direction or unavailable.",
+      "Scheduling logic is embedded directly in Building instead of behind a replaceable policy.",
+      "Does not model external up and down requests separately.",
+      "Door safety, overload, maintenance, and state transitions are mostly missing.",
+      "Could allow invalid method sequences such as moving while the door is open."
+    ],
+    "feedback": "The answer provides a basic class outline but lacks the policy abstraction and safety-state modeling expected for the scenario."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core classes for an elevator system in a building with multiple elevators and floors. It must handle internal floor selections, external up and down requests, elevator scheduling, door states, overload conditions, and maintenance mode. Explain how scheduling policies can be changed without redesigning the whole system.",
+    "quality_tier": "poor",
+    "answer": "I'd create one ElevatorSystem class with arrays for elevator floors, door booleans, weights, and requested floors. A large processRequests method could loop through all elevators and use if statements to decide what each one should do.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Lists several pieces of state that an elevator system needs to track."
+    ],
+    "improvements": [
+      "Parallel arrays make elevator state difficult to keep consistent.",
+      "One large request method mixes scheduling, movement, doors, and safety logic.",
+      "Changing the scheduling algorithm requires modifying the central class.",
+      "The design lacks request objects, elevator entities, state transitions, and maintenance behavior.",
+      "It does not use object-oriented encapsulation effectively."
+    ],
+    "feedback": "The response creates a procedural controller rather than an extensible object model."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core classes for an elevator system in a building with multiple elevators and floors. It must handle internal floor selections, external up and down requests, elevator scheduling, door states, overload conditions, and maintenance mode. Explain how scheduling policies can be changed without redesigning the whole system.",
+    "quality_tier": "off_topic",
+    "answer": "I'd create a mobile application that shows where each elevator is and tells users how long they need to wait. It could also let VIP users reserve an elevator.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests user-facing features that could consume elevator-system data."
+    ],
+    "improvements": [
+      "The question asks for the internal class design and scheduling extensibility.",
+      "Does not define elevators, requests, controllers, policies, doors, overload handling, or maintenance.",
+      "A client application does not replace the core elevator model."
+    ],
+    "feedback": "The response discusses product features rather than the requested OOP design."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a distributed task scheduler that can execute one-time and recurring jobs at or after a requested time. It must support millions of scheduled jobs, retries, cancellation, multiple workers, and protection against two workers executing the same scheduled occurrence.",
+    "quality_tier": "excellent",
+    "answer": "I'd separate durable scheduling from execution. The schedule service stores a job definition with its next_run_at, recurrence rule, payload reference, state, and version. Jobs would be partitioned by time bucket and possibly tenant so the scheduler doesn't scan the entire table. Scheduler nodes claim due rows using leases or database operations such as select for update skip locked, then create a unique execution record for that specific occurrence. A uniqueness key like job_id plus scheduled_occurrence_time prevents two schedulers from enqueueing the same occurrence. The execution record is sent to a work queue, and workers process it idempotently. Worker leases or queue visibility timeouts handle crashes, while retries use backoff and preserve the same execution ID. Recurring jobs calculate the next occurrence from the recurrence rule and the intended schedule time, not the actual completion time, unless the product explicitly wants fixed-delay behavior. Cancellation changes the job version or state so schedulers and workers can reject stale executions. I'd use a short look-ahead window, sharded timing wheels or ordered partitions for scale, reconciliation scans for missed jobs, and metrics for scheduling lag, duplicate suppression, retry age, and stuck leases.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates job definitions, scheduled occurrences, and worker execution.",
+      "Uses a unique occurrence identity to prevent duplicate enqueueing by multiple schedulers.",
+      "Handles scheduler and worker crashes through leases, visibility timeouts, and reconciliation.",
+      "Distinguishes fixed-rate recurrence from fixed-delay recurrence.",
+      "Makes cancellation safe through durable state or version checks.",
+      "Provides scalable due-job discovery rather than repeatedly scanning all jobs.",
+      "Includes idempotency, retries, observability, and missed-job recovery."
+    ],
+    "improvements": [
+      "Could discuss timezone and daylight-saving behavior for calendar-based recurring jobs.",
+      "Could explain whether a severely delayed recurring job catches up every missed occurrence or skips to the next future occurrence."
+    ],
+    "feedback": "This is a production-grade scheduler design. It addresses durable timing, recurrence semantics, distributed claiming, duplicate prevention, cancellation, retries, and reconciliation."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a distributed task scheduler that can execute one-time and recurring jobs at or after a requested time. It must support millions of scheduled jobs, retries, cancellation, multiple workers, and protection against two workers executing the same scheduled occurrence.",
+    "quality_tier": "good",
+    "answer": "I'd store each job with a next execution time and recurrence information. Scheduler instances would query only a near-term time range and claim due jobs using row locks with skip locked, so different instances don't claim the same row. Before sending a job to the worker queue, I'd create an execution row with a unique key containing the job ID and scheduled time. Workers would use that execution ID for idempotency and retry failures with backoff. After scheduling a recurring occurrence, the scheduler calculates and stores the next time. Cancellation changes the job status so future occurrences aren't created.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses durable next-run information and recurrence data.",
+      "Coordinates scheduler instances with database row claiming.",
+      "Creates a unique execution record for each scheduled occurrence.",
+      "Uses the execution ID for worker idempotency and retries.",
+      "Stops future scheduling through a durable cancellation state."
+    ],
+    "improvements": [
+      "Could describe recovery if a scheduler claims a job and crashes before enqueueing it.",
+      "Does not explain partitioning or indexing for millions of future jobs.",
+      "Could distinguish schedule time from completion time for recurrence calculations.",
+      "Worker cancellation and stale already-enqueued occurrences are not covered.",
+      "Reconciliation for missed schedules is missing."
+    ],
+    "feedback": "The architecture is correct and covers the main duplicate-prevention mechanism. Scaling, crash gaps, and recurrence semantics need more detail."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a distributed task scheduler that can execute one-time and recurring jobs at or after a requested time. It must support millions of scheduled jobs, retries, cancellation, multiple workers, and protection against two workers executing the same scheduled occurrence.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store jobs in a database ordered by run time. Every scheduler server would query for jobs where run time is less than now and mark them as running. Then it would send them to a queue. Recurring jobs can insert another row after they run. Failed jobs would be retried three times.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Uses durable database storage for scheduled execution times.",
+      "Separates scheduling from worker execution through a queue.",
+      "Includes recurring-job creation and bounded retries."
+    ],
+    "improvements": [
+      "Concurrent scheduler instances can select the same due row unless claiming is atomic.",
+      "Marking a job running before enqueueing creates a loss window if the scheduler crashes.",
+      "Inserting recurrence only after execution changes scheduling semantics and can drift.",
+      "No unique occurrence identity prevents duplicate worker execution.",
+      "Cancellation, leases, large-scale due-job discovery, and reconciliation are missing."
+    ],
+    "feedback": "The answer has the right major components but leaves race conditions and crash windows that can both duplicate and lose executions."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a distributed task scheduler that can execute one-time and recurring jobs at or after a requested time. It must support millions of scheduled jobs, retries, cancellation, multiple workers, and protection against two workers executing the same scheduled occurrence.",
+    "quality_tier": "poor",
+    "answer": "I'd run a cron process every minute on every server. It would read all jobs and execute anything whose time has arrived. To avoid duplicates, I'd add a boolean called executed and check it first.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that scheduled work must be compared against the current time.",
+      "Attempts to track whether a job has already executed."
+    ],
+    "improvements": [
+      "Every server can read executed as false and run the same job concurrently.",
+      "A boolean cannot represent separate occurrences of a recurring job.",
+      "Scanning every job each minute does not scale to millions of schedules.",
+      "The design does not handle retries, cancellation, crashes, or worker queues.",
+      "Execution and marking are not atomic or idempotent."
+    ],
+    "feedback": "The proposal is vulnerable to duplicate execution and does not scale or support recurring-job semantics."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a distributed task scheduler that can execute one-time and recurring jobs at or after a requested time. It must support millions of scheduled jobs, retries, cancellation, multiple workers, and protection against two workers executing the same scheduled occurrence.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use Kubernetes CronJobs because Kubernetes can run containers on a schedule. We can create one CronJob resource for every user task.",
+    "scores": {
+      "relevance": 3,
+      "clarity": 7,
+      "depth": 3,
+      "confidence": 5
+    },
+    "strengths": [
+      "Identifies an existing scheduling mechanism for a limited number of infrastructure-managed jobs."
+    ],
+    "improvements": [
+      "Creating millions of Kubernetes resources is operationally impractical.",
+      "Does not explain one-time jobs, per-occurrence uniqueness, application cancellation, or retry semantics.",
+      "The question asks for the architecture of the scheduling service rather than a product name.",
+      "Does not address duplicate execution across workers."
+    ],
+    "feedback": "The selected tool may suit a small infrastructure workload but does not answer the large-scale application scheduler design."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a relational schema for a product catalog where each product can belong to multiple categories and its price changes over time. The system must quickly return the current price, preserve complete price history, and prevent overlapping effective price periods for the same product.",
+    "quality_tier": "excellent",
+    "answer": "I'd have products and categories tables, plus a product_categories join table with a composite primary key on product_id and category_id. Price history would be separate, with product_id, amount in a fixed-precision type or integer minor units, currency, effective_from, and effective_to. The current row could use a null effective_to, with a partial unique index allowing only one open-ended price per product and currency. To prevent any overlapping periods, PostgreSQL can use an exclusion constraint on product ID, currency, and a timestamp range with the overlap operator. In another database, I'd validate overlaps inside a transaction while locking the product's price rows, though that is harder to enforce perfectly. An index beginning with product_id and currency followed by effective_from supports historical lookups. For especially frequent current-price reads, I might keep current_price_id on products as a derived pointer, but the history table remains authoritative and both changes occur in one transaction.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly models the product-to-category relationship with a join table.",
+      "Separates temporal price history from the product entity.",
+      "Uses suitable monetary types and includes currency.",
+      "Enforces one current price and prevents all overlapping effective periods.",
+      "Provides relevant indexes for current and historical price queries.",
+      "Treats optional current-price denormalization as derived data maintained transactionally."
+    ],
+    "improvements": [
+      "Could define whether effective intervals are closed-open to avoid ambiguity at exact boundary timestamps.",
+      "Could mention how scheduled future prices are inserted while preserving the no-overlap constraint."
+    ],
+    "feedback": "This is a strong relational design. It preserves normalized history, supports efficient reads, and enforces the temporal invariant at the database layer."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a relational schema for a product catalog where each product can belong to multiple categories and its price changes over time. The system must quickly return the current price, preserve complete price history, and prevent overlapping effective price periods for the same product.",
+    "quality_tier": "good",
+    "answer": "I'd use products, categories, and a product_category join table. For pricing, I'd create product_prices with product_id, price, currency, start_time, and end_time. The active price has a null end time. I'd add an index on product_id and start_time and a unique partial index so only one row with a null end time exists for each product. When changing price, one transaction closes the current row and inserts the new row.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Models many-to-many categories correctly.",
+      "Stores every price version with an effective interval.",
+      "Supports efficient product price lookups through indexing.",
+      "Uses one transaction to close the old price and create the new one.",
+      "Prevents multiple simultaneously open-ended current prices."
+    ],
+    "improvements": [
+      "A unique current-price index does not prevent overlaps between two closed or future periods.",
+      "Could use an exclusion constraint or another database-enforced range check.",
+      "Should specify a fixed-precision monetary representation and currency-aware uniqueness.",
+      "Could define interval-boundary semantics."
+    ],
+    "feedback": "The schema handles current pricing and history well. The remaining weakness is complete enforcement of non-overlapping historical and future intervals."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a relational schema for a product catalog where each product can belong to multiple categories and its price changes over time. The system must quickly return the current price, preserve complete price history, and prevent overlapping effective price periods for the same product.",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep a price column on products for the current value and make another price_history table with product ID, old price, and changed_at. Categories would be stored in a product_categories table. Whenever the price changes, the old value gets copied into history before the product row is updated.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Provides fast current-price reads from the products table.",
+      "Preserves earlier price values in a separate history table.",
+      "Uses a join table for multiple categories."
+    ],
+    "improvements": [
+      "A changed_at-only history does not directly model effective start and end periods.",
+      "The schema cannot represent future scheduled prices cleanly.",
+      "It does not enforce non-overlapping effective periods.",
+      "Copying history and updating current price must be atomic.",
+      "Currency and fixed-precision monetary storage are not addressed."
+    ],
+    "feedback": "The design is workable for simple audit history but does not fully model or enforce temporal price intervals."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a relational schema for a product catalog where each product can belong to multiple categories and its price changes over time. The system must quickly return the current price, preserve complete price history, and prevent overlapping effective price periods for the same product.",
+    "quality_tier": "poor",
+    "answer": "I'd put product name, category names, current price, previous prices, and all price-change dates in one products table. The previous prices could be stored as a comma-separated string.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Attempts to retain both current and previous price information."
+    ],
+    "improvements": [
+      "Comma-separated values violate relational normalization and are difficult to query or validate.",
+      "Multiple category names in one row cannot enforce category identity or relationships.",
+      "Price amounts and dates can become misaligned.",
+      "The schema cannot prevent overlapping effective periods.",
+      "Historical price queries and updates would be inefficient and error-prone."
+    ],
+    "feedback": "The proposed single-table design does not provide reliable relational structure or temporal integrity."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a relational schema for a product catalog where each product can belong to multiple categories and its price changes over time. The system must quickly return the current price, preserve complete price history, and prevent overlapping effective price periods for the same product.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use Elasticsearch because users need to search products by name and category. It can also support filters and autocomplete.",
+    "scores": {
+      "relevance": 2,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Identifies a useful search technology for product discovery."
+    ],
+    "improvements": [
+      "The question asks for a relational source-of-truth schema.",
+      "Does not model many-to-many categories or temporal price history.",
+      "Does not enforce current-price uniqueness or non-overlapping periods.",
+      "Search indexing does not replace transactional database constraints."
+    ],
+    "feedback": "The response addresses product search rather than relational catalog and price-history design."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "You're building a multi-step checkout form in React. Draft data should autosave, users can move backward between steps, older autosave responses must not overwrite newer input, and validation errors must be accessible. How would you structure the component and request flow?",
+    "quality_tier": "excellent",
+    "answer": "I'd keep the checkout draft in one canonical form state, probably managed by a reducer or form library, while each step renders only its relevant fields. Moving between steps shouldn't destroy field values. Autosave would be debounced and triggered from validated draft changes, with each request carrying a monotonically increasing client revision or the server's expected version. I'd cancel superseded requests where possible, but I'd also ignore any response whose revision is older than the latest submitted or accepted revision. The server should use optimistic concurrency so another tab can't silently overwrite the draft. I'd show a saving, saved, or failed status without blocking typing, and retry only safe idempotent saves. Validation would run at the field level and again before advancing or submitting. Each error should be associated with its input through aria-describedby, invalid fields should use aria-invalid, and a submission error summary should receive focus and link to the affected fields. I'd persist only appropriate non-sensitive draft data and avoid storing payment details in local storage.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses one canonical form state across multiple steps.",
+      "Prevents stale autosave responses through request revisions in addition to cancellation.",
+      "Extends concurrency protection to other browser tabs through server-side versioning.",
+      "Keeps autosave status non-blocking and treats retries as idempotent operations.",
+      "Provides concrete accessible-validation behavior including error associations and focus management.",
+      "Recognizes the sensitivity of checkout and payment data."
+    ],
+    "improvements": [
+      "Could discuss how partially valid fields are serialized when a step contains validation errors.",
+      "Could mention restoring a draft after refresh and resolving a conflict with a newer server version."
+    ],
+    "feedback": "This is a strong intermediate frontend answer. It handles state persistence, network races, cross-tab conflicts, autosave usability, and accessible validation."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "You're building a multi-step checkout form in React. Draft data should autosave, users can move backward between steps, older autosave responses must not overwrite newer input, and validation errors must be accessible. How would you structure the component and request flow?",
+    "quality_tier": "good",
+    "answer": "I'd store the complete checkout draft in a parent component or form context so changing steps doesn't reset the fields. Autosave would be debounced, and I'd cancel the previous request when a new one starts. I'd also attach a request number and update the saved state only if the response matches the latest request. Each step can validate its own fields before moving forward. Error text should have an ID linked from the input with aria-describedby, and invalid fields should use aria-invalid. On final submission, I'd focus an error summary if multiple fields are wrong.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Keeps form data stable while navigating between steps.",
+      "Uses debouncing and cancellation to control autosave requests.",
+      "Adds a latest-request check to prevent stale response updates.",
+      "Provides field-level and final-step validation.",
+      "Includes accessible field errors and an error summary."
+    ],
+    "improvements": [
+      "Could include server-side optimistic concurrency for edits from multiple tabs or devices.",
+      "Does not discuss autosave failures, retries, or save-status feedback.",
+      "Could distinguish validation needed for autosave from validation needed to advance.",
+      "Sensitive payment-data storage is not addressed."
+    ],
+    "feedback": "The answer directly solves the main React and accessibility requirements. Server conflicts and failure-state handling are the primary omissions."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "You're building a multi-step checkout form in React. Draft data should autosave, users can move backward between steps, older autosave responses must not overwrite newer input, and validation errors must be accessible. How would you structure the component and request flow?",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep each step's data in local storage so it comes back when the user returns. A useEffect could call the save API whenever the form values change. When the response comes back, I'd show Saved. Errors can be displayed in red below the inputs.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Attempts to preserve draft values across step changes and refreshes.",
+      "Recognizes that autosave should respond to form-state changes.",
+      "Displays field errors near the relevant inputs."
+    ],
+    "improvements": [
+      "Saving on every change without debouncing can generate excessive requests.",
+      "There is no protection against older responses arriving after newer ones.",
+      "Local storage may be inappropriate for sensitive checkout information.",
+      "Red text alone does not provide accessible error semantics.",
+      "Does not describe aria-invalid, aria-describedby, focus management, or retry behavior."
+    ],
+    "feedback": "The answer covers basic persistence but misses the central response-ordering bug and provides insufficient accessibility handling."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "You're building a multi-step checkout form in React. Draft data should autosave, users can move backward between steps, older autosave responses must not overwrite newer input, and validation errors must be accessible. How would you structure the component and request flow?",
+    "quality_tier": "poor",
+    "answer": "I'd submit the whole form after every keypress so nothing gets lost. Each step could have its own component state, and when users go back, I'd fetch the saved values again. If an error happens, I'd show an alert saying the form is invalid.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes the need to persist data and notify users when validation fails."
+    ],
+    "improvements": [
+      "Submitting on every keypress creates excessive traffic and race conditions.",
+      "Separate disposable step state can cause flicker and data loss during navigation.",
+      "Refetching when moving backward may overwrite newer unsaved input.",
+      "A generic alert does not identify or connect to invalid fields.",
+      "Does not handle stale responses, cancellation, focus, or accessible error associations."
+    ],
+    "feedback": "The design increases request volume and makes state synchronization less reliable instead of solving the stated issues."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "You're building a multi-step checkout form in React. Draft data should autosave, users can move backward between steps, older autosave responses must not overwrite newer input, and validation errors must be accessible. How would you structure the component and request flow?",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a progress bar at the top and animate the transition between checkout steps. The current step could use a different color so users know where they are.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests useful visual orientation for a multi-step checkout."
+    ],
+    "improvements": [
+      "The question asks about form state, autosave races, and accessible validation.",
+      "Does not explain request handling or preservation of draft data.",
+      "Does not prevent stale responses from overwriting current input.",
+      "Visual step indicators do not replace accessible error behavior."
+    ],
+    "feedback": "The response focuses on presentation rather than the requested state and request-flow architecture."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A highly requested product page is cached for five minutes. When the cache expires, thousands of requests hit the database at once and latency spikes. Design a solution that prevents this cache stampede while still serving reasonably fresh data and handling database failures.",
+    "quality_tier": "excellent",
+    "answer": "I'd avoid making every request regenerate the value. One option is stale-while-revalidate: store the payload with a fresh-until time and a later stale-until time. During the fresh period, serve normally. During the stale period, serve the cached value immediately while exactly one request or background worker acquires a short lease and refreshes it. Other requests continue receiving stale data instead of waiting or hitting the database. I'd add TTL jitter so many product keys don't expire simultaneously. For a completely missing key, I'd use request coalescing or single-flight so one caller loads the database and the others wait briefly for the same result. Negative results should be cached for a short time to protect against repeated missing-product lookups. Refreshes need timeouts and should not hold a lock longer than the lease. If the database fails, serve stale data within a defined maximum-staleness window, apply backoff and circuit breaking, and expose degraded status through metrics. Product updates can publish invalidation events or update the cache after the database transaction commits.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses stale-while-revalidate to keep requests fast during refresh.",
+      "Ensures only one refresher regenerates a hot key through a lease or single-flight mechanism.",
+      "Handles cold misses separately through request coalescing.",
+      "Uses TTL jitter to prevent synchronized expiration across many keys.",
+      "Includes negative caching, bounded stale serving, backoff, circuit breaking, and observability.",
+      "Addresses cache invalidation after authoritative data changes."
+    ],
+    "improvements": [
+      "Could discuss whether callers waiting on a cold-miss single-flight receive a timeout or stale fallback.",
+      "Could describe fencing tokens if a refresh operation can outlive its lease and overwrite newer data."
+    ],
+    "feedback": "This is a comprehensive backend answer. It protects the database on hot-key expiry while balancing freshness, latency, and degraded operation."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A highly requested product page is cached for five minutes. When the cache expires, thousands of requests hit the database at once and latency spikes. Design a solution that prevents this cache stampede while still serving reasonably fresh data and handling database failures.",
+    "quality_tier": "good",
+    "answer": "I'd use a distributed lock per product key. When the cache expires, the first request gets the lock and refreshes the value. Other requests should either wait briefly or receive the previous cached value instead of querying the database. I'd keep stale entries for longer than their normal freshness TTL so they can be served during refresh. I'd also add random jitter to expiry times and use a short negative-cache TTL for products that don't exist. If the database is unavailable, I'd continue serving stale data for a limited period.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses per-key locking to prevent simultaneous regeneration.",
+      "Preserves stale cache data for low-latency fallback.",
+      "Adds TTL jitter to reduce synchronized expiration.",
+      "Includes negative caching for missing records.",
+      "Defines limited stale serving during database outages."
+    ],
+    "improvements": [
+      "Could specify lock timeout, ownership, and safe release behavior.",
+      "Does not discuss cold-cache requests when no stale value exists.",
+      "Could mention backoff or circuit breaking during repeated database failures.",
+      "Cache invalidation after product updates is not addressed.",
+      "Waiting callers should have bounded latency."
+    ],
+    "feedback": "The main anti-stampede design is correct. Lock safety, cold misses, and update invalidation require more detail."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A highly requested product page is cached for five minutes. When the cache expires, thousands of requests hit the database at once and latency spikes. Design a solution that prevents this cache stampede while still serving reasonably fresh data and handling database failures.",
+    "quality_tier": "mediocre",
+    "answer": "I'd increase the cache TTL from five minutes to one hour so it expires less often. I could also refresh the most popular products every fifty minutes using a background job. If the database fails, the cache may still contain the value.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Reduces the frequency of hot-key cache misses.",
+      "Introduces proactive refresh for popular products.",
+      "Recognizes that cached data can provide resilience during database failures."
+    ],
+    "improvements": [
+      "A longer TTL may violate freshness requirements.",
+      "The cache can still stampede when the hourly entry finally expires.",
+      "A fixed background refresh schedule can synchronize work across many keys.",
+      "Does not use single-flight, locking, stale-while-revalidate, or TTL jitter.",
+      "Database-failure behavior is not explicitly bounded or monitored."
+    ],
+    "feedback": "The proposal lowers stampede frequency but does not eliminate the concurrency problem and may serve excessively stale information."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A highly requested product page is cached for five minutes. When the cache expires, thousands of requests hit the database at once and latency spikes. Design a solution that prevents this cache stampede while still serving reasonably fresh data and handling database failures.",
+    "quality_tier": "poor",
+    "answer": "I'd remove the cache because it is causing the spike. Then every request would consistently query the database, so there wouldn't be a sudden change when the cache expires.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Recognizes that synchronized expiration is the trigger for the sudden traffic change."
+    ],
+    "improvements": [
+      "Removing the cache sends the full high request rate to the database continuously.",
+      "The database may become slower or unavailable under sustained load.",
+      "Does not preserve low latency or availability.",
+      "Does not provide freshness control, request coalescing, stale fallback, or failure handling.",
+      "The cache should be redesigned rather than removed."
+    ],
+    "feedback": "The proposal eliminates the expiration event by exposing the database to permanent peak load, which is worse than the original problem."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A highly requested product page is cached for five minutes. When the cache expires, thousands of requests hit the database at once and latency spikes. Design a solution that prevents this cache stampede while still serving reasonably fresh data and handling database failures.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add more database replicas and use a faster database instance with additional CPU and memory. That should let it process more product queries.",
+    "scores": {
+      "relevance": 3,
+      "clarity": 7,
+      "depth": 3,
+      "confidence": 5
+    },
+    "strengths": [
+      "Identifies capacity scaling as one possible way to reduce database latency."
+    ],
+    "improvements": [
+      "More capacity does not remove synchronized duplicate cache regeneration.",
+      "A sufficiently hot key can still overwhelm replicas.",
+      "Does not explain cache freshness, locking, stale serving, or request coalescing.",
+      "Database failure behavior and update invalidation are missing."
+    ],
+    "feedback": "Capacity may reduce symptoms, but the response does not solve the cache-stampede mechanism."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a piece of critical feedback you initially disagreed with. How did you evaluate it, what did you change, and what was the outcome?",
+    "quality_tier": "excellent",
+    "answer": "A senior engineer told me that my pull requests were technically correct but too large to review safely. My first reaction was that splitting them would slow delivery because the feature touched the API, database, and frontend together. Instead of dismissing the feedback, I looked at my previous reviews and noticed that the largest PRs had more clarification rounds and two of them needed follow-up fixes. For the next feature, I wrote a short implementation plan and split the work into a schema change, backend support, and frontend integration, with feature flags keeping incomplete pieces inactive. Review time dropped from several days to about one day per change, and reviewers found a migration issue before release. I still think some changes need to be coordinated, but I changed my default from one complete feature PR to a sequence of independently safe changes.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Provides a specific criticism and honestly describes the initial disagreement.",
+      "Evaluates the feedback using evidence from prior review cycles and defects.",
+      "Changes the workflow through planning, incremental pull requests, and feature flags.",
+      "Quantifies improvement in review time.",
+      "Shows a balanced conclusion rather than claiming the feedback applies without exception."
+    ],
+    "improvements": [
+      "Could mention how the candidate discussed the experiment with the senior engineer before changing the workflow.",
+      "Could provide a longer-term outcome, such as whether the team adopted the same pull-request pattern."
+    ],
+    "feedback": "This is a strong intermediate behavioral answer. It shows openness without passive agreement, evidence-based evaluation, concrete change, and measurable results."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a piece of critical feedback you initially disagreed with. How did you evaluate it, what did you change, and what was the outcome?",
+    "quality_tier": "good",
+    "answer": "My manager told me that I was giving too much technical detail during product meetings. I initially thought the detail was necessary because the decisions affected architecture. I asked for examples and reviewed a few meeting notes. I realized I was explaining implementation before confirming what decision the group needed to make. After that, I started leading with the user impact, options, and recommendation, and kept deeper details for questions or a separate document. Meetings became shorter, and product teammates started involving me earlier in planning.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Describes specific feedback and the candidate's initial reasoning.",
+      "Requests concrete examples instead of reacting defensively.",
+      "Identifies the underlying communication problem.",
+      "Implements a clear change in meeting structure.",
+      "Provides positive outcomes involving meeting efficiency and trust."
+    ],
+    "improvements": [
+      "Could quantify how much meeting time changed.",
+      "Does not mention whether the candidate followed up with the manager to confirm improvement.",
+      "Could include an example of a decision that became clearer after the change."
+    ],
+    "feedback": "The answer demonstrates mature feedback handling and a concrete communication adjustment. More measurable evidence would strengthen it further."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a piece of critical feedback you initially disagreed with. How did you evaluate it, what did you change, and what was the outcome?",
+    "quality_tier": "mediocre",
+    "answer": "A teammate said I should add more comments to my code. I didn't fully agree because I prefer readable code, but I added comments to the complicated functions. It helped the teammate understand the code, so I now add comments when something isn't obvious.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Provides a direct example of feedback the candidate did not initially accept.",
+      "Finds a compromise between readable code and explanatory comments.",
+      "Describes a small behavioral change and positive result."
+    ],
+    "improvements": [
+      "Does not explain how the candidate determined which comments were valuable.",
+      "The outcome is vague and not measured.",
+      "Could distinguish comments explaining intent from comments repeating the code.",
+      "Does not describe a follow-up conversation with the teammate.",
+      "The example shows limited impact for an intermediate-level candidate."
+    ],
+    "feedback": "The answer is relevant but shallow. It would benefit from clearer evaluation criteria, collaboration, and evidence of sustained improvement."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a piece of critical feedback you initially disagreed with. How did you evaluate it, what did you change, and what was the outcome?",
+    "quality_tier": "poor",
+    "answer": "I've received feedback before, but sometimes people criticize code because they don't understand the full context. If I know my implementation is correct, I explain it and continue with my approach.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that technical context can affect whether feedback is applicable."
+    ],
+    "improvements": [
+      "Does not provide a specific example.",
+      "Assumes correctness without describing any effort to evaluate the feedback.",
+      "Shows no behavioral change or outcome.",
+      "The response may sound dismissive of reviewers and teammates.",
+      "Should demonstrate curiosity, evidence gathering, and follow-up."
+    ],
+    "feedback": "The answer is defensive and hypothetical. It provides no evidence that the candidate can productively evaluate critical feedback."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a piece of critical feedback you initially disagreed with. How did you evaluate it, what did you change, and what was the outcome?",
+    "quality_tier": "off_topic",
+    "answer": "I always try to give constructive feedback to other people. I make sure to be polite and mention both strengths and weaknesses so they don't feel discouraged.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Describes a considerate general approach to giving feedback."
+    ],
+    "improvements": [
+      "The question asks about receiving feedback, not giving it.",
+      "Does not provide a specific situation, initial disagreement, evaluation, change, or outcome.",
+      "General communication principles do not provide the requested behavioral evidence."
+    ],
+    "feedback": "The response answers a different feedback question and does not address the candidate's reaction to criticism."
+  }
+]

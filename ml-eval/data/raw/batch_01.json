@@ -1,0 +1,1013 @@
+[
+{
+"category": "DSA",
+"difficulty": "medium",
+"level": "fresher",
+"question": "You're receiving one temperature reading every second and need to report the maximum temperature from only the most recent 300 readings after each new reading arrives. How would you design the algorithm, and what are its time and space complexities?",
+"quality_tier": "excellent",
+"answer": "I'd use a monotonic decreasing deque. The deque would store indices, or timestamps, rather than just temperatures. For every new reading, I'd first remove indices from the front if they're outside the last 300 readings. Then I'd remove values from the back while their temperature is less than or equal to the new one, because they can never become the maximum while the new reading is still in the window. I'd add the new index at the back, and the front would always contain the current maximum. Each reading enters and leaves the deque at most once, so the amortized time is O(1) per reading and O(n) overall. Space is O(300), or O(k) generally.",
+"scores": {
+"relevance": 10,
+"clarity": 9,
+"depth": 9,
+"confidence": 9
+},
+"strengths": [
+"Correctly selects a monotonic decreasing deque for a sliding-window maximum.",
+"Explains both expiration from the front and dominated-element removal from the back.",
+"Justifies the amortized O(1) processing time by noting that each reading enters and leaves once.",
+"Recognizes that indices or timestamps are needed to determine whether readings have expired."
+],
+"improvements": [
+"Could briefly clarify whether equal values are removed or retained and how that choice affects duplicate handling.",
+"Could mention how the first 299 readings are handled before a full window is available."
+],
+"feedback": "This is a strong fresher-level response. It gives the optimal data structure, explains the invariant clearly, and provides accurate complexity analysis. The minor edge cases do not affect the core correctness."
+},
+{
+"category": "DSA",
+"difficulty": "medium",
+"level": "fresher",
+"question": "You're receiving one temperature reading every second and need to report the maximum temperature from only the most recent 300 readings after each new reading arrives. How would you design the algorithm, and what are its time and space complexities?",
+"quality_tier": "good",
+"answer": "I think I'd keep a deque in decreasing order. When a new temperature comes in, I'd remove smaller temperatures from the back and then insert the new one. I'd also remove the oldest item when it's no longer in the 300-second window. The first item in the deque should be the maximum. It should be around O(1) per update on average and O(300) memory.",
+"scores": {
+"relevance": 9,
+"clarity": 8,
+"depth": 7,
+"confidence": 8
+},
+"strengths": [
+"Identifies the correct monotonic-deque approach.",
+"Correctly states that the deque front provides the current maximum.",
+"Provides the expected amortized update time and bounded memory usage."
+],
+"improvements": [
+"Should explicitly state that the deque stores indices or timestamps; storing only temperatures makes expiration ambiguous when duplicates exist.",
+"Could explain why removing smaller values is safe rather than only describing the operations.",
+"Should use O(k) as the general space complexity, with k equal to 300 here."
+],
+"feedback": "The answer is technically sound and reaches the optimal solution. It loses some depth because it does not fully explain how expired elements are identified or why the deque operations guarantee correctness."
+},
+{
+"category": "DSA",
+"difficulty": "medium",
+"level": "fresher",
+"question": "You're receiving one temperature reading every second and need to report the maximum temperature from only the most recent 300 readings after each new reading arrives. How would you design the algorithm, and what are its time and space complexities?",
+"quality_tier": "mediocre",
+"answer": "I'd probably store the last 300 temperatures in a queue. Whenever a new one comes, I'd remove the oldest one and scan the queue to find the maximum. So it'll always give the correct max. The scan would take O(300), which is basically constant because 300 is fixed, and the memory is also 300 values.",
+"scores": {
+"relevance": 8,
+"clarity": 8,
+"depth": 4,
+"confidence": 7
+},
+"strengths": [
+"Proposes a correct straightforward solution using a fixed-size queue.",
+"Correctly removes the oldest reading before evaluating the current window.",
+"Accurately identifies that the scan examines up to 300 values."
+],
+"improvements": [
+"Should express the general update complexity as O(k), not dismiss it as constant merely because this example uses 300.",
+"Does not discuss the optimal O(1) amortized monotonic-deque solution expected for a medium question.",
+"Could compare the simple queue approach with the optimized alternative and explain when the simpler method may be acceptable."
+],
+"feedback": "The proposed algorithm is correct but not optimal. For a medium DSA question, an interviewer would expect recognition of the sliding-window maximum pattern and a monotonic deque."
+},
+{
+"category": "DSA",
+"difficulty": "medium",
+"level": "fresher",
+"question": "You're receiving one temperature reading every second and need to report the maximum temperature from only the most recent 300 readings after each new reading arrives. How would you design the algorithm, and what are its time and space complexities?",
+"quality_tier": "poor",
+"answer": "I would keep one variable called max and update it whenever a higher temperature comes in. Then I don't need to store all 300 readings, so the time is O(1) and space is O(1). If the temperature is lower, the max just stays the same.",
+"scores": {
+"relevance": 6,
+"clarity": 7,
+"depth": 2,
+"confidence": 5
+},
+"strengths": [
+"Recognizes that maintaining state between incoming readings can avoid rescanning in some streaming problems.",
+"Clearly states the intended time and space costs of the proposed method."
+],
+"improvements": [
+"The algorithm is incorrect when the current maximum expires from the 300-reading window.",
+"Must retain enough information to determine the next maximum after an old reading leaves.",
+"Should test the approach with a sequence where an early large value is followed by smaller values for more than 300 seconds."
+],
+"feedback": "The response solves a running maximum, not a sliding-window maximum. It misses the central requirement that old readings stop contributing after they leave the window."
+},
+{
+"category": "DSA",
+"difficulty": "medium",
+"level": "fresher",
+"question": "You're receiving one temperature reading every second and need to report the maximum temperature from only the most recent 300 readings after each new reading arrives. How would you design the algorithm, and what are its time and space complexities?",
+"quality_tier": "off_topic",
+"answer": "For temperature data, I'd mainly use a machine-learning model because weather can change unexpectedly. We could train it using humidity, wind speed, and previous temperatures, then predict what the next temperature will be. Accuracy would depend on the dataset.",
+"scores": {
+"relevance": 1,
+"clarity": 6,
+"depth": 2,
+"confidence": 4
+},
+"strengths": [
+"The response is understandable and identifies potentially useful features for a temperature-prediction task."
+],
+"improvements": [
+"The question asks for the exact maximum among recent readings, not a prediction of future temperature.",
+"Should discuss a data structure for maintaining a sliding-window maximum.",
+"Does not provide relevant algorithmic time or space complexity."
+],
+"feedback": "This answer addresses forecasting rather than the requested sliding-window computation. It does not engage with the actual DSA problem."
+},
+{
+"category": "OOP",
+"difficulty": "medium",
+"level": "intermediate",
+"question": "An e-commerce checkout currently has one large function with conditionals for card, UPI, and wallet payments. New payment methods are added frequently, and each method has different validation and execution logic. How would you redesign this using object-oriented principles?",
+"quality_tier": "excellent",
+"answer": "I'd separate the payment behavior behind something like a PaymentMethod interface with methods such as validate, authorize or pay, and maybe refund if that belongs in the same capability. CardPayment, UpiPayment, and WalletPayment would implement it independently. The checkout service would depend on the interface instead of checking payment-type strings. I'd use a factory or dependency-injection map to resolve the implementation from the requested method. That follows open-closed because adding net banking shouldn't require editing the checkout flow. I'd also avoid forcing every implementation to support operations it can't handle, so refund or recurring-payment behavior might be smaller capability interfaces. Shared orchestration like order state changes, idempotency, and audit logging should remain in the checkout service rather than being duplicated inside each payment class.",
+"scores": {
+"relevance": 10,
+"clarity": 9,
+"depth": 9,
+"confidence": 9
+},
+"strengths": [
+"Applies polymorphism and dependency inversion to eliminate payment-type conditionals.",
+"Uses a factory or dependency-injection registry without tightly coupling checkout to concrete classes.",
+"Connects the design to the open-closed and interface-segregation principles.",
+"Correctly separates payment-specific behavior from shared checkout orchestration such as idempotency and order-state handling."
+],
+"improvements": [
+"Could describe how failures and provider-specific error codes would be normalized for the checkout service.",
+"Could mention how transaction state would be modeled when authorization and capture are separate operations."
+],
+"feedback": "This is a mature intermediate-level answer. It does more than name the Strategy pattern; it establishes sensible responsibility boundaries and anticipates capability differences among payment methods."
+},
+{
+"category": "OOP",
+"difficulty": "medium",
+"level": "intermediate",
+"question": "An e-commerce checkout currently has one large function with conditionals for card, UPI, and wallet payments. New payment methods are added frequently, and each method has different validation and execution logic. How would you redesign this using object-oriented principles?",
+"quality_tier": "good",
+"answer": "I'd use the Strategy pattern. There'd be a PaymentStrategy interface with validate and pay methods, and separate classes for CardPayment, UpiPayment, and WalletPayment. Checkout would receive the strategy and call the same methods without knowing the details. A factory could choose the right strategy based on the payment type. Then adding another payment option mostly means adding another class instead of changing the checkout code.",
+"scores": {
+"relevance": 9,
+"clarity": 9,
+"depth": 7,
+"confidence": 8
+},
+"strengths": [
+"Correctly identifies Strategy as a suitable pattern for interchangeable payment behavior.",
+"Clearly explains how checkout can work through a common abstraction.",
+"Recognizes that a factory can centralize implementation selection.",
+"Explains how the redesign reduces modifications when new payment methods are added."
+],
+"improvements": [
+"Could discuss which responsibilities remain in checkout versus the individual strategy classes.",
+"Does not address cross-cutting requirements such as idempotency, logging, or consistent error handling.",
+"Could note that the factory itself should avoid becoming another large conditional block, for example by using a registered map."
+],
+"feedback": "The core redesign is correct and clearly explained. It would become stronger with more attention to boundaries, lifecycle operations, and production concerns beyond selecting a design-pattern name."
+},
+{
+"category": "OOP",
+"difficulty": "medium",
+"level": "intermediate",
+"question": "An e-commerce checkout currently has one large function with conditionals for card, UPI, and wallet payments. New payment methods are added frequently, and each method has different validation and execution logic. How would you redesign this using object-oriented principles?",
+"quality_tier": "mediocre",
+"answer": "I'd create a base Payment class and make Card, UPI, and Wallet inherit from it. The base class can have a processPayment method, and each child overrides it. Then in checkout we create the child object and call the method. This should make the code cleaner and reusable.",
+"scores": {
+"relevance": 8,
+"clarity": 7,
+"depth": 5,
+"confidence": 7
+},
+"strengths": [
+"Recognizes that polymorphism can replace payment-specific execution branches.",
+"Suggests separate implementations for card, UPI, and wallet behavior.",
+"Provides a basic common operation through processPayment."
+],
+"improvements": [
+"Does not explain how checkout selects or receives the concrete implementation without retaining conditionals.",
+"Assumes inheritance is required when an interface and composition would usually be more flexible.",
+"Does not address method-specific validation or shared orchestration responsibilities.",
+"The claim of reusability is not supported with an explanation of what behavior is actually shared."
+],
+"feedback": "The answer identifies basic polymorphism but remains shallow. It needs a clearer creation mechanism, responsibility boundaries, and justification for inheritance versus interfaces and composition."
+},
+{
+"category": "OOP",
+"difficulty": "medium",
+"level": "intermediate",
+"question": "An e-commerce checkout currently has one large function with conditionals for card, UPI, and wallet payments. New payment methods are added frequently, and each method has different validation and execution logic. How would you redesign this using object-oriented principles?",
+"quality_tier": "poor",
+"answer": "I'd keep the function but move each payment condition into a separate private method, like payByCard and payByUPI. The main function would still check the type and call the right method. That way the file looks organized, and adding a method isn't too difficult.",
+"scores": {
+"relevance": 6,
+"clarity": 7,
+"depth": 3,
+"confidence": 5
+},
+"strengths": [
+"Separating large branches into named methods would improve local readability.",
+"The proposed method names would make the existing control flow easier to follow."
+],
+"improvements": [
+"The central conditional still has to change for every new payment method, so the extensibility problem remains.",
+"Does not use polymorphism, dependency inversion, or a stable payment abstraction.",
+"Keeps unrelated payment validation and execution responsibilities inside the same checkout class.",
+"Should explain how new behavior can be added without modifying the established checkout workflow."
+],
+"feedback": "This is a refactor for readability, not an object-oriented redesign of the changing behavior. It leaves the main maintenance and coupling problem intact."
+},
+{
+"category": "OOP",
+"difficulty": "medium",
+"level": "intermediate",
+"question": "An e-commerce checkout currently has one large function with conditionals for card, UPI, and wallet payments. New payment methods are added frequently, and each method has different validation and execution logic. How would you redesign this using object-oriented principles?",
+"quality_tier": "off_topic",
+"answer": "I'd improve the checkout screen by showing larger payment icons and putting UPI first because most users prefer it. We can also save the selected method in local storage so it's preselected the next time they visit.",
+"scores": {
+"relevance": 1,
+"clarity": 7,
+"depth": 2,
+"confidence": 5
+},
+"strengths": [
+"Provides understandable user-interface suggestions for payment-method selection."
+],
+"improvements": [
+"The question concerns backend code structure and object-oriented design, not checkout-screen usability.",
+"Should address the large conditional and varying payment behaviors through abstractions and polymorphism.",
+"Does not discuss validation, execution logic, extensibility, or object responsibilities."
+],
+"feedback": "The answer discusses product and frontend changes rather than redesigning the payment-processing code. It is not responsive to the OOP question."
+},
+{
+"category": "System Design",
+"difficulty": "hard",
+"level": "experienced",
+"question": "Design the inventory-reservation part of a flash-sale system. Thousands of users may attempt to buy the final few units at once, payment can take several minutes, and abandoned checkouts must eventually release inventory. Explain how you would prevent overselling and handle failures.",
+"quality_tier": "excellent",
+"answer": "I'd separate available stock from temporary reservations. When checkout starts, the inventory service would atomically decrement available stock and create a reservation with a unique ID and expiry time. For a single database shard, that could be one transaction using a conditional update like available greater than or equal to quantity, followed by the reservation insert. At higher scale, I'd partition by SKU so all mutations for a SKU are serialized through the same owner, or use a strongly consistent store with compare-and-swap. Payment receives the reservation ID and uses an idempotency key. On success, we atomically mark the reservation confirmed; we don't decrement stock again because it was already held. On payment failure or timeout, an expiry worker releases the quantity, but the release operation must also be idempotent and conditional on the reservation still being active. I'd use an outbox for publishing reservation and order events so a database commit can't succeed while the event is lost. The expiration timestamp is the source of truth; delayed messages only trigger cleanup, so duplicate or late expiry events can't release confirmed stock. I'd monitor hot SKUs, reservation age, release lag, and discrepancies, and have a reconciliation job compare inventory totals with active and confirmed reservations.",
+"scores": {
+"relevance": 10,
+"clarity": 9,
+"depth": 10,
+"confidence": 9
+},
+"strengths": [
+"Defines a clear reservation lifecycle that distinguishes available, held, confirmed, and released inventory.",
+"Prevents overselling through conditional atomic mutation or serialized per-SKU ownership.",
+"Handles payment retries and cleanup using idempotent state transitions.",
+"Correctly treats reservation expiry as persisted state rather than trusting message delivery timing.",
+"Addresses event-loss risk with the transactional outbox pattern and includes reconciliation and observability."
+],
+"improvements": [
+"Could state the consistency-versus-availability trade-off during an inventory-store partition.",
+"Could discuss limits on reservations per user or bot protection, which may be relevant during a flash sale.",
+"Could define the exact reservation state machine to make allowed transitions explicit."
+],
+"feedback": "This is a strong experienced-level design. It protects the critical invariant under concurrency and covers retries, delayed events, expiration, event publication, and operational recovery."
+},
+{
+"category": "System Design",
+"difficulty": "hard",
+"level": "experienced",
+"question": "Design the inventory-reservation part of a flash-sale system. Thousands of users may attempt to buy the final few units at once, payment can take several minutes, and abandoned checkouts must eventually release inventory. Explain how you would prevent overselling and handle failures.",
+"quality_tier": "good",
+"answer": "I'd create an inventory service that owns stock changes. At checkout, it would use an atomic conditional update to reduce available inventory only if enough units remain, and then create a reservation with an expiry time. Payment would reference that reservation. If payment succeeds, the reservation becomes confirmed. If it fails or expires, a background worker returns the quantity. All confirm and release calls should be idempotent because payment callbacks and queue messages can be duplicated. For scaling, inventory can be partitioned by product ID so updates for the same SKU go to the same partition. I'd also use a queue for expiration processing and periodically reconcile reservations in case a message is missed.",
+"scores": {
+"relevance": 9,
+"clarity": 9,
+"depth": 8,
+"confidence": 8
+},
+"strengths": [
+"Uses conditional atomic updates to protect stock under concurrent purchase attempts.",
+"Defines reservations with expiration rather than holding a user request open during payment.",
+"Recognizes that confirmation and release operations must be idempotent.",
+"Suggests SKU-based partitioning and reconciliation for missed expiration processing."
+],
+"improvements": [
+"Should clarify whether stock decrement and reservation creation occur in one transaction to avoid losing inventory between those operations.",
+"Could explain how late expiration messages are prevented from releasing an already confirmed reservation.",
+"Does not address reliable publication of state-change events after database commits.",
+"Could describe behavior when the inventory service or database is unavailable during the sale."
+],
+"feedback": "The design covers the main invariant and failure paths. It is credible, but an experienced candidate should be more explicit about transaction boundaries, stale events, and commit-to-message reliability."
+},
+{
+"category": "System Design",
+"difficulty": "hard",
+"level": "experienced",
+"question": "Design the inventory-reservation part of a flash-sale system. Thousands of users may attempt to buy the final few units at once, payment can take several minutes, and abandoned checkouts must eventually release inventory. Explain how you would prevent overselling and handle failures.",
+"quality_tier": "mediocre",
+"answer": "I'd put the stock count in Redis because it's fast and use DECR when somebody checks out. If the result goes below zero, I'd reject that user and increment it back. I'd keep a TTL for the user's cart, and when it expires we'd add the stock back. After payment, we'd save the order in the database. Redis can handle a lot of requests, so it should work for the flash sale.",
+"scores": {
+"relevance": 8,
+"clarity": 7,
+"depth": 5,
+"confidence": 7
+},
+"strengths": [
+"Recognizes the need for an atomic inventory mutation during checkout.",
+"Includes temporary holds and eventual release for abandoned carts.",
+"Chooses a low-latency store that can support high request volume."
+],
+"improvements": [
+"Decrementing below zero and then compensating is weaker than conditionally reserving only when stock is available.",
+"Does not explain how a cart TTL reliably triggers exactly one stock release.",
+"Fails to handle races between successful payment and reservation expiration.",
+"Does not define durable recovery if Redis loses data or fails over.",
+"Saving the order separately creates consistency risks between inventory, payment, and order state."
+],
+"feedback": "The answer contains useful building blocks but lacks a safe state model. It relies heavily on Redis speed without resolving durability, duplicate release, late payment, and cross-system consistency."
+},
+{
+"category": "System Design",
+"difficulty": "hard",
+"level": "experienced",
+"question": "Design the inventory-reservation part of a flash-sale system. Thousands of users may attempt to buy the final few units at once, payment can take several minutes, and abandoned checkouts must eventually release inventory. Explain how you would prevent overselling and handle failures.",
+"quality_tier": "poor",
+"answer": "I'd read the stock from the database when the user clicks buy. If it's more than zero, I'd let them pay, and after payment I'd subtract one from the stock. We can add a lock in the application so two requests don't update it together. If the user leaves, nothing changes because we haven't reduced stock yet.",
+"scores": {
+"relevance": 6,
+"clarity": 7,
+"depth": 2,
+"confidence": 4
+},
+"strengths": [
+"Attempts to prevent simultaneous updates by considering locking.",
+"Avoids reducing stock for users who never complete payment."
+],
+"improvements": [
+"Checking stock before payment without reserving it allows many users to pay for the same final unit.",
+"An application-process lock does not coordinate multiple service instances.",
+"Does not handle payment success after stock has been purchased by another user.",
+"Provides no durable reservation, expiration, idempotency, or failure-recovery mechanism.",
+"Should identify overselling prevention as the primary consistency invariant."
+],
+"feedback": "The proposed flow fails under the concurrency described in the question. It delays the inventory mutation until after payment, so it cannot guarantee that paid orders have stock."
+},
+{
+"category": "System Design",
+"difficulty": "hard",
+"level": "experienced",
+"question": "Design the inventory-reservation part of a flash-sale system. Thousands of users may attempt to buy the final few units at once, payment can take several minutes, and abandoned checkouts must eventually release inventory. Explain how you would prevent overselling and handle failures.",
+"quality_tier": "off_topic",
+"answer": "For a flash sale, I'd put the website behind a CDN, compress the product images, and use lazy loading so the page opens quickly. I'd also send push notifications before the sale and add a countdown timer to create urgency.",
+"scores": {
+"relevance": 1,
+"clarity": 7,
+"depth": 2,
+"confidence": 5
+},
+"strengths": [
+"Suggests reasonable page-performance and marketing measures for a flash-sale experience."
+],
+"improvements": [
+"The question asks specifically about inventory reservation and overselling, not page delivery or promotion.",
+"Does not describe concurrency control, temporary stock holds, expiration, or payment coordination.",
+"Does not address any inventory failure mode."
+],
+"feedback": "The response discusses traffic delivery and user engagement but does not design the requested inventory subsystem."
+},
+{
+"category": "Databases",
+"difficulty": "medium",
+"level": "intermediate",
+"question": "A multi-tenant orders table has tens of millions of rows. This query is slow: fetch the newest 50 orders for one tenant where status is 'PAID' and created_at is before a supplied timestamp. How would you investigate and optimize it, including indexing and pagination?",
+"quality_tier": "excellent",
+"answer": "First I'd run EXPLAIN ANALYZE with representative tenant and timestamp values to confirm whether it's scanning, sorting, or misestimating row counts. For this query shape, I'd likely add a composite index starting with tenant_id and status, followed by created_at descending, and include id as a deterministic tie-breaker, so something like tenant_id, status, created_at DESC, id DESC. The query would order by created_at DESC, id DESC and use keyset pagination with the previous page's created_at and id, for example rows less than that pair, rather than OFFSET. That lets the database seek into the index and read roughly the next 50 matching entries. Depending on the database, I might include frequently selected columns to reduce heap lookups, but I wouldn't blindly create a huge covering index. I'd check index size, write overhead, tenant skew, stale statistics, and whether PAID is common enough that a partial index is useful. In PostgreSQL, a partial index for status equals PAID could work if this exact status is queried frequently. I'd also verify that the timestamp types match and no function or cast prevents index use.",
+"scores": {
+"relevance": 10,
+"clarity": 9,
+"depth": 10,
+"confidence": 9
+},
+"strengths": [
+"Begins with EXPLAIN ANALYZE rather than assuming the cause of slowness.",
+"Proposes an index whose column order matches equality filters followed by range and ordering requirements.",
+"Uses created_at plus id to provide deterministic keyset pagination.",
+"Discusses partial and covering indexes as conditional choices rather than universal fixes.",
+"Considers write cost, tenant skew, statistics, and type mismatches that may affect plan selection."
+],
+"improvements": [
+"Could show the exact tuple predicate or equivalent expanded predicate for the keyset cursor.",
+"Could mention validating performance for both large and small tenants because data distribution may change the optimal plan."
+],
+"feedback": "This is an excellent intermediate response. It connects the query shape to index ordering, handles stable pagination correctly, and includes practical investigation and trade-off analysis."
+},
+{
+"category": "Databases",
+"difficulty": "medium",
+"level": "intermediate",
+"question": "A multi-tenant orders table has tens of millions of rows. This query is slow: fetch the newest 50 orders for one tenant where status is 'PAID' and created_at is before a supplied timestamp. How would you investigate and optimize it, including indexing and pagination?",
+"quality_tier": "good",
+"answer": "I'd check the execution plan first to see whether the database is doing a full scan or an expensive sort. I'd create a composite index on tenant_id, status, and created_at descending because tenant and status are equality filters and created_at is used for the range and sorting. I'd order by created_at descending and use the last created_at value as the cursor for the next page instead of using a large OFFSET. I'd also update statistics and test the index with production-like data because adding an index has a write and storage cost.",
+"scores": {
+"relevance": 9,
+"clarity": 9,
+"depth": 7,
+"confidence": 8
+},
+"strengths": [
+"Correctly recommends examining the execution plan before changing the schema.",
+"Uses an appropriate composite-index column order for the query filters and sort.",
+"Chooses keyset pagination over OFFSET for deep pages.",
+"Acknowledges index write and storage overhead."
+],
+"improvements": [
+"Using created_at alone as the cursor can skip or duplicate rows when multiple orders share the same timestamp.",
+"Should include a stable tie-breaker such as id in both the index and ORDER BY clause.",
+"Could discuss partial indexing when PAID queries dominate or covering selected columns when heap access is expensive."
+],
+"feedback": "The main optimization strategy is correct. The important missing detail is a deterministic compound cursor, since timestamps are not guaranteed to be unique."
+},
+{
+"category": "Databases",
+"difficulty": "medium",
+"level": "intermediate",
+"question": "A multi-tenant orders table has tens of millions of rows. This query is slow: fetch the newest 50 orders for one tenant where status is 'PAID' and created_at is before a supplied timestamp. How would you investigate and optimize it, including indexing and pagination?",
+"quality_tier": "mediocre",
+"answer": "I'd add indexes on tenant_id, status, and created_at separately. Then the database can use whichever index it needs. I'd limit the result to 50 and paginate using OFFSET and LIMIT. We should also avoid selecting unnecessary columns.",
+"scores": {
+"relevance": 7,
+"clarity": 7,
+"depth": 4,
+"confidence": 6
+},
+"strengths": [
+"Recognizes that indexing filter and ordering columns may improve the query.",
+"Suggests limiting selected columns and restricting the result count.",
+"Includes a pagination mechanism."
+],
+"improvements": [
+"Separate single-column indexes may not efficiently satisfy the combined tenant, status, range, and ordering requirements.",
+"Should propose a composite index with equality columns before created_at.",
+"OFFSET becomes progressively slower and less stable for large, changing datasets.",
+"Does not mention examining the query plan or checking whether a sort and table scan are occurring.",
+"Should include a deterministic keyset cursor using created_at and a unique identifier."
+],
+"feedback": "The answer identifies indexing and pagination but chooses weaker implementations for both. It needs a query-shaped composite index and keyset pagination."
+},
+{
+"category": "Databases",
+"difficulty": "medium",
+"level": "intermediate",
+"question": "A multi-tenant orders table has tens of millions of rows. This query is slow: fetch the newest 50 orders for one tenant where status is 'PAID' and created_at is before a supplied timestamp. How would you investigate and optimize it, including indexing and pagination?",
+"quality_tier": "poor",
+"answer": "I'd cache all paid orders in memory when the server starts. Then filtering by tenant should be fast because memory is faster than the database. Every time an order is created, I'd append it to the cache and restart the server occasionally to refresh it.",
+"scores": {
+"relevance": 4,
+"clarity": 6,
+"depth": 2,
+"confidence": 4
+},
+"strengths": [
+"Recognizes that avoiding repeated disk-heavy work can reduce response latency in some workloads."
+],
+"improvements": [
+"Loading tens of millions of paid orders into each server is not memory-efficient or operationally practical.",
+"The cache-refresh proposal creates stale and inconsistent query results.",
+"Does not address database indexing, execution plans, sorting, or pagination as requested.",
+"Appending new orders does not handle status updates, deletions, or ordering correctly.",
+"Should first optimize the database access path before introducing a narrowly designed cache."
+],
+"feedback": "The proposal replaces a database-query problem with an unbounded and inconsistent application cache. It does not provide the requested database optimization strategy."
+},
+{
+"category": "Databases",
+"difficulty": "medium",
+"level": "intermediate",
+"question": "A multi-tenant orders table has tens of millions of rows. This query is slow: fetch the newest 50 orders for one tenant where status is 'PAID' and created_at is before a supplied timestamp. How would you investigate and optimize it, including indexing and pagination?",
+"quality_tier": "off_topic",
+"answer": "I'd improve the order page by adding filters for price and customer name. We could show paid orders in green and failed orders in red, and use infinite scrolling so users don't need to click next.",
+"scores": {
+"relevance": 1,
+"clarity": 7,
+"depth": 2,
+"confidence": 5
+},
+"strengths": [
+"Presents understandable user-interface ideas for browsing orders."
+],
+"improvements": [
+"The question asks how to optimize the database query, not redesign the order-page interface.",
+"Infinite scrolling still requires an efficient backend pagination strategy.",
+"Does not discuss query plans, indexes, sorting, keyset pagination, or data distribution."
+],
+"feedback": "The answer focuses on presentation and user experience rather than the database-performance problem."
+},
+{
+"category": "Frontend",
+"difficulty": "medium",
+"level": "fresher",
+"question": "You're building a search-as-you-type component. Users report that results sometimes show an older query after they finish typing, and the API receives too many requests. How would you fix both problems while keeping the component accessible?",
+"quality_tier": "excellent",
+"answer": "I'd debounce the input, maybe by 250 to 300 milliseconds, so we don't send a request for every keystroke. The older-results bug is a race condition: an earlier request can finish after a later one. I'd cancel the previous request with AbortController when a new search starts, and I'd still guard the state update by checking that the response belongs to the latest query or request ID, since cancellation isn't always enough in every abstraction. I'd handle empty input without calling the API, show loading and error states, and clean up the timer and request when the component unmounts. For accessibility, the input needs a proper label, the results should follow the combobox and listbox pattern if they're selectable, keyboard arrows and Enter should work, focus shouldn't jump unexpectedly, and status changes like the number of results should be announced through an appropriate live region without announcing every keystroke.",
+"scores": {
+"relevance": 10,
+"clarity": 9,
+"depth": 9,
+"confidence": 9
+},
+"strengths": [
+"Correctly identifies excessive calls as a debouncing problem and stale results as a request race.",
+"Combines request cancellation with a latest-request guard for robust stale-response prevention.",
+"Includes timer and request cleanup plus empty-query, loading, and error behavior.",
+"Addresses concrete accessibility requirements including labeling, keyboard interaction, focus stability, and live announcements."
+],
+"improvements": [
+"Could mention caching repeated queries or enforcing a minimum query length as optional request reductions.",
+"Could distinguish debounce from throttle and explain why debounce is more suitable for this interaction."
+],
+"feedback": "This is an unusually complete fresher-level answer. It solves both functional issues and demonstrates practical awareness of component lifecycle and accessible autocomplete behavior."
+},
+{
+"category": "Frontend",
+"difficulty": "medium",
+"level": "fresher",
+"question": "You're building a search-as-you-type component. Users report that results sometimes show an older query after they finish typing, and the API receives too many requests. How would you fix both problems while keeping the component accessible?",
+"quality_tier": "good",
+"answer": "I'd debounce the search so the API is called only after the user pauses typing for around 300 milliseconds. I'd also cancel the previous fetch using AbortController whenever the query changes, so an older request doesn't update the results later. I'd clean up the debounce timer in the effect cleanup. For accessibility, I'd add a visible label, let users move through suggestions with the keyboard, and use ARIA attributes for the expanded suggestion list.",
+"scores": {
+"relevance": 9,
+"clarity": 9,
+"depth": 7,
+"confidence": 8
+},
+"strengths": [
+"Uses debounce to directly reduce request volume.",
+"Uses AbortController to mitigate stale-result races.",
+"Includes effect cleanup to avoid lingering timers.",
+"Mentions visible labeling, keyboard operation, and expanded-state semantics."
+],
+"improvements": [
+"Should also verify that a response matches the latest query because cancellation may not protect every request path.",
+"Could specify the combobox and listbox semantics rather than referring generally to ARIA attributes.",
+"Does not mention loading, error, empty-query, or result-announcement behavior."
+],
+"feedback": "The answer correctly solves both reported defects and includes basic accessibility. More detail around stale-response guards and the complete autocomplete interaction would raise it further."
+},
+{
+"category": "Frontend",
+"difficulty": "medium",
+"level": "fresher",
+"question": "You're building a search-as-you-type component. Users report that results sometimes show an older query after they finish typing, and the API receives too many requests. How would you fix both problems while keeping the component accessible?",
+"quality_tier": "mediocre",
+"answer": "I'd use setTimeout for one second before calling the API. If the user types again, I'd clear the old timeout. For the wrong results, I think I'd compare the response query with whatever is currently inside the input before displaying it. I'd also add a placeholder saying Search here and make each result clickable.",
+"scores": {
+"relevance": 8,
+"clarity": 7,
+"depth": 5,
+"confidence": 6
+},
+"strengths": [
+"Describes the basic mechanics of debouncing with setTimeout and clearTimeout.",
+"Attempts to prevent stale updates by comparing the returned query with the current input.",
+"Recognizes that search results need an interactive presentation."
+],
+"improvements": [
+"A one-second debounce may make the interface feel unnecessarily slow and should be justified or tuned.",
+"Should cancel in-flight requests where possible, not only ignore stale responses.",
+"A placeholder is not a substitute for an accessible label.",
+"Clickable results also need keyboard navigation, focus management, semantic roles, and selection behavior.",
+"Should describe cleanup when the component unmounts."
+],
+"feedback": "The response has a workable outline for request control, but the accessibility portion is insufficient and the lifecycle handling is incomplete."
+},
+{
+"category": "Frontend",
+"difficulty": "medium",
+"level": "fresher",
+"question": "You're building a search-as-you-type component. Users report that results sometimes show an older query after they finish typing, and the API receives too many requests. How would you fix both problems while keeping the component accessible?",
+"quality_tier": "poor",
+"answer": "I'd sort the results alphabetically after every response so the latest ones appear correctly. To reduce API load, I'd only allow the user to type one character per second. I'd make the input bigger so it's easier to use.",
+"scores": {
+"relevance": 4,
+"clarity": 6,
+"depth": 2,
+"confidence": 3
+},
+"strengths": [
+"Recognizes that request volume and usability require some form of control."
+],
+"improvements": [
+"Sorting results does not prevent an older network response from replacing newer results.",
+"Artificially restricting typing speed creates a poor experience and does not implement proper request debouncing.",
+"A larger input alone does not make the component accessible.",
+"Should identify the asynchronous race condition and use cancellation or latest-request validation.",
+"Should include labeling, keyboard navigation, semantic roles, and appropriate announcements."
+],
+"feedback": "The proposed changes do not solve the stale-response race and introduce an inappropriate typing restriction. The accessibility requirement is largely unaddressed."
+},
+{
+"category": "Frontend",
+"difficulty": "medium",
+"level": "fresher",
+"question": "You're building a search-as-you-type component. Users report that results sometimes show an older query after they finish typing, and the API receives too many requests. How would you fix both problems while keeping the component accessible?",
+"quality_tier": "off_topic",
+"answer": "I'd redesign the search bar with a glass effect, a gradient border, and an animated icon. When users focus it, it could expand across the page. That would make the search feature feel more modern.",
+"scores": {
+"relevance": 1,
+"clarity": 7,
+"depth": 2,
+"confidence": 5
+},
+"strengths": [
+"Clearly describes a visual design direction for a search input."
+],
+"improvements": [
+"The question concerns request volume, stale asynchronous responses, and accessibility rather than visual styling.",
+"Does not mention debouncing, cancellation, response ordering, or state management.",
+"An expanding animated control may introduce additional focus and motion-accessibility concerns that are not addressed."
+],
+"feedback": "The answer focuses entirely on appearance and does not address either reported functional defect."
+},
+{
+"category": "Backend",
+"difficulty": "hard",
+"level": "experienced",
+"question": "Your service receives payment-provider webhooks that are delivered at least once and may arrive out of order. A duplicate or delayed event must never create a second refund or move an order backward from PAID to PENDING. Design the processing flow.",
+"quality_tier": "excellent",
+"answer": "I'd authenticate the webhook first using the provider's signature and preserve the raw body if that's required for verification. Then I'd persist the provider event ID, payload, and receipt time before doing business work. The event ID would have a unique constraint, so exact duplicates become successful no-ops. Processing would use an explicit order or payment state machine, not blindly overwrite status from the event. Each transition would check the current state and the provider's event version, sequence, or effective timestamp when available. A PENDING event received after PAID would be recorded but not applied because that transition is invalid. Refund creation would have its own idempotency key and durable refund record with a unique constraint, so retries can't issue a second provider call. I'd commit state changes and an outbox record in the same transaction, then publish downstream events asynchronously. Failures would retry with backoff and eventually go to a dead-letter path, while returning a successful webhook response only after durable receipt. For events that arrive before their prerequisite, I'd either keep them pending and re-evaluate later or fetch the authoritative payment state from the provider. Reconciliation jobs would compare our state with the provider and surface unresolved gaps.",
+"scores": {
+"relevance": 10,
+"clarity": 9,
+"depth": 10,
+"confidence": 9
+},
+"strengths": [
+"Separates durable webhook receipt from asynchronous business processing.",
+"Uses a unique provider event ID to make duplicate delivery a safe no-op.",
+"Protects against out-of-order regressions with an explicit valid-transition state machine.",
+"Adds a separate idempotency boundary for the irreversible refund side effect.",
+"Addresses transaction-to-message consistency, retry handling, dead-letter processing, prerequisite events, and reconciliation.",
+"Includes webhook signature verification and raw-body considerations."
+],
+"improvements": [
+"Could explicitly discuss the response-code strategy when signature validation fails versus temporary persistence failure.",
+"Could define how concurrent events for the same order are serialized, such as row locking or partitioned consumers."
+],
+"feedback": "This is a production-grade answer. It treats deduplication, ordering, irreversible side effects, durability, and recovery as separate concerns and protects each with an appropriate mechanism."
+},
+{
+"category": "Backend",
+"difficulty": "hard",
+"level": "experienced",
+"question": "Your service receives payment-provider webhooks that are delivered at least once and may arrive out of order. A duplicate or delayed event must never create a second refund or move an order backward from PAID to PENDING. Design the processing flow.",
+"quality_tier": "good",
+"answer": "I'd verify the webhook signature and store every event using the provider's event ID as a unique key. If the insert conflicts, I'd return success because we've already received it. A worker would process stored events and update orders through allowed state transitions, so PAID couldn't transition back to PENDING. For refunds, I'd store a refund operation with a unique idempotency key before calling the provider. I'd retry failed events and send repeatedly failing ones to a dead-letter queue. Since events can arrive out of order, the worker could query the provider for the current payment state when an event doesn't match our expected state.",
+"scores": {
+"relevance": 9,
+"clarity": 9,
+"depth": 8,
+"confidence": 8
+},
+"strengths": [
+"Uses durable event storage and a unique event ID for deduplication.",
+"Protects order status with allowed state transitions.",
+"Provides a distinct idempotency mechanism for refund execution.",
+"Includes retries, dead-letter handling, signature verification, and provider-state reconciliation."
+],
+"improvements": [
+"Should explain the transaction boundary between updating order state and emitting internal events.",
+"Could describe how concurrent events for one order are prevented from racing.",
+"Does not specify whether the webhook is acknowledged before or after durable persistence.",
+"Could explain how events waiting for a prerequisite are retried without endless failure loops."
+],
+"feedback": "The answer covers the essential correctness controls. It would be stronger with explicit transaction, acknowledgment, and per-order concurrency details."
+},
+{
+"category": "Backend",
+"difficulty": "hard",
+"level": "experienced",
+"question": "Your service receives payment-provider webhooks that are delivered at least once and may arrive out of order. A duplicate or delayed event must never create a second refund or move an order backward from PAID to PENDING. Design the processing flow.",
+"quality_tier": "mediocre",
+"answer": "I'd put the webhooks on a queue and process them one by one. Before processing, I'd check a database table to see whether the event ID already exists. If it exists, I'd skip it. For order status, I'd add a condition that says don't update PENDING if the current status is already PAID. For refunds, I'd also check whether the order already has a refund flag.",
+"scores": {
+"relevance": 8,
+"clarity": 7,
+"depth": 5,
+"confidence": 6
+},
+"strengths": [
+"Identifies event-ID deduplication as necessary for at-least-once delivery.",
+"Attempts to prevent a specific backward transition from PAID to PENDING.",
+"Recognizes that refund execution needs a duplicate guard."
+],
+"improvements": [
+"A check followed by insert or processing can race unless uniqueness and transaction boundaries enforce deduplication.",
+"Processing a queue one by one globally is unnecessary and may not guarantee ordering if there are multiple consumers.",
+"A single PAID-versus-PENDING condition is weaker than a complete state-transition model.",
+"A refund flag may be set too early or too late and does not by itself make the external provider call idempotent.",
+"Does not cover signature verification, durable receipt, retries, dead letters, or reconciliation."
+],
+"feedback": "The response recognizes the main problems but implements them with fragile checks rather than durable invariants. It needs database constraints, transactional state transitions, and side-effect idempotency."
+},
+{
+"category": "Backend",
+"difficulty": "hard",
+"level": "experienced",
+"question": "Your service receives payment-provider webhooks that are delivered at least once and may arrive out of order. A duplicate or delayed event must never create a second refund or move an order backward from PAID to PENDING. Design the processing flow.",
+"quality_tier": "poor",
+"answer": "I'd process the webhook immediately and update the order with whatever status is in the latest request. To avoid duplicates, I'd keep the last event ID in an in-memory variable. For refunds, I'd call the refund API only when the webhook says REFUNDED.",
+"scores": {
+"relevance": 5,
+"clarity": 6,
+"depth": 2,
+"confidence": 3
+},
+"strengths": [
+"Recognizes that event identifiers could be used to detect some duplicate deliveries."
+],
+"improvements": [
+"An in-memory event ID is lost on restart, is not shared across instances, and only remembers one event.",
+"Blindly applying the latest received request allows delayed events to move state backward.",
+"A REFUNDED notification normally reports an existing refund; it should not automatically trigger another refund call.",
+"Does not use durable persistence, unique constraints, a state machine, or idempotency keys.",
+"Does not authenticate webhooks or handle processing failures and retries."
+],
+"feedback": "This design is unsafe under both duplicates and out-of-order delivery. It can regress order state and potentially misunderstand refund notifications in a way that causes incorrect side effects."
+},
+{
+"category": "Backend",
+"difficulty": "hard",
+"level": "experienced",
+"question": "Your service receives payment-provider webhooks that are delivered at least once and may arrive out of order. A duplicate or delayed event must never create a second refund or move an order backward from PAID to PENDING. Design the processing flow.",
+"quality_tier": "off_topic",
+"answer": "I'd choose Node.js for the webhook service because it's good for I/O, and I'd deploy it using Docker and Kubernetes. We can autoscale pods when CPU usage increases and put Nginx in front.",
+"scores": {
+"relevance": 2,
+"clarity": 7,
+"depth": 3,
+"confidence": 5
+},
+"strengths": [
+"Suggests a plausible deployment stack for an I/O-oriented service.",
+"Mentions horizontal scaling and ingress infrastructure."
+],
+"improvements": [
+"Technology selection does not answer how duplicate and out-of-order events remain correct.",
+"Autoscaling can increase concurrency races unless deduplication and state-transition controls are designed.",
+"Does not address event persistence, idempotent refunds, valid order transitions, retries, or reconciliation."
+],
+"feedback": "The response discusses implementation and deployment technology but not the webhook-processing correctness requirements."
+},
+{
+"category": "Behavioral",
+"difficulty": "easy",
+"level": "fresher",
+"question": "Tell me about a time a change you made caused a bug that affected other people. What did you do once you discovered it, and what changed in how you worked afterward?",
+"quality_tier": "excellent",
+"answer": "During my final-year project, I changed the login token format so we could add role information, but I only tested the web client. Our teammate's mobile client was still parsing the old format, so login started failing for them before a demo. Once we traced it to my change, I told the team it was mine instead of trying to patch around it quietly. I reverted the token change first so they could continue testing, then I created a versioned response field and updated both clients with my teammate. I also added an API contract test using sample responses from both clients and wrote a short migration note in the pull request. The biggest change for me was that I stopped treating a backend response as an internal implementation detail. After that, I checked consumers before changing shared contracts and included backward compatibility in the plan.",
+"scores": {
+"relevance": 10,
+"clarity": 9,
+"depth": 9,
+"confidence": 9
+},
+"strengths": [
+"Provides a concrete incident with a clear cause, impact, response, and lesson.",
+"Takes direct ownership without exaggerating or blaming the mobile-client teammate.",
+"Prioritizes restoring service by reverting before implementing the safer versioned change.",
+"Describes specific preventive actions: contract tests, migration notes, consumer checks, and backward compatibility."
+],
+"improvements": [
+"Could quantify how long the disruption lasted or whether the team still met the demo deadline.",
+"Could briefly explain how the issue was detected to show the feedback loop more completely."
+],
+"feedback": "This is a strong fresher answer because it demonstrates ownership, practical incident response, collaboration, and a concrete improvement to engineering habits."
+},
+{
+"category": "Behavioral",
+"difficulty": "easy",
+"level": "fresher",
+"question": "Tell me about a time a change you made caused a bug that affected other people. What did you do once you discovered it, and what changed in how you worked afterward?",
+"quality_tier": "good",
+"answer": "In a team project, I changed a database field from optional to required because I thought every new user would have that value. Some existing test accounts didn't, so my teammates started getting errors on their screens. I checked the logs, found the migration was the reason, and rolled it back. Then I added a default value, updated the old rows, and reapplied the constraint after checking with the team. Since then, I test migrations against existing data instead of only testing new records.",
+"scores": {
+"relevance": 9,
+"clarity": 9,
+"depth": 7,
+"confidence": 8
+},
+"strengths": [
+"Gives a specific example involving an unsafe schema constraint.",
+"Explains the investigation, rollback, data backfill, and safer reapplication.",
+"Shows a relevant behavioral change by testing migrations against existing data."
+],
+"improvements": [
+"Could state more directly how the candidate communicated ownership and status to affected teammates.",
+"Could mention whether a pre-deployment check or migration test was added to the shared workflow.",
+"The impact is described generally and could be made more measurable."
+],
+"feedback": "The response is credible and well structured. It demonstrates technical correction and learning, though the collaboration and communication aspects could be developed further."
+},
+{
+"category": "Behavioral",
+"difficulty": "easy",
+"level": "fresher",
+"question": "Tell me about a time a change you made caused a bug that affected other people. What did you do once you discovered it, and what changed in how you worked afterward?",
+"quality_tier": "mediocre",
+"answer": "Once I pushed some CSS changes and the page looked broken on my teammate's laptop because their screen size was different. I fixed the media query and asked them to check it again. After that I tried to test on more screen sizes before pushing.",
+"scores": {
+"relevance": 8,
+"clarity": 7,
+"depth": 5,
+"confidence": 6
+},
+"strengths": [
+"Answers with a real-seeming example involving a responsive-layout regression.",
+"States the immediate fix and a relevant testing habit adopted afterward.",
+"Avoids blaming the teammate's device for the problem."
+],
+"improvements": [
+"Should explain how the issue was discovered and how urgently it affected the team.",
+"Does not clearly show ownership or communication beyond asking for another check.",
+"Could describe a specific preventive measure such as responsive test cases, browser tools, or a review checklist.",
+"The example lacks a clear result after the fix."
+],
+"feedback": "The answer meets the basic prompt but is thin. It needs more detail about impact, ownership, communication, and how the preventive change became part of the workflow."
+},
+{
+"category": "Behavioral",
+"difficulty": "easy",
+"level": "fresher",
+"question": "Tell me about a time a change you made caused a bug that affected other people. What did you do once you discovered it, and what changed in how you worked afterward?",
+"quality_tier": "poor",
+"answer": "I don't think I've really caused bugs that affected anyone. Usually bugs happen because requirements aren't clear or because different people's code doesn't work together. If something did happen, I'd probably fix it as soon as possible.",
+"scores": {
+"relevance": 4,
+"clarity": 6,
+"depth": 2,
+"confidence": 3
+},
+"strengths": [
+"States that fixing an issue promptly would be important."
+],
+"improvements": [
+"Does not provide the requested example.",
+"Avoids ownership by attributing bugs to requirements or other people's integration.",
+"Provides no concrete actions, communication, result, or lesson.",
+"Could use a small academic, personal-project, or team mistake rather than claiming no relevant experience."
+],
+"feedback": "The answer is evasive and hypothetical. For a fresher, the incident does not need to be large, but the interviewer still needs evidence of accountability and learning."
+},
+{
+"category": "Behavioral",
+"difficulty": "easy",
+"level": "fresher",
+"question": "Tell me about a time a change you made caused a bug that affected other people. What did you do once you discovered it, and what changed in how you worked afterward?",
+"quality_tier": "off_topic",
+"answer": "My biggest strength is that I'm a fast learner. During college I learned React and Node.js from online courses, and I also built multiple projects. I'm always interested in learning new technologies.",
+"scores": {
+"relevance": 1,
+"clarity": 7,
+"depth": 2,
+"confidence": 5
+},
+"strengths": [
+"Communicates an interest in learning and names relevant technologies."
+],
+"improvements": [
+"The prompt asks for a specific mistake, response, and resulting change in behavior.",
+"Does not describe a bug, affected people, ownership, corrective actions, or lessons.",
+"Should use a concrete STAR-style incident rather than a general strength statement."
+],
+"feedback": "The response answers a different behavioral question about strengths and learning. It provides no evidence relevant to handling a mistake."
+},
+{
+"category": "DSA",
+"difficulty": "hard",
+"level": "experienced",
+"question": "You maintain a build system where each module depends on other modules. Given a set of modules changed in a commit, determine which modules must be rebuilt, produce a valid rebuild order, and report an error if the dependency graph contains a cycle. How would you approach this efficiently?",
+"quality_tier": "excellent",
+"answer": "I'd represent the graph in both directions: dependency edges for ordering and reverse-dependency edges for finding what is affected. Starting from the changed modules, I'd traverse the reverse graph with BFS or DFS to collect every transitive dependent that must be rebuilt, including the changed modules themselves. Then I'd topologically sort the affected subgraph. With Kahn's algorithm, I'd compute each affected node's indegree considering only dependencies that are also in the affected set, enqueue zero-indegree nodes, and emit them in order. If I emit fewer nodes than the affected set contains, there's a cycle in that subgraph. If the requirement is to reject any cycle anywhere in the repository, I'd validate the full graph when it's loaded or modified rather than only checking affected nodes. The work per commit is O(Va plus Ea), where Va and Ea are affected nodes and relevant edges, after maintaining the adjacency structures. For frequent commits, I'd cache the validated graph and update only changed dependency edges, but I'd be careful because fully dynamic cycle detection is more complex than rerunning a linear check.",
+"scores": {
+"relevance": 10,
+"clarity": 9,
+"depth": 10,
+"confidence": 9
+},
+"strengths": [
+"Uses reverse dependencies to compute the exact transitive rebuild set.",
+"Topologically sorts only the affected subgraph rather than rebuilding unrelated modules.",
+"Correctly adjusts indegrees to include only affected-subgraph dependencies.",
+"Detects cycles through an incomplete Kahn traversal and distinguishes local-cycle detection from validating the entire repository.",
+"Provides an output-sensitive complexity analysis and a realistic note about incremental graph maintenance."
+],
+"improvements": [
+"Could clarify whether unchanged dependencies must already be successfully built before the affected rebuild begins.",
+"Could mention deterministic ordering among multiple zero-indegree modules if reproducible builds require it."
+],
+"feedback": "This is a strong experienced-level solution. It separates impact analysis from ordering, handles the cycle requirement carefully, and gives an efficient complexity bound."
+},
+{
+"category": "DSA",
+"difficulty": "hard",
+"level": "experienced",
+"question": "You maintain a build system where each module depends on other modules. Given a set of modules changed in a commit, determine which modules must be rebuilt, produce a valid rebuild order, and report an error if the dependency graph contains a cycle. How would you approach this efficiently?",
+"quality_tier": "good",
+"answer": "I'd build a reverse adjacency list so I can start from every changed module and find all modules that depend on it, directly or indirectly. I'd put those into an affected set. Then I'd run a topological sort on that set using either DFS or Kahn's algorithm and rebuild in that order. With Kahn's algorithm, if the number of processed affected modules is smaller than the affected-set size, then there's a cycle. The traversal and sort should be linear in the number of affected modules and edges.",
+"scores": {
+"relevance": 9,
+"clarity": 9,
+"depth": 8,
+"confidence": 8
+},
+"strengths": [
+"Correctly uses a reverse graph to find transitive dependents of changed modules.",
+"Separates affected-set discovery from topological rebuild ordering.",
+"Provides a valid cycle-detection method using Kahn's algorithm.",
+"States the appropriate output-sensitive linear complexity."
+],
+"improvements": [
+"Should explain how indegrees are computed for the induced affected subgraph.",
+"Does not clarify whether cycles outside the affected set must also be reported.",
+"Could mention handling duplicate changed modules and shared dependents with a visited set.",
+"Could discuss deterministic ordering when multiple modules are simultaneously ready."
+],
+"feedback": "The central algorithm is correct and efficient. A few graph-boundary and implementation details are missing, but the answer would satisfy most interviewers."
+},
+{
+"category": "DSA",
+"difficulty": "hard",
+"level": "experienced",
+"question": "You maintain a build system where each module depends on other modules. Given a set of modules changed in a commit, determine which modules must be rebuilt, produce a valid rebuild order, and report an error if the dependency graph contains a cycle. How would you approach this efficiently?",
+"quality_tier": "mediocre",
+"answer": "I'd run DFS from each changed module and add whatever nodes I can reach to a list. After that, I'd reverse the list because DFS can give a topological order. I'd use a visited set so modules don't get added twice. The complexity should be O(V plus E).",
+"scores": {
+"relevance": 7,
+"clarity": 7,
+"depth": 4,
+"confidence": 6
+},
+"strengths": [
+"Recognizes that graph traversal and a visited set are relevant.",
+"Connects DFS postorder with topological sorting.",
+"Provides a generally linear graph-complexity target."
+],
+"improvements": [
+"Traversing normal dependency edges from changed modules finds their prerequisites, not necessarily the modules that depend on them and require rebuilding.",
+"Must use reverse-dependency edges to collect affected downstream modules.",
+"Does not describe DFS color states or another method for detecting cycles.",
+"Simply reversing a discovery list is not a valid topological sort unless nodes are appended after exploring descendants.",
+"The complexity should be scoped to the affected graph if the algorithm avoids scanning the full repository."
+],
+"feedback": "The answer contains pieces of a graph solution but leaves edge direction and DFS ordering ambiguous. It also fails to implement the explicit cycle-detection requirement."
+},
+{
+"category": "DSA",
+"difficulty": "hard",
+"level": "experienced",
+"question": "You maintain a build system where each module depends on other modules. Given a set of modules changed in a commit, determine which modules must be rebuilt, produce a valid rebuild order, and report an error if the dependency graph contains a cycle. How would you approach this efficiently?",
+"quality_tier": "poor",
+"answer": "I'd sort all module names alphabetically and rebuild from A to Z. Before rebuilding a module, I'd check whether any of its dependencies failed. For changed modules, I'd rebuild only those names and maybe their parent folders.",
+"scores": {
+"relevance": 4,
+"clarity": 6,
+"depth": 1,
+"confidence": 3
+},
+"strengths": [
+"Recognizes that dependency failures should affect whether a module can be rebuilt."
+],
+"improvements": [
+"Alphabetical order does not guarantee that dependencies are built before dependents.",
+"Parent folders do not determine transitive module dependencies.",
+"Rebuilding only changed modules misses downstream modules affected by their outputs or interfaces.",
+"Does not model the dependency graph, perform a topological sort, or detect cycles.",
+"Provides no meaningful complexity analysis."
+],
+"feedback": "The proposed order is unrelated to dependency constraints and cannot satisfy the build-system requirements."
+},
+{
+"category": "DSA",
+"difficulty": "hard",
+"level": "experienced",
+"question": "You maintain a build system where each module depends on other modules. Given a set of modules changed in a commit, determine which modules must be rebuilt, produce a valid rebuild order, and report an error if the dependency graph contains a cycle. How would you approach this efficiently?",
+"quality_tier": "off_topic",
+"answer": "I'd use Docker layers so unchanged files are cached. Then I'd run builds in parallel on Kubernetes and use larger machines for the slow modules. That should reduce the total build time.",
+"scores": {
+"relevance": 2,
+"clarity": 7,
+"depth": 3,
+"confidence": 5
+},
+"strengths": [
+"Suggests caching and parallel execution as legitimate build-performance techniques."
+],
+"improvements": [
+"The question asks how to determine the affected modules, produce a dependency-valid order, and detect cycles.",
+"Parallel infrastructure does not identify which modules are transitively affected.",
+"Does not provide a graph representation, traversal, topological sort, cycle detection, or complexity analysis."
+],
+"feedback": "The answer discusses build execution infrastructure but not the graph algorithm required to plan the rebuild."
+}
+]

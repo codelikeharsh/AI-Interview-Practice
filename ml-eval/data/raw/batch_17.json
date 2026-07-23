@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Search for a target in a rotated sorted array that may contain duplicate values.",
+    "quality_tier": "excellent",
+    "answer": "I'd use modified binary search. If one side is strictly sorted, decide whether the target lies inside it. When nums[left], nums[mid], and nums[right] are equal, shrink both ends because ordering is ambiguous. Average time is O(log n), but duplicates can force O(n).",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Handles the duplicate ambiguity and gives the correct worst-case bound."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Search for a target in a rotated sorted array that may contain duplicate values.",
+    "quality_tier": "good",
+    "answer": "I'd use rotated-array binary search and shrink boundaries when duplicates hide which half is sorted.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Handles the duplicate ambiguity and gives the correct worst-case bound."
+    ],
+    "improvements": [
+      "Could discuss returning any versus first matching index."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Search for a target in a rotated sorted array that may contain duplicate values.",
+    "quality_tier": "mediocre",
+    "answer": "I'd remove duplicates into a new set and then binary-search it.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "A set loses indices and ordering.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Search for a target in a rotated sorted array that may contain duplicate values.",
+    "quality_tier": "poor",
+    "answer": "I'd use normal binary search without considering rotation.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Normal binary search fails across the pivot.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Search for a target in a rotated sorted array that may contain duplicate values.",
+    "quality_tier": "off_topic",
+    "answer": "I'd sort the array first on every search.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Sorting changes complexity and original positions.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Find the maximum sum of any path in a binary tree, where a path may start and end at any nodes.",
+    "quality_tier": "excellent",
+    "answer": "I'd use postorder DFS. For each node, compute the maximum downward gain using at most one child, clamping negative gains to zero. The best path through the node uses value plus both gains and updates a global maximum. Return value plus the larger gain. Time O(n), space O(h).",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly separates returnable one-branch gain from complete two-branch paths."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Find the maximum sum of any path in a binary tree, where a path may start and end at any nodes.",
+    "quality_tier": "good",
+    "answer": "I'd use postorder recursion, return the best one-sided gain, and update a global answer with both child gains.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly separates returnable one-branch gain from complete two-branch paths."
+    ],
+    "improvements": [
+      "Could mention all-negative trees."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Find the maximum sum of any path in a binary tree, where a path may start and end at any nodes.",
+    "quality_tier": "mediocre",
+    "answer": "I'd compute every root-to-leaf path and take the largest.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Maximum paths need not start at the root or end at a leaf.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Find the maximum sum of any path in a binary tree, where a path may start and end at any nodes.",
+    "quality_tier": "poor",
+    "answer": "I'd choose the locally larger child at each node.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Local greedy choices can miss the best combined path.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Find the maximum sum of any path in a binary tree, where a path may start and end at any nodes.",
+    "quality_tier": "off_topic",
+    "answer": "I'd sort node values and sum the largest ones.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Sorted values ignore connectivity.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the core model for a digital wallet supporting balances, transfers, holds, refunds, multiple currencies, and an auditable transaction history.",
+    "quality_tier": "excellent",
+    "answer": "I'd treat the ledger as authoritative, with immutable journal entries and balanced postings between accounts. WalletBalance is a materialized view. Holds, captures, releases, transfers, and refunds are explicit transaction types with idempotency keys and state machines. Currency conversion is a separate quoted operation with recorded rates, never mixed into generic arithmetic.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Centers the design on double-entry auditability, holds, idempotency, currency, and materialized balances."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the core model for a digital wallet supporting balances, transfers, holds, refunds, multiple currencies, and an auditable transaction history.",
+    "quality_tier": "good",
+    "answer": "I'd use immutable transactions and ledger entries, separate available and held balances, and model refunds and transfers as idempotent state transitions.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Centers the design on double-entry auditability, holds, idempotency, currency, and materialized balances."
+    ],
+    "improvements": [
+      "Could discuss chargebacks and reconciliation."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the core model for a digital wallet supporting balances, transfers, holds, refunds, multiple currencies, and an auditable transaction history.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store one mutable balance per wallet and append a text description after changes.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Mutable balances alone are difficult to audit and repair.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the core model for a digital wallet supporting balances, transfers, holds, refunds, multiple currencies, and an auditable transaction history.",
+    "quality_tier": "poor",
+    "answer": "I'd directly subtract one wallet and add another in separate calls.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Separate calls can create or lose money on failure.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design the core model for a digital wallet supporting balances, transfers, holds, refunds, multiple currencies, and an auditable transaction history.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design wallet cards and colors.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Visual design is unrelated to wallet correctness.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a real-time fraud-detection pipeline for card transactions with low-latency decisions, streaming features, model updates, and manual review.",
+    "quality_tier": "excellent",
+    "answer": "I'd ingest transaction events into a partitioned stream, enrich them with low-latency features from an online feature store, and run rules plus model inference within a strict deadline. The decision service returns approve, decline, or review with reason codes. Feature computations are replayable from the log; model versions are auditable and shadow-tested. Review outcomes feed labels back into training.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses online latency, replayable features, model governance, explanations, review, and feedback loops."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a real-time fraud-detection pipeline for card transactions with low-latency decisions, streaming features, model updates, and manual review.",
+    "quality_tier": "good",
+    "answer": "I'd use a stream, online feature store, rules and model inference service, and a manual-review queue. Models are versioned and monitored.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses online latency, replayable features, model governance, explanations, review, and feedback loops."
+    ],
+    "improvements": [
+      "Could discuss privacy, drift detection, and regional rules."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a real-time fraud-detection pipeline for card transactions with low-latency decisions, streaming features, model updates, and manual review.",
+    "quality_tier": "mediocre",
+    "answer": "I'd write transactions to a database and run a fraud report every hour.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Hourly processing cannot stop real-time fraud.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a real-time fraud-detection pipeline for card transactions with low-latency decisions, streaming features, model updates, and manual review.",
+    "quality_tier": "poor",
+    "answer": "I'd decline every transaction above a fixed amount.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "One threshold creates excessive false positives and misses context.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a real-time fraud-detection pipeline for card transactions with low-latency decisions, streaming features, model updates, and manual review.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a warning icon for risky payments.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "UI warnings do not implement detection.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Choose a multi-region database strategy for user profiles that need low-latency reads worldwide and occasional writes, while avoiding lost updates.",
+    "quality_tier": "excellent",
+    "answer": "I'd clarify write locality and conflict tolerance. A single-writer home region with asynchronous replicas gives simple ordering and global reads but higher remote-write latency. Multi-leader lowers write latency but needs conflict resolution. For profiles, versioned optimistic writes and field-level merge rules may work; critical identity fields may remain single-writer. Failover requires fencing and tested promotion.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Explains topology trade-offs, versioning, conflict scope, replication, and failover."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Choose a multi-region database strategy for user profiles that need low-latency reads worldwide and occasional writes, while avoiding lost updates.",
+    "quality_tier": "good",
+    "answer": "I'd use regional read replicas and route writes to a home region, with version checks to prevent lost updates and a controlled failover plan.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Explains topology trade-offs, versioning, conflict scope, replication, and failover."
+    ],
+    "improvements": [
+      "Could discuss consistency of reads after writes."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Choose a multi-region database strategy for user profiles that need low-latency reads worldwide and occasional writes, while avoiding lost updates.",
+    "quality_tier": "mediocre",
+    "answer": "I'd allow every region to write the same row and use last-write-wins timestamps.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Clock-based last-write-wins can silently lose concurrent edits.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Choose a multi-region database strategy for user profiles that need low-latency reads worldwide and occasional writes, while avoiding lost updates.",
+    "quality_tier": "poor",
+    "answer": "I'd copy the database nightly to each region.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Nightly copies are too stale and not an active database strategy.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Choose a multi-region database strategy for user profiles that need low-latency reads worldwide and occasional writes, while avoiding lost updates.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a region selector in the UI.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "UI selection does not solve replication.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design authentication sharing across several microfrontends owned by different teams without exposing tokens unsafely or duplicating login logic.",
+    "quality_tier": "excellent",
+    "answer": "I'd centralize authentication in the shell or a trusted auth SDK. Prefer secure HTTP-only cookies managed by the backend, with microfrontends calling same-site APIs rather than reading bearer tokens. Shared session state and logout events use a stable contract, while each microfrontend still performs authorization-aware rendering. Versioned packages and integration tests protect compatibility.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses centralized trust, token isolation, contracts, logout, authorization, and team boundaries."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design authentication sharing across several microfrontends owned by different teams without exposing tokens unsafely or duplicating login logic.",
+    "quality_tier": "good",
+    "answer": "I'd let the shell own login and session state, use secure cookies, and expose a small versioned auth interface to microfrontends.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses centralized trust, token isolation, contracts, logout, authorization, and team boundaries."
+    ],
+    "improvements": [
+      "Could discuss cross-origin deployments and token refresh."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design authentication sharing across several microfrontends owned by different teams without exposing tokens unsafely or duplicating login logic.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store the access token in localStorage and let every microfrontend read it.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "localStorage exposes tokens to any injected script.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design authentication sharing across several microfrontends owned by different teams without exposing tokens unsafely or duplicating login logic.",
+    "quality_tier": "poor",
+    "answer": "I'd let each microfrontend implement its own login flow.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Duplicated login logic causes inconsistency and security drift.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design authentication sharing across several microfrontends owned by different teams without exposing tokens unsafely or duplicating login logic.",
+    "quality_tier": "off_topic",
+    "answer": "I'd make all microfrontends use the same header color.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Styling does not define authentication.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Process millions of records through a third-party API that allows only 100 requests per second and sometimes returns 429 or 5xx responses.",
+    "quality_tier": "excellent",
+    "answer": "I'd use a durable work queue and a shared token-bucket limiter enforcing the provider's quota across workers. Jobs are idempotent and checkpointed. 429 responses honor Retry-After; transient failures use jittered backoff, permanent errors are dead-lettered, and concurrency adapts to latency. Metrics track quota use, retries, backlog, and success.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Combines durable batching, shared rate control, Retry-After, idempotency, backoff, and monitoring."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Process millions of records through a third-party API that allows only 100 requests per second and sometimes returns 429 or 5xx responses.",
+    "quality_tier": "good",
+    "answer": "I'd queue records, use a global rate limiter, retry 429 and 5xx responses with backoff, and persist progress so work resumes.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Combines durable batching, shared rate control, Retry-After, idempotency, backoff, and monitoring."
+    ],
+    "improvements": [
+      "Could discuss provider-specific batch endpoints."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Process millions of records through a third-party API that allows only 100 requests per second and sometimes returns 429 or 5xx responses.",
+    "quality_tier": "mediocre",
+    "answer": "I'd run 100 worker threads and sleep one second after every batch.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Fixed sleeps are imprecise across workers and varying latency.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Process millions of records through a third-party API that allows only 100 requests per second and sometimes returns 429 or 5xx responses.",
+    "quality_tier": "poor",
+    "answer": "I'd send requests as fast as possible and retry failures immediately.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Immediate retries amplify throttling and outages.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Process millions of records through a third-party API that allows only 100 requests per second and sometimes returns 429 or 5xx responses.",
+    "quality_tier": "off_topic",
+    "answer": "I'd ask the provider for a higher limit.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "A higher limit is not a processing design.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you had to communicate bad news to a customer or senior stakeholder.",
+    "quality_tier": "excellent",
+    "answer": "A migration defect meant a promised report would be delayed. I confirmed scope first, then told the customer the same day with the impact, what remained safe, the mitigation, and a realistic recovery date. I avoided blaming the vendor. We provided a manual report meanwhile, met the revised date, and later added an integration checkpoint that would have exposed the issue earlier.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows timeliness, clarity, accountability, mitigation, and follow-through."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you had to communicate bad news to a customer or senior stakeholder.",
+    "quality_tier": "good",
+    "answer": "I communicated early with verified facts, explained impact and mitigation, gave a revised date, and followed through.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows timeliness, clarity, accountability, mitigation, and follow-through."
+    ],
+    "improvements": [
+      "Could mention how often progress updates were sent."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you had to communicate bad news to a customer or senior stakeholder.",
+    "quality_tier": "mediocre",
+    "answer": "I told the stakeholder the deadline had slipped and apologized.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Relevant but lacks decision context and outcome detail.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you had to communicate bad news to a customer or senior stakeholder.",
+    "quality_tier": "poor",
+    "answer": "I waited until the original deadline in case the team recovered.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Delay reduces options and damages trust.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you had to communicate bad news to a customer or senior stakeholder.",
+    "quality_tier": "off_topic",
+    "answer": "I prefer managers to communicate bad news.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Avoiding responsibility does not demonstrate stakeholder management.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

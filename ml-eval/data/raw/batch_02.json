@@ -1,0 +1,1032 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "You're given an unsorted list of meeting intervals for one conference room. Some meetings overlap. Merge all overlapping intervals and return both the merged intervals and the total amount of time the room is occupied. How would you solve it?",
+    "quality_tier": "excellent",
+    "answer": "I'd first sort the intervals by start time. Then I'd keep a result list and compare each interval with the last merged interval. If the current start is less than or equal to the last end, I'd merge them by updating the end to the maximum of both ends. Otherwise, I'd add a new interval. After that, I'd sum end minus start for every merged interval. Sorting takes O(n log n), the merge pass is O(n), and the result uses O(n) space in the worst case. I'd also clarify whether touching intervals like 10 to 11 and 11 to 12 should count as merged.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Selects the standard sorting-and-merging approach expected for this interval problem.",
+      "Correctly compares each interval against the last merged interval rather than all previous intervals.",
+      "Explains how to calculate total occupied time without double-counting overlapping periods.",
+      "Provides accurate time and space complexity.",
+      "Identifies the boundary-condition question around intervals that only touch."
+    ],
+    "improvements": [
+      "Could mention how invalid intervals, such as an end before a start, should be handled.",
+      "Could state that the input can be copied before sorting if modifying the original list is not allowed."
+    ],
+    "feedback": "This is a complete and efficient fresher-level answer. It explains the invariant, avoids double-counting, and includes a useful clarification about interval boundaries."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "You're given an unsorted list of meeting intervals for one conference room. Some meetings overlap. Merge all overlapping intervals and return both the merged intervals and the total amount of time the room is occupied. How would you solve it?",
+    "quality_tier": "good",
+    "answer": "I'd sort the meetings by their start time and then loop through them. If the next meeting starts before the current merged meeting ends, I'd extend the end time. Otherwise, I'd store the current one and start a new merged interval. At the end, I'd add the duration of all merged meetings. The overall time should be O(n log n) because of sorting.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses the correct sort-and-scan strategy.",
+      "Correctly explains when two intervals should be merged.",
+      "Recognizes that sorting dominates the overall time complexity.",
+      "Includes the required total-duration calculation."
+    ],
+    "improvements": [
+      "Should explicitly use the maximum of the two end times when merging.",
+      "Does not provide the worst-case space complexity.",
+      "Could clarify how the final active interval is added after the loop.",
+      "Does not discuss whether touching intervals should merge."
+    ],
+    "feedback": "The core solution is correct and clearly stated. It is missing a few implementation and edge-case details, but it would generally pass this question."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "You're given an unsorted list of meeting intervals for one conference room. Some meetings overlap. Merge all overlapping intervals and return both the merged intervals and the total amount of time the room is occupied. How would you solve it?",
+    "quality_tier": "mediocre",
+    "answer": "If the times are integers, I could make an array for every minute of the day and mark each minute as occupied. Then I'd count the occupied values for the total time and scan the array again to create the merged intervals. It would be simple, but the array size depends on the maximum possible time.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Provides a method that can produce both total occupied time and merged ranges.",
+      "Recognizes that the approach depends on a bounded integer time range.",
+      "Avoids double-counting overlapping periods by marking occupancy."
+    ],
+    "improvements": [
+      "The method does not work naturally for arbitrary timestamps or fractional times.",
+      "Its complexity depends on the size of the time domain rather than only the number of meetings.",
+      "Should present the O(n log n) sorting approach, which works for general interval values.",
+      "Does not give precise time and space complexity in terms of the timeline range."
+    ],
+    "feedback": "The answer can work under restrictive assumptions, but it is not the general solution expected in an interview. The candidate should move toward sorting intervals by start time."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "You're given an unsorted list of meeting intervals for one conference room. Some meetings overlap. Merge all overlapping intervals and return both the merged intervals and the total amount of time the room is occupied. How would you solve it?",
+    "quality_tier": "poor",
+    "answer": "I'd compare every meeting with every other meeting. Whenever two overlap, I'd combine them and remove one. Then I'd calculate the duration of whatever intervals are left. It would probably be O(n squared), but it should eventually merge everything.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 5,
+      "depth": 3,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that overlapping intervals must be combined before calculating total time.",
+      "Acknowledges that the proposed pairwise approach is quadratic."
+    ],
+    "improvements": [
+      "The algorithm is underspecified because merging one pair can create a new overlap that requires restarting or carefully updating comparisons.",
+      "Removing elements during nested iteration can cause intervals to be skipped.",
+      "Does not explain how chained overlaps such as 1 to 3, 2 to 5, and 4 to 8 are handled safely.",
+      "Should sort by start time and merge in a single linear pass after sorting."
+    ],
+    "feedback": "The response points toward interval merging, but the proposed mutation-heavy pairwise process is unreliable and unnecessarily inefficient."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "You're given an unsorted list of meeting intervals for one conference room. Some meetings overlap. Merge all overlapping intervals and return both the merged intervals and the total amount of time the room is occupied. How would you solve it?",
+    "quality_tier": "off_topic",
+    "answer": "I'd store the meetings in Google Calendar and use different colors for busy and free time. The calendar can notify users when two meetings clash, so they can reschedule one of them.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 1,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that overlapping meetings can create scheduling conflicts in a real application."
+    ],
+    "improvements": [
+      "The question asks for an algorithm that merges intervals and calculates occupied time.",
+      "Does not describe sorting, interval comparison, merging, or complexity.",
+      "Moves the responsibility to an external product instead of solving the stated problem."
+    ],
+    "feedback": "This response discusses calendar-product features rather than the required interval algorithm."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design and implement an LRU cache with a fixed capacity. Both get and put must run in O(1) average time, and reading an item should make it the most recently used item. Explain your data structures and edge cases.",
+    "quality_tier": "excellent",
+    "answer": "I'd combine a hash map with a doubly linked list. The map stores key to list-node references, so lookup is O(1). The list stores usage order, with the most recently used node near the head and the least recently used near the tail. On get, if the key exists, I'd detach that node and move it to the front. On put, I'd update and move an existing node, or create a new front node. If capacity is exceeded, I'd remove the tail node and delete its key from the map. I'd probably use dummy head and tail nodes to avoid special cases. Capacity zero should reject or immediately discard inserts. If thread safety is required, the map and list mutation need to be protected together with one lock or an equivalent synchronization strategy.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses the expected hash-map and doubly linked-list combination.",
+      "Correctly updates recency on both reads and writes.",
+      "Explains eviction from the least-recently-used end and removal from both data structures.",
+      "Uses sentinel nodes to reduce pointer edge cases.",
+      "Addresses existing-key updates, zero capacity, and optional thread-safety requirements."
+    ],
+    "improvements": [
+      "Could mention whether get should return a sentinel value or an optional result when the key is absent.",
+      "Could describe how memory ownership or node cleanup would be handled in a manual-memory language."
+    ],
+    "feedback": "This is a complete experienced-level answer. It explains the O(1) invariant, all major operations, and important implementation edge cases."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design and implement an LRU cache with a fixed capacity. Both get and put must run in O(1) average time, and reading an item should make it the most recently used item. Explain your data structures and edge cases.",
+    "quality_tier": "good",
+    "answer": "I'd use a dictionary for key lookups and a doubly linked list for recency. The front would hold the newest item and the back would hold the oldest. A get moves the node to the front. A put either updates and moves the node or inserts a new node. If the cache becomes too large, I'd remove the last node and also remove it from the dictionary. Both operations are O(1).",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Chooses the correct two-data-structure design.",
+      "Correctly updates usage order during get and put operations.",
+      "Explains that eviction requires removal from both the list and dictionary.",
+      "Provides the required O(1) average complexity."
+    ],
+    "improvements": [
+      "Could explain why a doubly linked list is needed instead of a singly linked list.",
+      "Does not mention capacity-zero behavior or missing-key behavior.",
+      "Could discuss sentinel nodes and pointer-update edge cases.",
+      "Does not address synchronization if the cache is used concurrently."
+    ],
+    "feedback": "The design is correct and would likely pass. It lacks some edge-case and implementation detail expected from a highly experienced candidate."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design and implement an LRU cache with a fixed capacity. Both get and put must run in O(1) average time, and reading an item should make it the most recently used item. Explain your data structures and edge cases.",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep the values in a hash map and store the last-access timestamp with every item. Get would update the timestamp. When I need to evict, I'd scan all entries and remove the one with the oldest timestamp. Lookup is O(1), although eviction is O(n).",
+    "scores": {
+      "relevance": 8,
+      "clarity": 8,
+      "depth": 5,
+      "confidence": 7
+    },
+    "strengths": [
+      "Correctly uses a hash map for fast lookup.",
+      "Understands that recency must change when an item is read.",
+      "Honestly identifies that eviction requires an O(n) scan in the proposed design."
+    ],
+    "improvements": [
+      "Fails the requirement that put run in O(1) average time when eviction is required.",
+      "Timestamps can have ties and add dependency on clock precision.",
+      "Should use a doubly linked list to maintain exact usage order without scanning.",
+      "Does not address updating existing keys or capacity edge cases."
+    ],
+    "feedback": "The solution tracks recency correctly but does not meet the required complexity. The missing idea is maintaining an explicit ordered list of cache nodes."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design and implement an LRU cache with a fixed capacity. Both get and put must run in O(1) average time, and reading an item should make it the most recently used item. Explain your data structures and edge cases.",
+    "quality_tier": "poor",
+    "answer": "I'd use a queue. Every new key goes at the back, and when the cache is full, I'd remove from the front. Get can read the value from another map. I don't think the queue needs to change when an item is read because it was already inserted earlier.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that a separate map can support fast value lookup.",
+      "Uses a bounded structure with front-based eviction."
+    ],
+    "improvements": [
+      "The design implements FIFO eviction, not least-recently-used eviction.",
+      "A successful get must update the item's recency.",
+      "Moving an arbitrary queue item efficiently is not supported by a basic queue.",
+      "Updating an existing key can create duplicate queue entries unless carefully handled.",
+      "Should use map-to-node references with a doubly linked list."
+    ],
+    "feedback": "The answer confuses insertion order with access recency. It does not satisfy the defining behavior of an LRU cache."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design and implement an LRU cache with a fixed capacity. Both get and put must run in O(1) average time, and reading an item should make it the most recently used item. Explain your data structures and edge cases.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use Redis because it already supports caching and expiration. We can deploy it as a cluster and configure enough memory so the application stays fast.",
+    "scores": {
+      "relevance": 2,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Identifies a real caching technology that may be useful in production systems."
+    ],
+    "improvements": [
+      "The interview question asks for the internal data structures and operations of an LRU cache.",
+      "Does not explain O(1) get and put implementation.",
+      "Does not describe recency updates, eviction, existing-key updates, or edge cases.",
+      "Redis deployment details do not replace the required algorithm."
+    ],
+    "feedback": "This response selects a product instead of explaining the requested data-structure implementation."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A product currently sends only email notifications. You now need to support SMS and push notifications, with different validation, formatting, retry rules, and providers. How would you redesign the code so new notification channels can be added without rewriting the main business flow?",
+    "quality_tier": "excellent",
+    "answer": "I'd define a NotificationChannel interface with something like validateRecipient, formatMessage, and send. EmailChannel, SmsChannel, and PushChannel would implement the channel-specific behavior. The business service would create a notification request and pass it to a dispatcher that depends on the interface, not concrete providers. I'd resolve channels through dependency injection or a registry instead of a growing switch statement. I'd keep retry behavior separate as a RetryPolicy because SMS and push might have different retryable errors and backoff rules. Provider-specific responses should be normalized into a common result so the business layer doesn't understand Twilio or Firebase error codes. I'd also separate message templates from delivery logic, and store an idempotency key so a retry doesn't send the same notification twice.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses polymorphic channel abstractions to isolate email, SMS, and push behavior.",
+      "Separates retry policy from transport implementation instead of embedding all concerns in one class.",
+      "Avoids replacing one conditional with another by suggesting dependency injection or a registry.",
+      "Normalizes provider-specific errors for the business layer.",
+      "Separates templates from delivery and includes idempotency for safe retries."
+    ],
+    "improvements": [
+      "Could explain whether validation belongs entirely in each channel or partly in a shared notification-request object.",
+      "Could mention how channel fallback, such as SMS after failed push, would be modeled."
+    ],
+    "feedback": "This is a strong intermediate answer. It applies SOLID principles to real production concerns rather than only naming a design pattern."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A product currently sends only email notifications. You now need to support SMS and push notifications, with different validation, formatting, retry rules, and providers. How would you redesign the code so new notification channels can be added without rewriting the main business flow?",
+    "quality_tier": "good",
+    "answer": "I'd create a NotificationSender interface with a send method and then implement EmailSender, SmsSender, and PushSender. The service that needs to notify a user would receive the sender as a dependency. A factory or map could select the right sender based on the channel. Each class would handle its own validation and provider call, so adding WhatsApp later would mainly mean adding another implementation.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Introduces a stable interface and channel-specific implementations.",
+      "Uses dependency injection to reduce coupling to concrete notification providers.",
+      "Explains how the design supports adding another channel.",
+      "Keeps validation and provider calls within the relevant implementation."
+    ],
+    "improvements": [
+      "Could separate retry policy and message formatting instead of placing every concern inside sender classes.",
+      "Does not discuss provider-error normalization or idempotency.",
+      "Could explain how the factory avoids becoming a large switch statement.",
+      "Does not address shared orchestration such as logging and delivery-status persistence."
+    ],
+    "feedback": "The central object-oriented redesign is correct. More separation of concerns and production failure handling would improve it."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A product currently sends only email notifications. You now need to support SMS and push notifications, with different validation, formatting, retry rules, and providers. How would you redesign the code so new notification channels can be added without rewriting the main business flow?",
+    "quality_tier": "mediocre",
+    "answer": "I'd make a base Notification class and create EmailNotification, SMSNotification, and PushNotification subclasses. Each subclass can override send. The main service would create the correct child class and call send. Common fields like message and recipient can stay in the parent class.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Recognizes that polymorphism can separate channel-specific sending behavior.",
+      "Identifies potentially shared data such as message and recipient.",
+      "Creates distinct classes for the supported channels."
+    ],
+    "improvements": [
+      "Does not explain how the main service chooses the subclass without retaining channel conditionals.",
+      "Inheritance may be unnecessary when an interface and composition would be more flexible.",
+      "Does not address different validation, formatting, retry policies, or provider errors.",
+      "Could create an overly broad base class if channels require different recipient types and capabilities."
+    ],
+    "feedback": "The answer shows basic inheritance knowledge, but it does not fully solve extensibility or responsibility separation."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A product currently sends only email notifications. You now need to support SMS and push notifications, with different validation, formatting, retry rules, and providers. How would you redesign the code so new notification channels can be added without rewriting the main business flow?",
+    "quality_tier": "poor",
+    "answer": "I'd add an if condition for SMS and another one for push. To keep it readable, I'd put each block in a separate private method. Then whenever a new channel comes, we can add one more condition.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Separating channel logic into named methods would make the existing code easier to read."
+    ],
+    "improvements": [
+      "The main flow still requires modification every time a channel is added.",
+      "The design directly violates the requested extensibility goal.",
+      "Does not use an interface, polymorphism, dependency injection, or a channel registry.",
+      "Keeps channel-specific validation and retry behavior coupled to one service."
+    ],
+    "feedback": "This improves formatting but not architecture. The growing conditional remains the core maintenance problem."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A product currently sends only email notifications. You now need to support SMS and push notifications, with different validation, formatting, retry rules, and providers. How would you redesign the code so new notification channels can be added without rewriting the main business flow?",
+    "quality_tier": "off_topic",
+    "answer": "I'd add notification settings to the profile page so users can enable or disable email, SMS, and push. Push should have a bell icon, and SMS should show the phone number that will receive it.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests reasonable user-facing controls for notification preferences."
+    ],
+    "improvements": [
+      "The question asks about object-oriented code architecture, not notification-settings UI.",
+      "Does not discuss abstractions, channel-specific behavior, extensibility, retries, or provider integration.",
+      "Does not address how new channels can be added without modifying the main business flow."
+    ],
+    "feedback": "The response focuses on frontend preferences rather than the requested OOP redesign."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a rate limiter for a public API. Each user is allowed 100 requests per minute, but no more than 20 requests in any one-second burst. The API runs on many instances and in multiple regions. Explain the algorithm, storage, consistency, and failure behavior.",
+    "quality_tier": "excellent",
+    "answer": "I'd model the two limits separately, probably with token buckets: one bucket refilling at 100 tokens per minute and another refilling at 20 per second. A request is allowed only if both buckets can consume a token. Within a region, I'd store the bucket state in a low-latency shared system like Redis and use a Lua script or equivalent atomic operation to refill, check, and decrement both buckets together. Keys would include the user ID and have TTLs so inactive users don't leave permanent state. For multi-region behavior, I'd first clarify whether the limit must be globally strict. If users are routed to a home region, that region can own their limiter state. If requests can hit any region and the limit must be globally exact, we'd need strongly consistent cross-region state, which adds latency. In many APIs, I'd use regional limits with a divided quota or accept a small bounded overshoot. I'd return 429 with Retry-After and expose remaining quota headers. If the limiter store is unavailable, fail-open may protect availability for low-risk read APIs, while payment or abuse-sensitive endpoints should fail-closed or use a conservative local fallback. I'd monitor rejection rates, Redis latency, hot users, and limiter-store failures.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Models both the minute quota and one-second burst limit explicitly.",
+      "Uses atomic shared-state updates across multiple application instances.",
+      "Recognizes that global strictness across regions creates a latency and consistency trade-off.",
+      "Provides practical strategies such as home-region routing, divided quotas, or bounded overshoot.",
+      "Explains client response behavior and risk-based fail-open versus fail-closed handling.",
+      "Includes TTL management and operational monitoring."
+    ],
+    "improvements": [
+      "Could specify token-refill calculations and numeric precision handling.",
+      "Could discuss protection against one extremely hot key overwhelming a single Redis shard."
+    ],
+    "feedback": "This is a strong system-design response. It covers algorithmic correctness, distributed consistency, latency, client behavior, and degraded operation."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a rate limiter for a public API. Each user is allowed 100 requests per minute, but no more than 20 requests in any one-second burst. The API runs on many instances and in multiple regions. Explain the algorithm, storage, consistency, and failure behavior.",
+    "quality_tier": "good",
+    "answer": "I'd use token buckets because they support both a refill rate and controlled bursts. I'd keep a per-user minute bucket and second bucket in Redis so all API instances see the same counters. A Redis script would update and check both buckets atomically. The keys would expire after inactivity. For multiple regions, I'd either route a user consistently to one region or split the quota between regions, because a globally consistent counter would add network latency. Rejected calls would return 429 and a Retry-After value.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Chooses token buckets suitable for sustained and burst limits.",
+      "Uses Redis to coordinate limits across application instances.",
+      "Makes the two-bucket update atomic.",
+      "Acknowledges cross-region consistency and latency trade-offs.",
+      "Includes appropriate HTTP response behavior."
+    ],
+    "improvements": [
+      "Does not discuss what happens if Redis or a whole region becomes unavailable.",
+      "Could explain whether split regional quotas may underuse capacity or permit limited overshoot.",
+      "Does not mention monitoring, hot-key handling, or abuse at anonymous endpoints.",
+      "Could describe token-refill timestamps and precision."
+    ],
+    "feedback": "The core distributed design is correct. Failure-mode and operational details are the main omissions."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a rate limiter for a public API. Each user is allowed 100 requests per minute, but no more than 20 requests in any one-second burst. The API runs on many instances and in multiple regions. Explain the algorithm, storage, consistency, and failure behavior.",
+    "quality_tier": "mediocre",
+    "answer": "I'd use Redis INCR with a key containing the user ID and current minute. If the count goes above 100, I'd block the request. I'd create another key for the current second and block above 20. Both keys can expire automatically. Since every server uses Redis, the counts should be shared.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 8,
+      "depth": 5,
+      "confidence": 7
+    },
+    "strengths": [
+      "Enforces both the per-minute and per-second limits.",
+      "Uses shared counters so multiple instances do not maintain independent quotas.",
+      "Uses expiration to clean up inactive counter keys."
+    ],
+    "improvements": [
+      "A fixed-window counter allows bursts around window boundaries, such as 20 requests just before and after a second changes.",
+      "The two counter checks must be atomic to avoid partial updates and races.",
+      "Does not address multi-region Redis placement or global consistency.",
+      "Provides no failure policy when Redis is unavailable.",
+      "Could consider token bucket, sliding window, or rolling-window algorithms."
+    ],
+    "feedback": "The solution is implementable but has boundary-burst and distributed-consistency weaknesses that matter for a hard system-design question."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a rate limiter for a public API. Each user is allowed 100 requests per minute, but no more than 20 requests in any one-second burst. The API runs on many instances and in multiple regions. Explain the algorithm, storage, consistency, and failure behavior.",
+    "quality_tier": "poor",
+    "answer": "I'd keep a counter variable inside each API server. It would reset every minute, and if it reaches 100, that server rejects the user's requests. We can add another counter for the second limit. This avoids calling another database.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that both time windows need separate enforcement.",
+      "Attempts to minimize latency by keeping limiter state close to the API."
+    ],
+    "improvements": [
+      "Per-instance counters allow users to multiply their quota by hitting different servers.",
+      "Counters are lost when an instance restarts or scales down.",
+      "The design does not work across regions.",
+      "Reset-based fixed windows allow large bursts at time boundaries.",
+      "Does not define failure behavior, key cleanup, or client retry information."
+    ],
+    "feedback": "The design works only for a single process and does not satisfy the distributed requirements in the question."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a rate limiter for a public API. Each user is allowed 100 requests per minute, but no more than 20 requests in any one-second burst. The API runs on many instances and in multiple regions. Explain the algorithm, storage, consistency, and failure behavior.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add authentication using JWT and require every user to verify their email. We can also encrypt all API traffic with HTTPS and rotate secrets regularly.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 3,
+      "confidence": 5
+    },
+    "strengths": [
+      "Mentions legitimate API authentication and transport-security practices."
+    ],
+    "improvements": [
+      "Authentication does not enforce request-rate quotas.",
+      "Does not provide an algorithm, shared storage, multi-region strategy, or failure behavior.",
+      "A valid JWT user can still exceed the required request limits."
+    ],
+    "feedback": "The answer discusses API security but does not design the requested distributed rate limiter."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two users may transfer money between the same pair of bank accounts at the same time. How would you implement the database transaction so balances never become negative, money is not lost or created, and concurrent transfers do not deadlock?",
+    "quality_tier": "excellent",
+    "answer": "I'd handle the entire transfer in one database transaction. First I'd make the request idempotent with a unique transfer ID so client retries can't move money twice. Then I'd lock both account rows using SELECT FOR UPDATE, but always in a deterministic order, like lower account ID first, regardless of transfer direction. That avoids two transactions taking opposite locks and deadlocking. After locking, I'd verify the source balance is at least the transfer amount, subtract from the source, add to the destination, and insert a transfer-ledger record before committing. If any step fails, the transaction rolls back. I'd also reject non-positive amounts and transfers to the same account. Depending on the database, a conditional debit update can add another safeguard, and a database constraint can prevent negative balances. For unavoidable deadlock or serialization failures, I'd retry the whole transaction with the same idempotency key.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Places debit, credit, and ledger creation inside one atomic database transaction.",
+      "Uses row-level locks to prevent concurrent balance races.",
+      "Prevents deadlocks by locking account rows in a consistent global order.",
+      "Adds idempotency to protect against client and transaction retries.",
+      "Includes validation, rollback behavior, ledger recording, and negative-balance safeguards.",
+      "Correctly retries transient database failures as a whole transaction."
+    ],
+    "improvements": [
+      "Could discuss the isolation level selected and why it is sufficient with explicit row locks.",
+      "Could mention storing monetary values as fixed-precision decimals or integer minor units."
+    ],
+    "feedback": "This is a strong answer that protects the balance and conservation-of-money invariants while addressing concurrency, deadlocks, retries, and auditability."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two users may transfer money between the same pair of bank accounts at the same time. How would you implement the database transaction so balances never become negative, money is not lost or created, and concurrent transfers do not deadlock?",
+    "quality_tier": "good",
+    "answer": "I'd start a transaction and lock both account records with SELECT FOR UPDATE. To avoid deadlocks, I'd always lock the smaller account ID first and then the larger one. After the locks are held, I'd check the sender balance, update both balances, create the transfer record, and commit. If the balance is too low, I'd roll back. I'd also use a unique transfer ID so retrying the same API call doesn't perform the transfer again.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses a single atomic transaction for the complete transfer.",
+      "Correctly uses row locks to serialize changes to the two accounts.",
+      "Uses deterministic account ordering to reduce deadlock risk.",
+      "Checks available funds after acquiring the lock.",
+      "Includes an idempotency mechanism for repeated transfer requests."
+    ],
+    "improvements": [
+      "Could add a database-level constraint or conditional debit as defense in depth.",
+      "Does not mention retrying the transaction after a transient deadlock or serialization failure.",
+      "Could include validation for zero, negative, or same-account transfers.",
+      "Could mention an immutable ledger entry for auditing."
+    ],
+    "feedback": "The transaction design is correct and safe. It lacks some defensive and operational details but would meet the main interview requirements."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two users may transfer money between the same pair of bank accounts at the same time. How would you implement the database transaction so balances never become negative, money is not lost or created, and concurrent transfers do not deadlock?",
+    "quality_tier": "mediocre",
+    "answer": "I'd use a database transaction and set the isolation level to serializable. I'd read the sender balance, check it, update the sender, and then update the receiver. If the database reports a conflict, I'd retry. Serializable should make the operations safe.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Understands that both balance updates must be inside one database transaction.",
+      "Chooses an isolation level capable of preventing many concurrency anomalies.",
+      "Mentions retrying serialization conflicts."
+    ],
+    "improvements": [
+      "Does not address deterministic lock ordering or explain how deadlocks are avoided.",
+      "Does not include idempotency, so a client retry after an uncertain commit could transfer twice.",
+      "Should record the transfer itself in the same transaction.",
+      "Does not validate transfer amount or same-account transfers.",
+      "Relying only on the isolation-level name is weaker than explaining the protected invariants."
+    ],
+    "feedback": "The answer has the right transactional direction but is too dependent on a general isolation-level claim and misses several practical safeguards."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two users may transfer money between the same pair of bank accounts at the same time. How would you implement the database transaction so balances never become negative, money is not lost or created, and concurrent transfers do not deadlock?",
+    "quality_tier": "poor",
+    "answer": "I'd first read the sender's balance. If they have enough money, I'd run one update to subtract it and another update to add it to the receiver. I'd use try-catch so if the second update fails, I can run another query to add the money back.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that a failed credit after a successful debit would need correction."
+    ],
+    "improvements": [
+      "The read-check-update sequence has a race condition and can allow concurrent overdrafts.",
+      "The two updates are not placed in one atomic database transaction.",
+      "Compensating with another query can also fail and leave balances inconsistent.",
+      "Does not address deadlocks, row locking, idempotency, or retry behavior.",
+      "Should rely on transaction rollback rather than manually reversing a partial transfer."
+    ],
+    "feedback": "This design can lose money or create negative balances under concurrency and failure. The transfer must be atomic and properly locked."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Two users may transfer money between the same pair of bank accounts at the same time. How would you implement the database transaction so balances never become negative, money is not lost or created, and concurrent transfers do not deadlock?",
+    "quality_tier": "off_topic",
+    "answer": "I'd encrypt the account number and make sure the database password is stored in an environment variable. Only the backend server should be allowed to connect to the database.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Mentions relevant database-security practices."
+    ],
+    "improvements": [
+      "The question is about transactional correctness and concurrency, not credential storage.",
+      "Does not explain atomic debit and credit operations.",
+      "Does not address negative balances, locking, deadlocks, retries, or idempotency."
+    ],
+    "feedback": "The response discusses security controls but not the requested concurrent transfer transaction."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "You're implementing an infinite-scrolling product list. Users sometimes see duplicate items, old results appear after changing filters, and keyboard users cannot easily reach newly loaded content. How would you design and fix the component?",
+    "quality_tier": "excellent",
+    "answer": "I'd use cursor-based pagination if the API supports it, because offsets can duplicate or skip items when the dataset changes. An IntersectionObserver can watch a sentinel near the bottom and request the next page. I'd prevent overlapping loads with an in-flight flag, but I'd also track the current filter version or request ID so a late response from the previous filter can't update state. When filters change, I'd abort the old request, clear the existing items and cursor, and start from the first page. I'd merge results by stable product ID so repeated API items don't appear twice. For accessibility, I wouldn't rely only on automatic loading. I'd provide a keyboard-focusable Load more button as a fallback, announce the number of newly loaded items with a polite live region, and avoid moving focus unexpectedly. I'd also handle loading, empty, error, and end-of-list states and disconnect the observer during cleanup.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses cursor pagination to reduce duplicate and missing items in changing datasets.",
+      "Prevents stale filter responses through cancellation and request-version validation.",
+      "Deduplicates merged pages using stable product identifiers.",
+      "Uses IntersectionObserver with cleanup instead of an expensive raw scroll handler.",
+      "Provides a keyboard-accessible manual loading fallback and non-disruptive result announcements.",
+      "Covers overlapping requests and complete UI states."
+    ],
+    "improvements": [
+      "Could mention preserving scroll position when navigating to a product and returning to the list.",
+      "Could discuss list virtualization if the number of rendered items becomes very large."
+    ],
+    "feedback": "This is an excellent fresher-level response. It handles network races, pagination correctness, component lifecycle, and accessibility in one coherent design."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "You're implementing an infinite-scrolling product list. Users sometimes see duplicate items, old results appear after changing filters, and keyboard users cannot easily reach newly loaded content. How would you design and fix the component?",
+    "quality_tier": "good",
+    "answer": "I'd load the next page using IntersectionObserver and make sure only one request runs at a time. When filters change, I'd cancel the previous fetch with AbortController, reset the items and page cursor, and ignore any response that doesn't match the current filter. I'd deduplicate products by ID before adding them. For keyboard users, I'd also include a Load more button and announce when more products have loaded.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses IntersectionObserver and prevents concurrent page requests.",
+      "Resets pagination state correctly when filters change.",
+      "Combines request cancellation with stale-response validation.",
+      "Deduplicates products by stable identifier.",
+      "Provides a keyboard-operable loading control and status announcement."
+    ],
+    "improvements": [
+      "Could explain cursor pagination versus offset pagination.",
+      "Does not mention observer cleanup or end-of-list handling.",
+      "Could describe how focus is preserved after loading.",
+      "Could mention error recovery and retry behavior."
+    ],
+    "feedback": "The answer directly solves all three reported issues. It is missing a few lifecycle and pagination details but is technically strong."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "You're implementing an infinite-scrolling product list. Users sometimes see duplicate items, old results appear after changing filters, and keyboard users cannot easily reach newly loaded content. How would you design and fix the component?",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep a loading boolean so scrolling can't call the API multiple times. When the filters change, I'd set the product array to empty and start again from page one. Before adding a product, I'd check whether its ID is already in the array. I could add tabindex to the product cards so keyboard users can focus them.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Recognizes that overlapping page requests can cause duplicates.",
+      "Resets list state when filter values change.",
+      "Attempts to deduplicate products by ID.",
+      "Considers keyboard access to product content."
+    ],
+    "improvements": [
+      "A loading boolean does not prevent a late response from an old filter from updating the list.",
+      "Should cancel or version requests when filters change.",
+      "Checking the entire array for every item can become inefficient; a set or map of IDs is preferable.",
+      "Adding tabindex to every product card may create excessive tab stops and does not solve loading access.",
+      "Should provide a Load more button or appropriate announcements for keyboard and screen-reader users."
+    ],
+    "feedback": "The answer identifies some symptoms but does not fully handle asynchronous races or accessible loading behavior."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "You're implementing an infinite-scrolling product list. Users sometimes see duplicate items, old results appear after changing filters, and keyboard users cannot easily reach newly loaded content. How would you design and fix the component?",
+    "quality_tier": "poor",
+    "answer": "I'd remove duplicate products by comparing their names. For the old results, I'd add a two-second delay after changing the filter before making the request. Keyboard users can use the browser's find option to search for products.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Recognizes that duplicated records need some form of identification."
+    ],
+    "improvements": [
+      "Product names are not guaranteed to be unique and should not be used as identity.",
+      "Adding a delay does not prevent an older request from completing after a newer one.",
+      "Does not cancel requests, track filter versions, or control overlapping pagination loads.",
+      "Browser search is not a substitute for keyboard-accessible component behavior.",
+      "Does not explain pagination, loading triggers, focus handling, or result announcements."
+    ],
+    "feedback": "The proposed fixes do not address the underlying race condition and provide no valid accessibility solution."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "You're implementing an infinite-scrolling product list. Users sometimes see duplicate items, old results appear after changing filters, and keyboard users cannot easily reach newly loaded content. How would you design and fix the component?",
+    "quality_tier": "off_topic",
+    "answer": "I'd improve the cards by adding shadows, hover animations, and larger product images. The filter bar could stay sticky at the top so the page looks more professional.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Provides understandable visual-design ideas for a product list."
+    ],
+    "improvements": [
+      "The question concerns pagination bugs, stale requests, duplicate data, and keyboard accessibility.",
+      "Does not describe request cancellation, deduplication, loading control, or focus behavior.",
+      "Hover animations may not help keyboard or touch users."
+    ],
+    "feedback": "The response focuses on styling and does not address the functional or accessibility problems."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a backend upload flow for video files as large as 2 GB. Users may be on unreliable mobile networks and retry parts of the upload. The application servers should not hold the complete file in memory, and finalizing the same upload twice must not create duplicate records.",
+    "quality_tier": "excellent",
+    "answer": "I'd use direct multipart upload to object storage instead of proxying the full video through the application server. The client first calls our API to create an upload session. We authenticate the user, create a database record with an upload ID and state, and ask the storage provider for a multipart-upload ID. Our API returns short-lived presigned URLs for individual parts. The client uploads parts independently and can retry only failed parts. Each part should have a number and checksum. When all parts are uploaded, the client calls finalize with an idempotency key. The backend locks or conditionally updates the upload record, verifies ownership and current state, asks storage to complete the multipart upload, validates final size and checksum where supported, and creates the video record exactly once. Repeated finalize requests should return the existing result. I'd use states like CREATED, UPLOADING, FINALIZING, COMPLETED, and FAILED. Expired abandoned sessions need cleanup, and completed files should go through asynchronous virus scanning, metadata extraction, and transcoding before being published.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Avoids sending the complete file through application memory by using direct object-storage uploads.",
+      "Supports unreliable networks through multipart uploads and independent part retries.",
+      "Uses presigned URLs with authentication, ownership checks, and limited lifetime.",
+      "Makes finalization idempotent and protects it with a durable upload state machine.",
+      "Includes part and final-object validation through size and checksums.",
+      "Addresses abandoned-upload cleanup and asynchronous security and media-processing steps."
+    ],
+    "improvements": [
+      "Could discuss limiting part count and part size to control storage-provider costs and abuse.",
+      "Could mention rate limits and per-user storage quotas during upload-session creation."
+    ],
+    "feedback": "This is a production-ready backend design. It covers memory constraints, resumability, security, idempotency, lifecycle management, and post-upload processing."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a backend upload flow for video files as large as 2 GB. Users may be on unreliable mobile networks and retry parts of the upload. The application servers should not hold the complete file in memory, and finalizing the same upload twice must not create duplicate records.",
+    "quality_tier": "good",
+    "answer": "I'd create an upload session in the backend and use multipart upload with cloud object storage. The backend would generate presigned URLs so the client sends each chunk directly to storage. Failed chunks could be retried without restarting the whole file. After uploading all parts, the client calls a finalize endpoint. That endpoint should use an idempotency key and a unique upload ID, verify that the upload belongs to the user, complete the multipart upload, and create the database record only once. I'd also clean up sessions that never finish.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses direct multipart object-storage upload rather than buffering the full file in the application.",
+      "Supports retrying individual failed chunks.",
+      "Includes upload ownership validation and idempotent finalization.",
+      "Recognizes the need to clean up abandoned sessions."
+    ],
+    "improvements": [
+      "Could define an explicit upload state machine to prevent concurrent finalization races.",
+      "Does not mention checksums, final-size validation, or short-lived upload permissions.",
+      "Could explain how repeated finalize calls return the previously created video record.",
+      "Does not discuss virus scanning or processing before publication."
+    ],
+    "feedback": "The main architecture is correct and scalable. More detail around state transitions, validation, and processing security would improve it."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a backend upload flow for video files as large as 2 GB. Users may be on unreliable mobile networks and retry parts of the upload. The application servers should not hold the complete file in memory, and finalizing the same upload twice must not create duplicate records.",
+    "quality_tier": "mediocre",
+    "answer": "I'd split the video into chunks in the browser and send each chunk to the backend with the file ID and chunk number. The backend would stream each chunk to disk instead of keeping it in memory. When every chunk is there, it would combine them and upload the final file to cloud storage. I'd store a boolean to say whether the upload is finished.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Uses chunking to support retrying part of an interrupted upload.",
+      "Avoids retaining the entire file in application memory by streaming chunks.",
+      "Includes chunk numbering and an upload identifier."
+    ],
+    "improvements": [
+      "Routing every 2 GB upload through application servers creates bandwidth, disk, scaling, and cleanup pressure.",
+      "Combining chunks on local server disk is difficult across multiple instances.",
+      "A boolean is insufficient for concurrent finalization and detailed failure states.",
+      "Does not provide idempotency for duplicate finalize calls.",
+      "Should use direct multipart uploads to object storage and validate ownership and checksums."
+    ],
+    "feedback": "The answer partially meets resumability and memory requirements but creates avoidable application-server and local-disk bottlenecks."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a backend upload flow for video files as large as 2 GB. Users may be on unreliable mobile networks and retry parts of the upload. The application servers should not hold the complete file in memory, and finalizing the same upload twice must not create duplicate records.",
+    "quality_tier": "poor",
+    "answer": "I'd create a POST endpoint that accepts multipart form data and saves the uploaded file. The request timeout can be increased to maybe 30 minutes for large videos. After the request completes, I'd insert the video row into the database.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Uses multipart form data, which is a standard format for basic file uploads.",
+      "Creates the database record after receiving the file rather than before an incomplete upload."
+    ],
+    "improvements": [
+      "A single long-running request is fragile on unreliable mobile networks.",
+      "Retrying requires uploading the entire 2 GB file again.",
+      "Application servers still carry the full network transfer and may buffer significant data.",
+      "Long request timeouts consume server resources and interact poorly with load balancers.",
+      "Does not address duplicate finalization, idempotency, checksums, ownership, or abandoned uploads."
+    ],
+    "feedback": "This approach may work for small files but does not satisfy the reliability and scaling requirements for large video uploads."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a backend upload flow for video files as large as 2 GB. Users may be on unreliable mobile networks and retry parts of the upload. The application servers should not hold the complete file in memory, and finalizing the same upload twice must not create duplicate records.",
+    "quality_tier": "off_topic",
+    "answer": "After receiving the video, I'd use FFmpeg to compress it into multiple qualities like 1080p, 720p, and 480p. Then users can stream the correct quality based on their internet speed.",
+    "scores": {
+      "relevance": 2,
+      "clarity": 7,
+      "depth": 3,
+      "confidence": 5
+    },
+    "strengths": [
+      "Describes a relevant post-upload video-processing use case."
+    ],
+    "improvements": [
+      "The question asks how the original large file is uploaded reliably.",
+      "Does not address multipart upload, retries, application memory, ownership, or idempotent finalization.",
+      "Transcoding happens after upload and does not solve upload reliability."
+    ],
+    "feedback": "The answer focuses on video processing after upload rather than designing the upload flow itself."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "Tell me about a time you disagreed with a teammate about how to implement something. How did you handle the disagreement, and what was the final outcome?",
+    "quality_tier": "excellent",
+    "answer": "In my final-year project, one teammate wanted to store authentication tokens in local storage because it was quick to implement, while I wanted to use secure HTTP-only cookies. Instead of just saying their approach was wrong, I wrote down the risks and made a small proof of concept showing how both approaches would work with our backend. We discussed XSS, CSRF, deployment setup, and how much time each option would take. We agreed to use HTTP-only cookies with SameSite settings and add CSRF protection for the state-changing routes. I also helped update the frontend calls so the decision didn't become extra work only for them. We finished the change before the next milestone, and after that we started documenting technical decisions in short notes before implementing them.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Provides a specific technical disagreement with understandable trade-offs.",
+      "Uses evidence and a proof of concept rather than authority or personal preference.",
+      "Acknowledges security and delivery-time considerations.",
+      "Shares implementation work after the decision instead of shifting the burden to the teammate.",
+      "Describes a concrete outcome and a lasting improvement to team decision-making."
+    ],
+    "improvements": [
+      "Could briefly mention the teammate's strongest argument to show the disagreement was considered fairly.",
+      "Could quantify whether the chosen implementation affected delivery time or reduced a measurable risk."
+    ],
+    "feedback": "This is a strong fresher answer. It shows respectful disagreement, technical reasoning, collaboration, and a practical team-level improvement."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "Tell me about a time you disagreed with a teammate about how to implement something. How did you handle the disagreement, and what was the final outcome?",
+    "quality_tier": "good",
+    "answer": "In a college project, my teammate wanted to build a custom modal component, but I suggested using the component library we already had because of accessibility and time. We compared the requirements and built a quick version using the library. It covered almost everything, so we used it and only added a small wrapper for our custom styling. The discussion stayed calm, and we finished the feature earlier than expected.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Gives a clear disagreement involving build-versus-reuse trade-offs.",
+      "Uses requirements and a quick implementation test to resolve the disagreement.",
+      "Considers accessibility and delivery time.",
+      "Provides a concrete compromise and positive outcome."
+    ],
+    "improvements": [
+      "Could explain what concern motivated the teammate's custom-component preference.",
+      "Does not describe any lasting lesson or change in future collaboration.",
+      "Could provide one specific accessibility feature preserved by using the library."
+    ],
+    "feedback": "The answer is relevant, collaborative, and outcome-oriented. More reflection and detail about both sides would strengthen it."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "Tell me about a time you disagreed with a teammate about how to implement something. How did you handle the disagreement, and what was the final outcome?",
+    "quality_tier": "mediocre",
+    "answer": "My teammate and I disagreed about whether to use React or plain JavaScript for a project. We talked about it for some time and finally decided to use React because both of us knew it better. The project was completed, and there wasn't any major issue after that.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Provides a direct example of a technical disagreement.",
+      "Shows that the candidate discussed the choice rather than refusing to cooperate.",
+      "States the final decision and project outcome."
+    ],
+    "improvements": [
+      "Does not explain the actual arguments for React and plain JavaScript.",
+      "The decision appears based only on familiarity rather than project requirements.",
+      "Does not describe the candidate's specific role in keeping the discussion productive.",
+      "The final result is vague and lacks measurable impact or learning."
+    ],
+    "feedback": "The answer covers the basic event but lacks evidence of structured decision-making or meaningful reflection."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "Tell me about a time you disagreed with a teammate about how to implement something. How did you handle the disagreement, and what was the final outcome?",
+    "quality_tier": "poor",
+    "answer": "Usually if I know my solution is correct, I try to explain it. If the teammate still disagrees, I tell the team lead so they can decide. In most cases, my approach gets selected because I research properly.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that unresolved disagreements may sometimes require escalation."
+    ],
+    "improvements": [
+      "Does not provide a specific example or final outcome.",
+      "Frames disagreement as proving personal correctness rather than understanding trade-offs.",
+      "Escalates quickly without describing experiments, requirements, or compromise.",
+      "The claim that the candidate's approach usually wins may sound dismissive of teammates.",
+      "Should demonstrate listening, shared decision criteria, and collaboration after the decision."
+    ],
+    "feedback": "The answer is hypothetical and suggests a rigid approach to disagreement. It does not provide evidence of constructive teamwork."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "easy",
+    "level": "fresher",
+    "question": "Tell me about a time you disagreed with a teammate about how to implement something. How did you handle the disagreement, and what was the final outcome?",
+    "quality_tier": "off_topic",
+    "answer": "I'm comfortable working both independently and in teams. In college, I participated in hackathons and completed several coding projects. I think communication is very important for every software engineer.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Expresses a general appreciation for communication and teamwork."
+    ],
+    "improvements": [
+      "The question asks for one specific disagreement and how it was resolved.",
+      "Does not describe the situation, competing viewpoints, actions, decision, or result.",
+      "General statements about teamwork do not provide behavioral evidence."
+    ],
+    "feedback": "The response gives broad teamwork claims but does not answer the requested behavioral example."
+  }
+]

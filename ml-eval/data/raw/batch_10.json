@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given meeting start and end times, return the minimum number of rooms needed so no meetings overlap in the same room.",
+    "quality_tier": "excellent",
+    "answer": "I'd sort meetings by start time and keep a min-heap of current end times. If the earliest ending room is free before the next meeting starts, reuse it by replacing its end time; otherwise allocate another room. The maximum heap size is the answer, with O(n log n) time.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses the standard heap allocation algorithm and correct complexity."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given meeting start and end times, return the minimum number of rooms needed so no meetings overlap in the same room.",
+    "quality_tier": "good",
+    "answer": "I'd sort by start time and use a min-heap of meeting end times. Reuse a room when the minimum end is no later than the next start.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses the standard heap allocation algorithm and correct complexity."
+    ],
+    "improvements": [
+      "Could clarify whether end and start at the same time overlap."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given meeting start and end times, return the minimum number of rooms needed so no meetings overlap in the same room.",
+    "quality_tier": "mediocre",
+    "answer": "I'd compare every meeting with every other meeting and count overlaps.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Pairwise overlap counts do not directly produce maximum simultaneous meetings.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given meeting start and end times, return the minimum number of rooms needed so no meetings overlap in the same room.",
+    "quality_tier": "poor",
+    "answer": "I'd sort by duration and put shorter meetings first.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Duration order does not preserve scheduling feasibility.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given meeting start and end times, return the minimum number of rooms needed so no meetings overlap in the same room.",
+    "quality_tier": "off_topic",
+    "answer": "I'd ask users to avoid booking overlapping meetings.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "User policy is not an algorithm.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Find the shortest path from one node to all others in a graph with non-negative weighted edges.",
+    "quality_tier": "excellent",
+    "answer": "I'd use Dijkstra's algorithm with an adjacency list and min-priority queue. Initialize source distance to zero, pop the smallest tentative distance, skip stale entries, and relax outgoing edges. With a binary heap the complexity is O((V+E) log V). Negative edges require a different algorithm.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly states assumptions, relaxation, stale entries, and complexity."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Find the shortest path from one node to all others in a graph with non-negative weighted edges.",
+    "quality_tier": "good",
+    "answer": "I'd use Dijkstra with a min-heap and relax each edge when a shorter path is found. Stale heap entries are ignored.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly states assumptions, relaxation, stale entries, and complexity."
+    ],
+    "improvements": [
+      "Could mention predecessor tracking for path reconstruction."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Find the shortest path from one node to all others in a graph with non-negative weighted edges.",
+    "quality_tier": "mediocre",
+    "answer": "I'd use BFS because it finds shortest paths.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Plain BFS is valid only for equal edge weights.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Find the shortest path from one node to all others in a graph with non-negative weighted edges.",
+    "quality_tier": "poor",
+    "answer": "I'd greedily choose the smallest individual outgoing edge at each step.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Local smallest edges do not guarantee a globally shortest path.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Find the shortest path from one node to all others in a graph with non-negative weighted edges.",
+    "quality_tier": "off_topic",
+    "answer": "I'd sort all nodes by name.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Node names are unrelated to path costs.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a library-management system with books, physical copies, members, loans, reservations, fines, and different borrowing policies.",
+    "quality_tier": "excellent",
+    "answer": "I'd separate Book metadata from BookCopy inventory. Member, Loan, Reservation, Fine, and LibraryBranch are distinct entities. BorrowingPolicy and FinePolicy strategies handle member tiers and changing rules. A circulation service performs atomic checkout, return, renewal, and reservation allocation while preserving copy state.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly separates titles from copies and variable policies from circulation state."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a library-management system with books, physical copies, members, loans, reservations, fines, and different borrowing policies.",
+    "quality_tier": "good",
+    "answer": "I'd create Book, BookCopy, Member, Loan, and Reservation classes, with policy interfaces for borrowing limits and fines.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly separates titles from copies and variable policies from circulation state."
+    ],
+    "improvements": [
+      "Could explain reservation queues across branches."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a library-management system with books, physical copies, members, loans, reservations, fines, and different borrowing policies.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store one availableCount on Book and create a Loan record when someone borrows it.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Counts alone cannot track damaged, lost, or branch-specific copies.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a library-management system with books, physical copies, members, loans, reservations, fines, and different borrowing policies.",
+    "quality_tier": "poor",
+    "answer": "I'd put every field and operation into one Library class.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "A monolithic class lacks cohesion and extensibility.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a library-management system with books, physical copies, members, loans, reservations, fines, and different borrowing policies.",
+    "quality_tier": "off_topic",
+    "answer": "I'd build a book-cover carousel.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Presentation is unrelated to the core model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a search-autocomplete service that returns popular queries within 100 ms, updates trends quickly, filters unsafe suggestions, and serves multiple regions.",
+    "quality_tier": "excellent",
+    "answer": "I'd maintain a prefix index, such as a trie or finite-state structure, containing top suggestions per prefix. Offline aggregation supplies long-term popularity, while a streaming pipeline updates recent trend scores. Unsafe phrases are filtered before publication and at query time. Regional caches serve hot prefixes; versioned snapshots and incremental updates provide consistency and rollback.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Combines low-latency prefix serving, trend updates, moderation, snapshots, and regional caching."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a search-autocomplete service that returns popular queries within 100 ms, updates trends quickly, filters unsafe suggestions, and serves multiple regions.",
+    "quality_tier": "good",
+    "answer": "I'd precompute top suggestions per prefix, cache them regionally, and update scores through a streaming trend pipeline. A moderation filter removes unsafe results.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Combines low-latency prefix serving, trend updates, moderation, snapshots, and regional caching."
+    ],
+    "improvements": [
+      "Could discuss personalization and privacy limits."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a search-autocomplete service that returns popular queries within 100 ms, updates trends quickly, filters unsafe suggestions, and serves multiple regions.",
+    "quality_tier": "mediocre",
+    "answer": "I'd query the full search-log database for strings beginning with the prefix and sort by count.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Direct database aggregation is too slow for hot interactive traffic.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a search-autocomplete service that returns popular queries within 100 ms, updates trends quickly, filters unsafe suggestions, and serves multiple regions.",
+    "quality_tier": "poor",
+    "answer": "I'd scan every past query on each keystroke.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Full scans cannot meet latency targets.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a search-autocomplete service that returns popular queries within 100 ms, updates trends quickly, filters unsafe suggestions, and serves multiple regions.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add spelling correction to the search box.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Spell correction is adjacent but not the requested service design.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design partitioning and retention for a time-series metrics table receiving billions of rows while supporting recent dashboards and occasional historical queries.",
+    "quality_tier": "excellent",
+    "answer": "I'd partition primarily by time, such as daily or hourly ranges, and optionally subpartition or shard by tenant or metric hash. Recent partitions stay on fast storage with indexes matching dashboard filters; older partitions are compressed or moved to cheaper storage. Retention drops whole partitions instead of deleting rows. Rollups support long-range queries, and writes are routed by timestamp with late-data handling.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses write scale, fast retention, storage tiers, rollups, and late data."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design partitioning and retention for a time-series metrics table receiving billions of rows while supporting recent dashboards and occasional historical queries.",
+    "quality_tier": "good",
+    "answer": "I'd use time-range partitions, drop expired partitions, keep recent data indexed, and store hourly or daily rollups for historical dashboards.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses write scale, fast retention, storage tiers, rollups, and late data."
+    ],
+    "improvements": [
+      "Could discuss partition-count limits and tenant skew."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design partitioning and retention for a time-series metrics table receiving billions of rows while supporting recent dashboards and occasional historical queries.",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep one table with an index on timestamp and run daily DELETE statements.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Large deletes generate bloat and long maintenance work.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design partitioning and retention for a time-series metrics table receiving billions of rows while supporting recent dashboards and occasional historical queries.",
+    "quality_tier": "poor",
+    "answer": "I'd create one table per metric name.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Unbounded per-metric tables become operationally unmanageable.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design partitioning and retention for a time-series metrics table receiving billions of rows while supporting recent dashboards and occasional historical queries.",
+    "quality_tier": "off_topic",
+    "answer": "I'd export graphs as images after each day.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Graph images do not replace queryable metric storage.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Implement a browser file upload with progress, cancellation, retry, and validation while avoiding memory spikes for large files.",
+    "quality_tier": "excellent",
+    "answer": "I'd validate type and size before upload, then use a streaming or multipart upload path that sends chunks rather than reading the whole file. An AbortController supports cancellation; per-part progress aggregates into total progress. Failed parts retry with backoff and checksums, and the UI exposes accessible progress and error status.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Combines bounded memory, resumability, cancellation, validation, and accessible progress."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Implement a browser file upload with progress, cancellation, retry, and validation while avoiding memory spikes for large files.",
+    "quality_tier": "good",
+    "answer": "I'd upload in chunks, track bytes sent, support AbortController cancellation, and retry failed chunks instead of restarting the whole file.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Combines bounded memory, resumability, cancellation, validation, and accessible progress."
+    ],
+    "improvements": [
+      "Could explain server-issued upload sessions and concurrency limits."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Implement a browser file upload with progress, cancellation, retry, and validation while avoiding memory spikes for large files.",
+    "quality_tier": "mediocre",
+    "answer": "I'd read the file into base64 and send it in one JSON request.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Base64 increases size and may create large memory copies.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Implement a browser file upload with progress, cancellation, retry, and validation while avoiding memory spikes for large files.",
+    "quality_tier": "poor",
+    "answer": "I'd disable the browser until the upload completes.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Blocking interaction is poor UX and does not add reliability.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Implement a browser file upload with progress, cancellation, retry, and validation while avoiding memory spikes for large files.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add an animated upload icon.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Animation does not implement upload behavior.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a circuit breaker around an unreliable third-party API, including state transitions, retries, timeouts, and observability.",
+    "quality_tier": "excellent",
+    "answer": "I'd wrap calls with strict timeouts and classify failures. The breaker tracks a rolling error rate and moves Closed to Open when thresholds are exceeded. After a cooldown it enters HalfOpen and allows a small number of probes; success closes it, failure reopens it. Retries use bounded backoff and must not multiply traffic. Metrics expose state, latency, failures, and rejected calls.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Defines breaker semantics, retry interaction, timeouts, and monitoring."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a circuit breaker around an unreliable third-party API, including state transitions, retries, timeouts, and observability.",
+    "quality_tier": "good",
+    "answer": "I'd implement Closed, Open, and HalfOpen states with failure thresholds, cooldowns, and limited probe requests. Calls also have timeouts and careful retries.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Defines breaker semantics, retry interaction, timeouts, and monitoring."
+    ],
+    "improvements": [
+      "Could discuss per-endpoint isolation and fallback data."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a circuit breaker around an unreliable third-party API, including state transitions, retries, timeouts, and observability.",
+    "quality_tier": "mediocre",
+    "answer": "I'd retry every failure five times before returning an error.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Retries alone can amplify an outage.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a circuit breaker around an unreliable third-party API, including state transitions, retries, timeouts, and observability.",
+    "quality_tier": "poor",
+    "answer": "I'd keep calling the provider until it succeeds.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Unbounded retries cause cascading failure.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a circuit breaker around an unreliable third-party API, including state transitions, retries, timeouts, and observability.",
+    "quality_tier": "off_topic",
+    "answer": "I'd show a friendly maintenance page.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "A maintenance page does not protect backend resources.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you made an important decision with incomplete data. How did you manage the risk?",
+    "quality_tier": "excellent",
+    "answer": "During a migration, we lacked reliable traffic data for one legacy endpoint. I used logs, support tickets, and a short shadow-traffic sample to estimate usage, then chose a reversible phased cutover with feature flags and rollback metrics. The first cohort exposed one missing client, which we fixed before expanding. The migration completed without a broad outage.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows evidence gathering, reversibility, explicit risk controls, and learning."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you made an important decision with incomplete data. How did you manage the risk?",
+    "quality_tier": "good",
+    "answer": "I gathered the best available evidence, chose a reversible pilot, defined rollback thresholds, and expanded only after validating results.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows evidence gathering, reversibility, explicit risk controls, and learning."
+    ],
+    "improvements": [
+      "Could quantify the sample size or thresholds."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you made an important decision with incomplete data. How did you manage the risk?",
+    "quality_tier": "mediocre",
+    "answer": "I made the most likely choice and monitored after release.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Monitoring helps, but the decision process is not specific.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you made an important decision with incomplete data. How did you manage the risk?",
+    "quality_tier": "poor",
+    "answer": "I waited until every uncertainty was resolved.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Waiting indefinitely can itself create business risk.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you made an important decision with incomplete data. How did you manage the risk?",
+    "quality_tier": "off_topic",
+    "answer": "I prefer decisions supported by complete data.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Preference does not demonstrate behavior.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

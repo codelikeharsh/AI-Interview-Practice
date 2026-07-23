@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given two nodes in a binary tree, find their lowest common ancestor when nodes do not have parent pointers.",
+    "quality_tier": "excellent",
+    "answer": "I'd recurse from the root. If the current node is null or matches either target, return it. Recurse left and right; if both return non-null, the current node is the LCA, otherwise propagate the non-null result. This is O(n) time and O(h) recursion space, assuming both nodes exist.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly uses subtree evidence and states assumptions and complexity."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given two nodes in a binary tree, find their lowest common ancestor when nodes do not have parent pointers.",
+    "quality_tier": "good",
+    "answer": "I'd use recursive postorder traversal and return a target when found. If both subtrees return a node, the current root is the answer.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly uses subtree evidence and states assumptions and complexity."
+    ],
+    "improvements": [
+      "Could explain how to verify that both targets actually exist."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given two nodes in a binary tree, find their lowest common ancestor when nodes do not have parent pointers.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store the path from the root to each node and compare the paths.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Path comparison works but uses extra O(n) storage.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given two nodes in a binary tree, find their lowest common ancestor when nodes do not have parent pointers.",
+    "quality_tier": "poor",
+    "answer": "I'd compare the two node values and choose the smaller parent value.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Values do not determine ancestry in a general binary tree.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given two nodes in a binary tree, find their lowest common ancestor when nodes do not have parent pointers.",
+    "quality_tier": "off_topic",
+    "answer": "I'd sort the tree nodes and inspect neighboring values.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Sorting destroys tree relationships.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design autocomplete that returns the top three stored phrases for a typed prefix, ranked by frequency and then lexicographically, while supporting frequency updates.",
+    "quality_tier": "excellent",
+    "answer": "I'd use a trie. Each terminal stores phrase frequency, and each trie node maintains its current top three phrase references ordered by frequency descending then lexicographically. Updating a phrase walks its characters and recomputes or adjusts the small top list at every node. Query is O(prefix length) plus returning three results.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses prefix indexing and bounded per-node rankings for fast queries."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design autocomplete that returns the top three stored phrases for a typed prefix, ranked by frequency and then lexicographically, while supporting frequency updates.",
+    "quality_tier": "good",
+    "answer": "I'd store phrases in a trie and cache the best three suggestions at every prefix node. Frequency updates refresh those lists along the phrase path.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses prefix indexing and bounded per-node rankings for fast queries."
+    ],
+    "improvements": [
+      "Could discuss memory cost and lazy recomputation for very frequent updates."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design autocomplete that returns the top three stored phrases for a typed prefix, ranked by frequency and then lexicographically, while supporting frequency updates.",
+    "quality_tier": "mediocre",
+    "answer": "I'd traverse the trie to the prefix and then DFS the entire subtree, sorting all matching phrases.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Correct but query cost can grow with the whole matching subtree.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design autocomplete that returns the top three stored phrases for a typed prefix, ranked by frequency and then lexicographically, while supporting frequency updates.",
+    "quality_tier": "poor",
+    "answer": "I'd put all phrases in an array and scan them for every keystroke.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Full scans do not scale with phrase count.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design autocomplete that returns the top three stored phrases for a typed prefix, ranked by frequency and then lexicographically, while supporting frequency updates.",
+    "quality_tier": "off_topic",
+    "answer": "I'd call a search engine for spelling correction.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Spelling correction does not implement ranked stored-prefix autocomplete.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a vending machine that accepts money, selects products, dispenses items, returns change, and handles sold-out and out-of-service states.",
+    "quality_tier": "excellent",
+    "answer": "I'd model the machine with explicit states such as Idle, HasCredit, Dispensing, SoldOutForSelection, and OutOfService. State objects handle valid actions and transitions. Inventory, CashStore, ProductSlot, and ChangePolicy are separate. A transaction records inserted money and selected item so cancellation and failures can refund safely.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses a state machine and separates inventory, cash, change, and transaction concerns."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a vending machine that accepts money, selects products, dispenses items, returns change, and handles sold-out and out-of-service states.",
+    "quality_tier": "good",
+    "answer": "I'd use the State pattern with classes for idle, money inserted, dispensing, and out of service. Inventory and cash handling stay in separate components.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses a state machine and separates inventory, cash, change, and transaction concerns."
+    ],
+    "improvements": [
+      "Could explain exact-change-only behavior and hardware failure recovery."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a vending machine that accepts money, selects products, dispenses items, returns change, and handles sold-out and out-of-service states.",
+    "quality_tier": "mediocre",
+    "answer": "I'd create one VendingMachine class with methods that check several booleans before each action.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Boolean combinations can create invalid states and scattered transition logic.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a vending machine that accepts money, selects products, dispenses items, returns change, and handles sold-out and out-of-service states.",
+    "quality_tier": "poor",
+    "answer": "I'd dispense whenever inserted money is greater than zero.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Does not validate price, stock, or safe transaction completion.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design a vending machine that accepts money, selects products, dispenses items, returns change, and handles sold-out and out-of-service states.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design the product-selection screen.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "UI design is unrelated to the object model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design real-time collaborative text editing for multiple users, including offline edits, cursor presence, conflict resolution, and document history.",
+    "quality_tier": "excellent",
+    "answer": "I'd use an operation-based model such as OT or a CRDT, with each edit carrying document version or causal metadata. A collaboration server orders or merges operations and broadcasts them over WebSockets. Clients optimistically apply local edits and transform or merge remote edits. Presence is ephemeral, while durable operations and periodic snapshots provide history and recovery. Offline clients resubmit causally tracked operations.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses concurrent editing, offline reconciliation, presence, durability, and history."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design real-time collaborative text editing for multiple users, including offline edits, cursor presence, conflict resolution, and document history.",
+    "quality_tier": "good",
+    "answer": "I'd use WebSockets and either operational transformation or a text CRDT. The server stores operations and snapshots, while clients apply edits optimistically and merge remote changes.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses concurrent editing, offline reconciliation, presence, durability, and history."
+    ],
+    "improvements": [
+      "Could compare OT and CRDT trade-offs more explicitly."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design real-time collaborative text editing for multiple users, including offline edits, cursor presence, conflict resolution, and document history.",
+    "quality_tier": "mediocre",
+    "answer": "I'd send the full document after every keystroke and use the last received version.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Full-document last-write-wins loses concurrent edits and wastes bandwidth.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design real-time collaborative text editing for multiple users, including offline edits, cursor presence, conflict resolution, and document history.",
+    "quality_tier": "poor",
+    "answer": "I'd lock the whole document whenever one user types.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Global locking prevents practical collaboration.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design real-time collaborative text editing for multiple users, including offline edits, cursor presence, conflict resolution, and document history.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add colored cursors and avatars.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Visual cursors alone do not resolve concurrent text operations.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "An event-consumer may receive duplicate messages. Design database processing so each event's business effect is applied once even if the message is delivered repeatedly.",
+    "quality_tier": "excellent",
+    "answer": "I'd give every event a stable producer event ID and create a processed_events table with a unique constraint. In one transaction, insert the event ID and apply the business mutation. If the insert conflicts, treat it as an already-processed success. External side effects require their own idempotency key or an outbox written in the same transaction.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Defines a transactional deduplication invariant and extends it to external effects."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "An event-consumer may receive duplicate messages. Design database processing so each event's business effect is applied once even if the message is delivered repeatedly.",
+    "quality_tier": "good",
+    "answer": "I'd store processed event IDs with a unique index and update business data in the same transaction. Duplicate inserts become no-ops.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Defines a transactional deduplication invariant and extends it to external effects."
+    ],
+    "improvements": [
+      "Could discuss retention of deduplication records and producer ID scope."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "An event-consumer may receive duplicate messages. Design database processing so each event's business effect is applied once even if the message is delivered repeatedly.",
+    "quality_tier": "mediocre",
+    "answer": "I'd check a cache for the event ID before running the handler.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "A cache check can race and may be lost on restart.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "An event-consumer may receive duplicate messages. Design database processing so each event's business effect is applied once even if the message is delivered repeatedly.",
+    "quality_tier": "poor",
+    "answer": "I'd assume the queue delivers each message exactly once.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "At-least-once systems cannot rely on that assumption.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "An event-consumer may receive duplicate messages. Design database processing so each event's business effect is applied once even if the message is delivered repeatedly.",
+    "quality_tier": "off_topic",
+    "answer": "I'd log duplicate messages for later analysis.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Logging does not prevent repeated effects.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Build a responsive image gallery that lazy-loads images without causing layout shifts and remains usable with slow connections.",
+    "quality_tier": "excellent",
+    "answer": "I'd include width and height or aspect-ratio placeholders so layout space is reserved. Native loading=lazy or IntersectionObserver can defer offscreen images, while responsive srcset and sizes select an appropriate file. I'd show low-cost placeholders, handle errors, provide meaningful alt text, and avoid lazy-loading the first visible images.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Prevents CLS while controlling network cost and maintaining accessibility."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Build a responsive image gallery that lazy-loads images without causing layout shifts and remains usable with slow connections.",
+    "quality_tier": "good",
+    "answer": "I'd reserve dimensions, use lazy loading for offscreen images, and provide responsive image sources and alt text.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Prevents CLS while controlling network cost and maintaining accessibility."
+    ],
+    "improvements": [
+      "Could mention fetchpriority for the first visible image."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Build a responsive image gallery that lazy-loads images without causing layout shifts and remains usable with slow connections.",
+    "quality_tier": "mediocre",
+    "answer": "I'd hide images until each one finishes loading.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Hiding images may still leave unstable layout unless space is reserved.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Build a responsive image gallery that lazy-loads images without causing layout shifts and remains usable with slow connections.",
+    "quality_tier": "poor",
+    "answer": "I'd set every image to width 100 percent without dimensions.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Missing dimensions cause layout shifts.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Build a responsive image gallery that lazy-loads images without causing layout shifts and remains usable with slow connections.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add hover zoom effects.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Hover effects do not solve loading performance.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a secure password-reset flow, including token creation, storage, expiration, reuse prevention, and account-enumeration resistance.",
+    "quality_tier": "excellent",
+    "answer": "I'd always return the same response whether an email exists. For real accounts, generate a high-entropy one-time token, store only its hash with user ID and expiry, and send the raw token through email. Reset occurs over HTTPS, atomically verifies and consumes the token, updates the password hash, invalidates other reset tokens and optionally active sessions, and is rate-limited and audited.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Covers token secrecy, atomic consumption, enumeration resistance, rate limiting, and session policy."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a secure password-reset flow, including token creation, storage, expiration, reuse prevention, and account-enumeration resistance.",
+    "quality_tier": "good",
+    "answer": "I'd generate a random expiring token, store its hash, email the raw value, and mark it used in the same transaction as changing the password. Responses should not reveal account existence.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Covers token secrecy, atomic consumption, enumeration resistance, rate limiting, and session policy."
+    ],
+    "improvements": [
+      "Could discuss password-reset confirmation notifications."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a secure password-reset flow, including token creation, storage, expiration, reuse prevention, and account-enumeration resistance.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store the raw token in the user table and delete it after use.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Raw token storage increases impact of database compromise.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a secure password-reset flow, including token creation, storage, expiration, reuse prevention, and account-enumeration resistance.",
+    "quality_tier": "poor",
+    "answer": "I'd email the user's existing password.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Passwords must never be recoverable or emailed.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a secure password-reset flow, including token creation, storage, expiration, reuse prevention, and account-enumeration resistance.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a more visible Forgot password link.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Link visibility is unrelated to security design.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a project where ownership was unclear and important work was falling between teams. What did you do?",
+    "quality_tier": "excellent",
+    "answer": "During an integration, frontend assumed backend owned error mapping while backend assumed the SDK team did. I documented the missing decisions, scheduled a short ownership meeting, and proposed a RACI for the remaining work. I took temporary ownership of the shared error contract, assigned implementation owners, and tracked completion. The integration launched on time and the ownership template was reused later.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows initiative, cross-team alignment, temporary ownership, and a reusable process."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a project where ownership was unclear and important work was falling between teams. What did you do?",
+    "quality_tier": "good",
+    "answer": "I surfaced the unowned tasks, brought the teams together, assigned explicit owners, and tracked the remaining dependencies.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows initiative, cross-team alignment, temporary ownership, and a reusable process."
+    ],
+    "improvements": [
+      "Could quantify the original risk or delay."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a project where ownership was unclear and important work was falling between teams. What did you do?",
+    "quality_tier": "mediocre",
+    "answer": "I asked my manager which team should own it and waited for direction.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Escalation is reasonable but shows limited independent coordination.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a project where ownership was unclear and important work was falling between teams. What did you do?",
+    "quality_tier": "poor",
+    "answer": "I completed every unowned task myself without involving the other teams.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Taking everything on creates hidden dependency and burnout risk.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a project where ownership was unclear and important work was falling between teams. What did you do?",
+    "quality_tier": "off_topic",
+    "answer": "I prefer projects where responsibilities are already documented.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Preference does not answer the example.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

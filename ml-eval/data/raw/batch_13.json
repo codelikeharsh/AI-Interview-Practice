@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Select k uniformly random items from a stream of unknown length using O(k) memory.",
+    "quality_tier": "excellent",
+    "answer": "I'd use reservoir sampling. Fill the reservoir with the first k items. For the i-th later item using one-based counting, choose a random integer from 1 to i; if it is at most k, replace that reservoir position. By induction, every seen item has probability k/i of being retained. Time is O(n), space O(k).",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Provides the exact algorithm, probability rule, proof intuition, and complexity."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Select k uniformly random items from a stream of unknown length using O(k) memory.",
+    "quality_tier": "good",
+    "answer": "I'd use reservoir sampling, replacing a random existing slot with decreasing probability as the stream grows.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Provides the exact algorithm, probability rule, proof intuition, and complexity."
+    ],
+    "improvements": [
+      "Could discuss secure versus pseudorandom generators."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Select k uniformly random items from a stream of unknown length using O(k) memory.",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep the first k items and occasionally replace one based on a fixed probability.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "A fixed replacement probability does not preserve uniformity.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Select k uniformly random items from a stream of unknown length using O(k) memory.",
+    "quality_tier": "poor",
+    "answer": "I'd store the whole stream and shuffle it at the end.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Violates the unknown-length and O(k)-memory constraints.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Select k uniformly random items from a stream of unknown length using O(k) memory.",
+    "quality_tier": "off_topic",
+    "answer": "I'd take every tenth item.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Periodic sampling is biased by stream order.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Support range-minimum queries and point updates on a large array.",
+    "quality_tier": "excellent",
+    "answer": "I'd build a segment tree where each node stores the minimum of its interval. Point updates modify one leaf and recompute ancestors in O(log n); range queries combine covered nodes in O(log n), with O(n) storage and build time.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses the correct structure and operation bounds."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Support range-minimum queries and point updates on a large array.",
+    "quality_tier": "good",
+    "answer": "I'd use a segment tree with minimum values at internal nodes, giving logarithmic updates and queries.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses the correct structure and operation bounds."
+    ],
+    "improvements": [
+      "Could mention lazy propagation if range updates are later required."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Support range-minimum queries and point updates on a large array.",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep a prefix-minimum array.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Prefix minima cannot answer arbitrary ranges after updates.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Support range-minimum queries and point updates on a large array.",
+    "quality_tier": "poor",
+    "answer": "I'd scan the queried range each time.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Range scans are O(n) per query.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Support range-minimum queries and point updates on a large array.",
+    "quality_tier": "off_topic",
+    "answer": "I'd sort the array after every update.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Sorting changes positions and is unnecessary.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Design a Snakes and Ladders game supporting configurable boards, multiple players, dice, snakes, ladders, and winning rules.",
+    "quality_tier": "excellent",
+    "answer": "I'd model Game, Board, Player, Dice, and BoardJump. Board maps start squares to destinations, so snakes and ladders share one abstraction. Game owns turn order and a WinningRule strategy, while Dice can be injected for deterministic tests. A move validates overshoot rules and applies at most the configured jump chain.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses configuration, shared jump abstraction, testable dice, and replaceable rules."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Design a Snakes and Ladders game supporting configurable boards, multiple players, dice, snakes, ladders, and winning rules.",
+    "quality_tier": "good",
+    "answer": "I'd create Game, Board, Player, and Dice classes, with a map for snake and ladder transitions. Game manages turns and declares the winner.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses configuration, shared jump abstraction, testable dice, and replaceable rules."
+    ],
+    "improvements": [
+      "Could discuss repeated rolls and jump chaining."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Design a Snakes and Ladders game supporting configurable boards, multiple players, dice, snakes, ladders, and winning rules.",
+    "quality_tier": "mediocre",
+    "answer": "I'd create separate Snake and Ladder logic inside the Player class.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Putting board rules in Player mixes responsibilities.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Design a Snakes and Ladders game supporting configurable boards, multiple players, dice, snakes, ladders, and winning rules.",
+    "quality_tier": "poor",
+    "answer": "I'd store the whole game in arrays and one large loop.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Procedural arrays reduce clarity and extensibility.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Design a Snakes and Ladders game supporting configurable boards, multiple players, dice, snakes, ladders, and winning rules.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design animated tokens.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Animation is unrelated to the domain model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an email-delivery platform for transactional and bulk email with templates, suppression lists, retries, provider feedback, and reputation protection.",
+    "quality_tier": "excellent",
+    "answer": "I'd accept idempotent send requests, render versioned templates, enforce recipient suppression and tenant quotas, then enqueue deliveries by priority and domain. Workers use provider adapters, classify responses, retry transient failures, and never retry permanent bounces. Feedback webhooks update delivery status and suppression lists idempotently. Bulk traffic is isolated from transactional traffic to protect reputation and latency.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses deliverability, feedback, suppression, priority isolation, idempotency, and provider failures."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an email-delivery platform for transactional and bulk email with templates, suppression lists, retries, provider feedback, and reputation protection.",
+    "quality_tier": "good",
+    "answer": "I'd persist email jobs, check suppression lists, send through queued workers, and process bounce and complaint callbacks. Transactional and marketing queues should be isolated.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses deliverability, feedback, suppression, priority isolation, idempotency, and provider failures."
+    ],
+    "improvements": [
+      "Could discuss domain warm-up and DKIM/SPF configuration."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an email-delivery platform for transactional and bulk email with templates, suppression lists, retries, provider feedback, and reputation protection.",
+    "quality_tier": "mediocre",
+    "answer": "I'd send all email through one worker pool and retry every failure.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Uniform retries can worsen bounces and reputation.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an email-delivery platform for transactional and bulk email with templates, suppression lists, retries, provider feedback, and reputation protection.",
+    "quality_tier": "poor",
+    "answer": "I'd call the SMTP provider directly from user requests.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Synchronous delivery creates latency and partial failures.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an email-delivery platform for transactional and bulk email with templates, suppression lists, retries, provider feedback, and reputation protection.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design prettier email templates.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Template appearance is not the delivery platform.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design storage for a high-write leaderboard that supports score updates, top 100 queries, and a user's exact rank.",
+    "quality_tier": "excellent",
+    "answer": "I'd store authoritative user scores and use an ordered structure such as Redis sorted sets for low-latency ranking, with durable events or database updates behind it. Updates are idempotent and use a defined score rule. Top 100 is a range query; exact rank uses reverse rank. Sharding requires local rankings plus merge or a global rank service.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Supports updates, top ranges, exact ranks, durability, and sharding trade-offs."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design storage for a high-write leaderboard that supports score updates, top 100 queries, and a user's exact rank.",
+    "quality_tier": "good",
+    "answer": "I'd use a sorted set keyed by leaderboard and member, with durable score storage and idempotent updates.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Supports updates, top ranges, exact ranks, durability, and sharding trade-offs."
+    ],
+    "improvements": [
+      "Could discuss tie-breaking and seasonal resets."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design storage for a high-write leaderboard that supports score updates, top 100 queries, and a user's exact rank.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store scores in a SQL table and sort all users for each request.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Repeated full sorts are expensive at high write volume.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design storage for a high-write leaderboard that supports score updates, top 100 queries, and a user's exact rank.",
+    "quality_tier": "poor",
+    "answer": "I'd cache only the current top 100 and ignore everyone else.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Top-only storage cannot answer arbitrary user rank.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design storage for a high-write leaderboard that supports score updates, top 100 queries, and a user's exact rank.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add badges for the highest users.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Badges do not define ranking storage.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Internationalize a React application for multiple languages, including plural rules, date and number formatting, and right-to-left layouts.",
+    "quality_tier": "excellent",
+    "answer": "I'd use message IDs with ICU-style plural and select rules, and locale-aware Intl APIs for dates, currency, and numbers. Locale resources load separately from code. The root sets lang and dir, layouts use logical CSS properties, and components are tested with long translations and RTL. User content is not treated as translatable UI text.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses pluralization, formatting, resource loading, semantics, and true RTL layout."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Internationalize a React application for multiple languages, including plural rules, date and number formatting, and right-to-left layouts.",
+    "quality_tier": "good",
+    "answer": "I'd use an i18n library, locale message files, Intl formatting, and set the page direction for RTL languages.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses pluralization, formatting, resource loading, semantics, and true RTL layout."
+    ],
+    "improvements": [
+      "Could discuss locale fallback and translation extraction."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Internationalize a React application for multiple languages, including plural rules, date and number formatting, and right-to-left layouts.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store translated strings directly inside each component.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Scattered strings are hard to manage and update.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Internationalize a React application for multiple languages, including plural rules, date and number formatting, and right-to-left layouts.",
+    "quality_tier": "poor",
+    "answer": "I'd reverse every flex row when Arabic is selected.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Manual reversal misses typography, icons, and logical spacing.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Internationalize a React application for multiple languages, including plural rules, date and number formatting, and right-to-left layouts.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use an automatic browser translator.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Automatic translation is not controlled product localization.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Your platform sends webhooks to customer endpoints. Design delivery retries, signing, ordering expectations, and customer observability.",
+    "quality_tier": "excellent",
+    "answer": "I'd persist every webhook event and delivery attempt, sign the raw payload with a timestamped secret, and deliver asynchronously. Attempts use exponential backoff with jitter and stop after a retention window. Each event has a stable ID for customer deduplication. Ordering is documented as best-effort unless per-endpoint serialization is explicitly purchased. Customers get logs, response codes, replay, and secret rotation.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Combines durable attempts, signatures, bounded retries, deduplication, ordering contract, replay, and rotation."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Your platform sends webhooks to customer endpoints. Design delivery retries, signing, ordering expectations, and customer observability.",
+    "quality_tier": "good",
+    "answer": "I'd queue signed webhook deliveries, retry transient failures with backoff, expose attempt logs, and provide stable event IDs and replay.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Combines durable attempts, signatures, bounded retries, deduplication, ordering contract, replay, and rotation."
+    ],
+    "improvements": [
+      "Could discuss SSRF protection and endpoint verification."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Your platform sends webhooks to customer endpoints. Design delivery retries, signing, ordering expectations, and customer observability.",
+    "quality_tier": "mediocre",
+    "answer": "I'd retry every minute forever until the endpoint returns 200.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Unbounded retries create permanent load and no dead-letter policy.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Your platform sends webhooks to customer endpoints. Design delivery retries, signing, ordering expectations, and customer observability.",
+    "quality_tier": "poor",
+    "answer": "I'd send unsigned JSON once and assume customers receive it.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Unsigned one-shot delivery is insecure and unreliable.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Your platform sends webhooks to customer endpoints. Design delivery retries, signing, ordering expectations, and customer observability.",
+    "quality_tier": "off_topic",
+    "answer": "I'd provide a nicer webhook settings page.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "UI does not define delivery semantics.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you influenced a decision without formal authority.",
+    "quality_tier": "excellent",
+    "answer": "I believed a shared API needed idempotency before launch, but I did not own the service. I collected failure examples from staging, wrote a small proposal with implementation cost, and built a prototype showing duplicate prevention. I invited the owning team to challenge it and incorporated their concerns. They adopted the design, and duplicate incidents dropped after launch.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows evidence, collaboration, respect for ownership, and outcome."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you influenced a decision without formal authority.",
+    "quality_tier": "good",
+    "answer": "I gathered evidence, proposed a low-cost solution, involved the owning team early, and let them retain decision ownership.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows evidence, collaboration, respect for ownership, and outcome."
+    ],
+    "improvements": [
+      "Could quantify impact more precisely."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you influenced a decision without formal authority.",
+    "quality_tier": "mediocre",
+    "answer": "I repeatedly mentioned my preference in meetings until people agreed.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Persistence alone does not show persuasion or shared reasoning.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you influenced a decision without formal authority.",
+    "quality_tier": "poor",
+    "answer": "I escalated directly to an executive because the team disagreed.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Premature escalation can damage trust.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you influenced a decision without formal authority.",
+    "quality_tier": "off_topic",
+    "answer": "I usually avoid decisions outside my area.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Avoidance does not demonstrate influence.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

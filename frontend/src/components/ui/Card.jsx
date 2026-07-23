@@ -17,7 +17,7 @@ export default function Card({
           : undefined
       }
       transition={{ duration: 0.18, ease: "easeOut" }}
-      className={`rounded-xl border border-border bg-surface ${
+      className={`block rounded-xl border border-border bg-surface ${
         interactive ? "cursor-pointer transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.35)]" : ""
       } ${className}`}
       {...props}

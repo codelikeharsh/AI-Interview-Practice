@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Land cells are added one by one to an initially empty grid. After each addition, return the current number of islands.",
+    "quality_tier": "excellent",
+    "answer": "I'd use Union-Find. Each new land cell starts as a new set and increments the island count. For each neighboring land cell, union their roots; every successful union decrements the count. Path compression and union by rank make operations nearly constant amortized time.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses incremental connectivity and exact count updates with near-constant operations."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Land cells are added one by one to an initially empty grid. After each addition, return the current number of islands.",
+    "quality_tier": "good",
+    "answer": "I'd use disjoint-set union, creating a set for each added cell and merging it with existing land neighbors.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses incremental connectivity and exact count updates with near-constant operations."
+    ],
+    "improvements": [
+      "Could discuss duplicate additions."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Land cells are added one by one to an initially empty grid. After each addition, return the current number of islands.",
+    "quality_tier": "mediocre",
+    "answer": "I'd rerun DFS over the entire grid after every addition.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Correct but repeatedly scans all prior cells.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Land cells are added one by one to an initially empty grid. After each addition, return the current number of islands.",
+    "quality_tier": "poor",
+    "answer": "I'd count the number of land cells and treat each as an island.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Adjacent land cells belong to the same island.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Land cells are added one by one to an initially empty grid. After each addition, return the current number of islands.",
+    "quality_tier": "off_topic",
+    "answer": "I'd render the grid and inspect connected colors.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Visual inspection is not an algorithm.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Merge user accounts when any accounts share at least one email address, and return each merged account's unique sorted emails.",
+    "quality_tier": "excellent",
+    "answer": "I'd map each email to an account node and union account indices whenever an email is seen in more than one account. After processing, group emails by root, deduplicate, sort, and attach the chosen account name. Complexity is near linear plus sorting.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly models transitive account connectivity and final grouping."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Merge user accounts when any accounts share at least one email address, and return each merged account's unique sorted emails.",
+    "quality_tier": "good",
+    "answer": "I'd use Union-Find or a graph of shared emails, then collect and sort emails by connected component.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly models transitive account connectivity and final grouping."
+    ],
+    "improvements": [
+      "Could clarify conflicting names among merged accounts."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Merge user accounts when any accounts share at least one email address, and return each merged account's unique sorted emails.",
+    "quality_tier": "mediocre",
+    "answer": "I'd compare every pair of accounts for shared emails.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Pairwise comparisons can be quadratic.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Merge user accounts when any accounts share at least one email address, and return each merged account's unique sorted emails.",
+    "quality_tier": "poor",
+    "answer": "I'd merge accounts only when their names match.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Names are not reliable identity links.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Merge user accounts when any accounts share at least one email address, and return each merged account's unique sorted emails.",
+    "quality_tier": "off_topic",
+    "answer": "I'd search the contacts application.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "External contacts do not solve the dataset problem.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design an expense-splitting application supporting equal, exact, and percentage splits, groups, settlements, and balance simplification.",
+    "quality_tier": "excellent",
+    "answer": "I'd model User, Group, Expense, Split, and Settlement. SplitStrategy implementations validate equal, exact, and percentage allocations. A ledger records pairwise obligations as immutable entries; a balance service derives net positions and can produce a simplified settlement plan without rewriting history.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates immutable expense history, split validation, balances, and optional simplification."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design an expense-splitting application supporting equal, exact, and percentage splits, groups, settlements, and balance simplification.",
+    "quality_tier": "good",
+    "answer": "I'd create Expense and Split classes with strategy implementations for each split type, and maintain balances between users.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Separates immutable expense history, split validation, balances, and optional simplification."
+    ],
+    "improvements": [
+      "Could explain multi-currency handling and rounding."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design an expense-splitting application supporting equal, exact, and percentage splits, groups, settlements, and balance simplification.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store one mutable amount owed between every pair and overwrite it after each expense.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Mutable pair totals lose detailed audit history.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design an expense-splitting application supporting equal, exact, and percentage splits, groups, settlements, and balance simplification.",
+    "quality_tier": "poor",
+    "answer": "I'd put split calculations and settlement logic in one switch statement.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Central switches hinder extension and testing.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design an expense-splitting application supporting equal, exact, and percentage splits, groups, settlements, and balance simplification.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design colorful expense categories.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Visual categories are unrelated to the model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an online ticket-booking platform for concerts with seat maps, temporary holds, payments, high traffic, and waiting rooms.",
+    "quality_tier": "excellent",
+    "answer": "I'd protect inventory with atomic seat holds and expirations in a strongly consistent reservation service. A waiting room and admission tokens smooth flash traffic. Seat maps are cached but final availability comes from reservation state. Payment uses reservation IDs and idempotency; confirmation and expiry are state-machine transitions with reconciliation.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses admission control, strong inventory consistency, holds, idempotency, cache semantics, and recovery."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an online ticket-booking platform for concerts with seat maps, temporary holds, payments, high traffic, and waiting rooms.",
+    "quality_tier": "good",
+    "answer": "I'd use a queue or waiting room, atomic seat reservations with TTLs, and idempotent payment confirmation. Cached seat maps are treated as advisory.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses admission control, strong inventory consistency, holds, idempotency, cache semantics, and recovery."
+    ],
+    "improvements": [
+      "Could discuss general-admission inventory and anti-bot controls."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an online ticket-booking platform for concerts with seat maps, temporary holds, payments, high traffic, and waiting rooms.",
+    "quality_tier": "mediocre",
+    "answer": "I'd let clients select seats and check availability only after payment.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Checking after payment can oversell and require refunds.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an online ticket-booking platform for concerts with seat maps, temporary holds, payments, high traffic, and waiting rooms.",
+    "quality_tier": "poor",
+    "answer": "I'd store seat availability in browser state.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Client state cannot enforce global availability.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an online ticket-booking platform for concerts with seat maps, temporary holds, payments, high traffic, and waiting rooms.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a countdown animation.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Animation does not provide booking correctness.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a transactional outbox schema and relay process so database changes and emitted events cannot become inconsistent.",
+    "quality_tier": "excellent",
+    "answer": "I'd write business changes and an outbox row in the same local transaction. The outbox stores event ID, aggregate ID, type, payload, creation time, and publish status or lease metadata. Relays claim rows in batches, publish with the stable event ID, and mark success. Consumers deduplicate because publish and marking cannot be atomic across the broker.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Explains the atomic local transaction and downstream at-least-once deduplication requirement."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a transactional outbox schema and relay process so database changes and emitted events cannot become inconsistent.",
+    "quality_tier": "good",
+    "answer": "I'd insert an outbox record in the same transaction as the business update, then have a worker publish rows and mark them complete.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Explains the atomic local transaction and downstream at-least-once deduplication requirement."
+    ],
+    "improvements": [
+      "Could discuss CDC-based relays and outbox retention."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a transactional outbox schema and relay process so database changes and emitted events cannot become inconsistent.",
+    "quality_tier": "mediocre",
+    "answer": "I'd update the database and publish to the broker in two sequential calls.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Sequential dual writes can fail between operations.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a transactional outbox schema and relay process so database changes and emitted events cannot become inconsistent.",
+    "quality_tier": "poor",
+    "answer": "I'd publish first and update the database afterward.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Publishing first can emit events for rolled-back changes.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a transactional outbox schema and relay process so database changes and emitted events cannot become inconsistent.",
+    "quality_tier": "off_topic",
+    "answer": "I'd log events to a text file.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Text logs are not a reliable event relay.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a reusable component API for a company design system without making components too rigid or exposing unsafe styling internals.",
+    "quality_tier": "excellent",
+    "answer": "I'd expose semantic components with controlled variants, sizes, states, and composition slots rather than arbitrary internal class access. Accessibility behavior and keyboard interactions are built in. Escape hatches use documented className or style hooks at stable boundaries, while tokens control visual consistency. APIs are versioned and tested across themes.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Balances consistency, composition, accessibility, tokens, and controlled escape hatches."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a reusable component API for a company design system without making components too rigid or exposing unsafe styling internals.",
+    "quality_tier": "good",
+    "answer": "I'd provide typed props for variants and sizes, composition for custom content, built-in accessibility, and limited documented styling hooks.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Balances consistency, composition, accessibility, tokens, and controlled escape hatches."
+    ],
+    "improvements": [
+      "Could discuss deprecation and codemods."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a reusable component API for a company design system without making components too rigid or exposing unsafe styling internals.",
+    "quality_tier": "mediocre",
+    "answer": "I'd expose every internal DOM element and class so teams can customize anything.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Exposing internals creates fragile coupling.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a reusable component API for a company design system without making components too rigid or exposing unsafe styling internals.",
+    "quality_tier": "poor",
+    "answer": "I'd hard-code one exact layout for every component.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Overly rigid components force duplication outside the system.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a reusable component API for a company design system without making components too rigid or exposing unsafe styling internals.",
+    "quality_tier": "off_topic",
+    "answer": "I'd publish screenshots of the components.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Screenshots do not define an API.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Build a backend that proxies large media files from object storage while supporting HTTP range requests and avoiding buffering the entire file.",
+    "quality_tier": "excellent",
+    "answer": "I'd validate authorization, parse and validate the Range header, request the corresponding byte range from object storage, and stream it to the client with 206, Content-Range, Accept-Ranges, and correct content length. Invalid ranges return 416. Backpressure and abort signals propagate to storage, and no full-file buffering occurs.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly handles protocol semantics, streaming, validation, aborts, and memory limits."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Build a backend that proxies large media files from object storage while supporting HTTP range requests and avoiding buffering the entire file.",
+    "quality_tier": "good",
+    "answer": "I'd forward valid byte ranges to storage and stream the response with the proper 206 and Content-Range headers.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly handles protocol semantics, streaming, validation, aborts, and memory limits."
+    ],
+    "improvements": [
+      "Could discuss cache and CDN behavior."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Build a backend that proxies large media files from object storage while supporting HTTP range requests and avoiding buffering the entire file.",
+    "quality_tier": "mediocre",
+    "answer": "I'd download the full file to memory and slice the requested bytes.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Full buffering creates memory spikes and wasted transfer.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Build a backend that proxies large media files from object storage while supporting HTTP range requests and avoiding buffering the entire file.",
+    "quality_tier": "poor",
+    "answer": "I'd ignore Range and always return the entire file.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Ignoring Range breaks seeking and wastes bandwidth.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Build a backend that proxies large media files from object storage while supporting HTTP range requests and avoiding buffering the entire file.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a video player.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "A player is unrelated to proxy implementation.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you pushed back on an unrealistic estimate or deadline.",
+    "quality_tier": "excellent",
+    "answer": "A stakeholder requested a two-week integration that included data migration, security review, and partner certification. I broke the work into evidence-based tasks, showed that certification alone had a three-week external lead time, and proposed a two-week sandbox demo plus a five-week production plan. They accepted the phased plan, and we launched production on the revised date without bypassing controls.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows evidence, alternatives, risk protection, and a successful negotiated outcome."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you pushed back on an unrealistic estimate or deadline.",
+    "quality_tier": "good",
+    "answer": "I decomposed the work, explained fixed external dependencies, and offered a smaller milestone instead of only saying no.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows evidence, alternatives, risk protection, and a successful negotiated outcome."
+    ],
+    "improvements": [
+      "Could mention how the team estimate was gathered."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you pushed back on an unrealistic estimate or deadline.",
+    "quality_tier": "mediocre",
+    "answer": "I told the stakeholder the estimate was unrealistic and asked for more time.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Pushback occurred but without supporting analysis or options.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you pushed back on an unrealistic estimate or deadline.",
+    "quality_tier": "poor",
+    "answer": "I agreed to the date and expected the team to work overtime.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Overcommitment creates quality and burnout risk.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you pushed back on an unrealistic estimate or deadline.",
+    "quality_tier": "off_topic",
+    "answer": "I usually avoid discussing estimates with stakeholders.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Avoidance does not demonstrate expectation management.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

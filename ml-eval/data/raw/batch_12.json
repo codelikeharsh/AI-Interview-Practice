@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Rotate an n by n matrix 90 degrees clockwise in place.",
+    "quality_tier": "excellent",
+    "answer": "I'd transpose the matrix across its main diagonal, then reverse every row. Transposition swaps matrix[i][j] with matrix[j][i] for j greater than i. The algorithm is O(n squared) time and O(1) extra space.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Provides the correct in-place transformation and complexity."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Rotate an n by n matrix 90 degrees clockwise in place.",
+    "quality_tier": "good",
+    "answer": "I'd transpose the square matrix and reverse each row.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Provides the correct in-place transformation and complexity."
+    ],
+    "improvements": [
+      "Could mention assumptions for empty or non-square input."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Rotate an n by n matrix 90 degrees clockwise in place.",
+    "quality_tier": "mediocre",
+    "answer": "I'd create a new matrix and place old[i][j] at new[j][n-1-i].",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Correct but violates the in-place requirement.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Rotate an n by n matrix 90 degrees clockwise in place.",
+    "quality_tier": "poor",
+    "answer": "I'd reverse every row without transposing.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Row reversal alone produces a horizontal reflection.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Rotate an n by n matrix 90 degrees clockwise in place.",
+    "quality_tier": "off_topic",
+    "answer": "I'd rotate the displayed image with CSS.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "CSS does not modify the matrix data.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Given a start word, target word, and dictionary, return the minimum number of one-letter transformations needed to reach the target using only dictionary words.",
+    "quality_tier": "excellent",
+    "answer": "I'd run BFS because every valid transformation has equal cost. Generate neighbors by changing each character to every possible letter, enqueue unseen dictionary words, and track distance. Bidirectional BFS from both ends reduces the explored search space. Complexity depends on word length and dictionary size.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses shortest-path reasoning and offers bidirectional optimization."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Given a start word, target word, and dictionary, return the minimum number of one-letter transformations needed to reach the target using only dictionary words.",
+    "quality_tier": "good",
+    "answer": "I'd use BFS over words, where edges connect words differing by one character. A visited set prevents cycles.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses shortest-path reasoning and offers bidirectional optimization."
+    ],
+    "improvements": [
+      "Could discuss wildcard-pattern indexing to generate neighbors faster."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Given a start word, target word, and dictionary, return the minimum number of one-letter transformations needed to reach the target using only dictionary words.",
+    "quality_tier": "mediocre",
+    "answer": "I'd use DFS and keep the shortest path found.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "DFS may explore exponentially many longer paths before finding the shortest.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Given a start word, target word, and dictionary, return the minimum number of one-letter transformations needed to reach the target using only dictionary words.",
+    "quality_tier": "poor",
+    "answer": "I'd greedily change each position toward the target character.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Greedy character changes can get stuck when intermediate words are absent.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Given a start word, target word, and dictionary, return the minimum number of one-letter transformations needed to reach the target using only dictionary words.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use a spell-check API.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Spell checking does not solve constrained shortest transformations.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design fare calculation for a ride-hailing app with vehicle types, distance and time charges, surge pricing, coupons, tolls, and city-specific rules.",
+    "quality_tier": "excellent",
+    "answer": "I'd represent a FareContext and compose pricing rules through strategies: BaseFarePolicy, DistanceTimePolicy, SurgePolicy, TollPolicy, and DiscountPolicy. A city configuration selects the rule chain. Each rule returns a documented adjustment, allowing an itemized quote and independent testing. Finalization can compare estimated and actual trip data.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates independently changing pricing rules and supports itemized results."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design fare calculation for a ride-hailing app with vehicle types, distance and time charges, surge pricing, coupons, tolls, and city-specific rules.",
+    "quality_tier": "good",
+    "answer": "I'd use pricing-policy interfaces for base fare, surge, tolls, and discounts, selected by city and vehicle type.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Separates independently changing pricing rules and supports itemized results."
+    ],
+    "improvements": [
+      "Could explain rule ordering and coupon eligibility conflicts."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design fare calculation for a ride-hailing app with vehicle types, distance and time charges, surge pricing, coupons, tolls, and city-specific rules.",
+    "quality_tier": "mediocre",
+    "answer": "I'd create one calculateFare method with many if statements for city, coupon, and vehicle.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Growing conditionals make rule interactions difficult to test.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design fare calculation for a ride-hailing app with vehicle types, distance and time charges, surge pricing, coupons, tolls, and city-specific rules.",
+    "quality_tier": "poor",
+    "answer": "I'd store one price-per-kilometer value and multiply it by distance.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Ignores time, surge, tolls, and discounts.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design fare calculation for a ride-hailing app with vehicle types, distance and time charges, surge pricing, coupons, tolls, and city-specific rules.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design the fare breakdown screen.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "UI breakdown is not the pricing model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design storage and delivery for a chat application supporting one-to-one and group messages, offline users, read receipts, and message history.",
+    "quality_tier": "excellent",
+    "answer": "I'd assign each conversation an ordered message sequence and store messages in a partitioned durable log or database keyed by conversation. A send request is idempotent, persists before acknowledgement, then publishes delivery events. Online devices receive over WebSockets; offline devices catch up from their last sequence. Read receipts store per-user high-water marks rather than one row per message where possible.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses durability, ordering, offline catch-up, idempotency, and scalable read receipts."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design storage and delivery for a chat application supporting one-to-one and group messages, offline users, read receipts, and message history.",
+    "quality_tier": "good",
+    "answer": "I'd persist messages by conversation, deliver live over WebSockets, and let clients resume from the last message ID. Read state is stored per user and conversation.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses durability, ordering, offline catch-up, idempotency, and scalable read receipts."
+    ],
+    "improvements": [
+      "Could discuss multi-device receipt aggregation and group fan-out."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design storage and delivery for a chat application supporting one-to-one and group messages, offline users, read receipts, and message history.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store messages only in WebSocket server memory and write them later.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Memory-first storage risks message loss on crash.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design storage and delivery for a chat application supporting one-to-one and group messages, offline users, read receipts, and message history.",
+    "quality_tier": "poor",
+    "answer": "I'd broadcast messages without assigning IDs or ordering.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Without stable IDs clients cannot deduplicate or resume safely.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design storage and delivery for a chat application supporting one-to-one and group messages, offline users, read receipts, and message history.",
+    "quality_tier": "off_topic",
+    "answer": "I'd focus on message bubble colors.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Styling does not address chat delivery architecture.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Store an employee hierarchy and efficiently answer who reports to a manager at any depth and what the management chain is for an employee.",
+    "quality_tier": "excellent",
+    "answer": "I'd start with an adjacency-list employees table containing manager_id. Recursive CTEs answer descendants and ancestors, with indexes on manager_id and id. If these queries dominate and updates are rare, I'd consider a closure table storing ancestor, descendant, and depth for faster reads, maintained transactionally.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Provides normalized storage, recursive queries, indexes, and a closure-table trade-off."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Store an employee hierarchy and efficiently answer who reports to a manager at any depth and what the management chain is for an employee.",
+    "quality_tier": "good",
+    "answer": "I'd use manager_id as a self-reference and recursive CTEs for upward and downward traversal.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Provides normalized storage, recursive queries, indexes, and a closure-table trade-off."
+    ],
+    "improvements": [
+      "Could discuss cycle prevention during manager changes."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Store an employee hierarchy and efficiently answer who reports to a manager at any depth and what the management chain is for an employee.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store the complete manager chain as a comma-separated string on each employee.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Delimited paths are hard to enforce and update.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Store an employee hierarchy and efficiently answer who reports to a manager at any depth and what the management chain is for an employee.",
+    "quality_tier": "poor",
+    "answer": "I'd create columns manager1 through manager10.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Fixed columns impose an arbitrary depth limit.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Store an employee hierarchy and efficiently answer who reports to a manager at any depth and what the management chain is for an employee.",
+    "quality_tier": "off_topic",
+    "answer": "I'd draw the organization chart manually.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Manual diagrams are not a queryable schema.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you add route-level code splitting to a React application while handling loading, errors, and prefetching?",
+    "quality_tier": "excellent",
+    "answer": "I'd dynamically import route components and wrap route boundaries with Suspense plus an error boundary. Chunks should align with meaningful routes, not tiny components. I would prefetch likely next routes on idle or intent, avoid downloading everything immediately, and monitor chunk failures and bundle size. Server rendering requires framework-compatible lazy loading.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Balances chunking, loading, errors, prefetching, and SSR constraints."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you add route-level code splitting to a React application while handling loading, errors, and prefetching?",
+    "quality_tier": "good",
+    "answer": "I'd lazy-load route components, show a loading fallback, and use an error boundary. Important likely routes can be prefetched on hover or idle.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Balances chunking, loading, errors, prefetching, and SSR constraints."
+    ],
+    "improvements": [
+      "Could discuss cache busting after deployments."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you add route-level code splitting to a React application while handling loading, errors, and prefetching?",
+    "quality_tier": "mediocre",
+    "answer": "I'd dynamically import every component in the application.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Over-fragmentation increases requests and fallback churn.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you add route-level code splitting to a React application while handling loading, errors, and prefetching?",
+    "quality_tier": "poor",
+    "answer": "I'd put all routes in one bundle so navigation is consistent.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "One bundle defeats route-level splitting.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you add route-level code splitting to a React application while handling loading, errors, and prefetching?",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a spinner to every button.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Button spinners are unrelated.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you version a public REST API while allowing existing clients time to migrate?",
+    "quality_tier": "excellent",
+    "answer": "I'd prefer backward-compatible additive changes and version only when semantics must break. Versions can be represented in the path or negotiated media type, with clear documentation, deprecation headers, migration guides, and telemetry by client version. Old versions receive security fixes until a published sunset date.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Combines compatibility policy, rollout, observability, and deprecation lifecycle."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you version a public REST API while allowing existing clients time to migrate?",
+    "quality_tier": "good",
+    "answer": "I'd expose a new version while keeping the old contract active, document differences, and announce a deprecation and sunset schedule.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Combines compatibility policy, rollout, observability, and deprecation lifecycle."
+    ],
+    "improvements": [
+      "Could explain shared internal implementation to avoid copy-paste versions."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you version a public REST API while allowing existing clients time to migrate?",
+    "quality_tier": "mediocre",
+    "answer": "I'd change the existing response and ask clients to update quickly.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Breaking existing responses causes immediate client failures.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you version a public REST API while allowing existing clients time to migrate?",
+    "quality_tier": "poor",
+    "answer": "I'd maintain every historical version forever.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Unlimited versions create permanent maintenance cost.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you version a public REST API while allowing existing clients time to migrate?",
+    "quality_tier": "off_topic",
+    "answer": "I'd rename the API endpoint.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Renaming alone does not define contract versioning.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you had to address persistent underperformance from a teammate.",
+    "quality_tier": "excellent",
+    "answer": "I first gathered specific missed commitments and impact, then met privately to understand causes. We agreed on narrower milestones, pairing support, and written expectations with weekly follow-ups. Performance improved on technical tasks but not communication, so I involved the manager with documented examples and a fair improvement plan. The team regained predictability without public blame.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows evidence, empathy, expectations, support, documentation, and appropriate escalation."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you had to address persistent underperformance from a teammate.",
+    "quality_tier": "good",
+    "answer": "I used concrete examples, listened for blockers, set measurable expectations, offered support, and escalated only after follow-up showed limited improvement.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows evidence, empathy, expectations, support, documentation, and appropriate escalation."
+    ],
+    "improvements": [
+      "Could specify the timeframe and measurable improvement."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you had to address persistent underperformance from a teammate.",
+    "quality_tier": "mediocre",
+    "answer": "I reminded the teammate several times to work faster.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Reminders lack diagnosis and measurable commitments.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you had to address persistent underperformance from a teammate.",
+    "quality_tier": "poor",
+    "answer": "I reassigned all their tasks and stopped involving them.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Removing all work avoids rather than manages performance.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a time you had to address persistent underperformance from a teammate.",
+    "quality_tier": "off_topic",
+    "answer": "I avoid giving performance feedback because managers should handle it.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Avoidance does not demonstrate leadership.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

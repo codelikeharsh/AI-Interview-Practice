@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Return all valid placements of n queens on an n by n chessboard so no queens attack each other.",
+    "quality_tier": "excellent",
+    "answer": "I'd use backtracking row by row, tracking occupied columns and both diagonal sets. For each safe column, place a queen, recurse, and undo. This prunes invalid partial boards immediately; the worst case is exponential, with O(n) recursion and set state.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses the standard pruned search and exact conflict sets."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Return all valid placements of n queens on an n by n chessboard so no queens attack each other.",
+    "quality_tier": "good",
+    "answer": "I'd backtrack one row at a time and use sets for columns and diagonals.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses the standard pruned search and exact conflict sets."
+    ],
+    "improvements": [
+      "Could discuss bitmask optimization."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Return all valid placements of n queens on an n by n chessboard so no queens attack each other.",
+    "quality_tier": "mediocre",
+    "answer": "I'd generate every board arrangement and test it afterward.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Generating all arrangements wastes enormous work.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Return all valid placements of n queens on an n by n chessboard so no queens attack each other.",
+    "quality_tier": "poor",
+    "answer": "I'd place queens greedily in the first available safe column.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Greedy placement can miss valid solutions.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Return all valid placements of n queens on an n by n chessboard so no queens attack each other.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use a chess engine.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "An external engine does not explain the algorithm.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an LFU cache with O(1) average get and put, breaking frequency ties by least-recent use.",
+    "quality_tier": "excellent",
+    "answer": "I'd map keys to nodes containing value and frequency, map each frequency to a doubly linked list ordered by recency, and track minFrequency. Get or update moves a node to the next frequency list. Eviction removes the tail of the min-frequency list. Empty lists update minFrequency, giving O(1) average operations.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Defines the required frequency buckets, tie-breaking lists, and min-frequency invariant."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an LFU cache with O(1) average get and put, breaking frequency ties by least-recent use.",
+    "quality_tier": "good",
+    "answer": "I'd use key-to-node and frequency-to-LRU-list maps plus a minimum-frequency tracker.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Defines the required frequency buckets, tie-breaking lists, and min-frequency invariant."
+    ],
+    "improvements": [
+      "Could discuss frequency overflow or aging."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an LFU cache with O(1) average get and put, breaking frequency ties by least-recent use.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store frequency counts and scan all entries to find the least frequent item on eviction.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Eviction becomes O(n).",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an LFU cache with O(1) average get and put, breaking frequency ties by least-recent use.",
+    "quality_tier": "poor",
+    "answer": "I'd use an LRU cache and ignore frequencies.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "LRU alone does not satisfy LFU behavior.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design an LFU cache with O(1) average get and put, breaking frequency ties by least-recent use.",
+    "quality_tier": "off_topic",
+    "answer": "I'd use Redis without explaining its policy.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Product choice does not explain implementation.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a hotel reservation system with room types, individual rooms, date-range availability, bookings, cancellations, pricing rules, and payments.",
+    "quality_tier": "excellent",
+    "answer": "I'd separate RoomType from Room, and Reservation from Payment. An AvailabilityService checks inventory for a date range and creates a temporary hold before confirmation. PricingPolicy composes seasonal, occupancy, and promotion rules. Reservation has explicit states and cancellation policies, while room assignment may occur later than type-level booking.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Handles date ranges, type-level inventory, holds, state, pricing, cancellation, and payment separation."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a hotel reservation system with room types, individual rooms, date-range availability, bookings, cancellations, pricing rules, and payments.",
+    "quality_tier": "good",
+    "answer": "I'd model RoomType, Room, Reservation, Guest, Payment, and pricing policies, with a service checking availability over date ranges.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Handles date ranges, type-level inventory, holds, state, pricing, cancellation, and payment separation."
+    ],
+    "improvements": [
+      "Could discuss overbooking and room maintenance."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a hotel reservation system with room types, individual rooms, date-range availability, bookings, cancellations, pricing rules, and payments.",
+    "quality_tier": "mediocre",
+    "answer": "I'd store one available boolean on each room.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "A single boolean cannot represent future availability.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a hotel reservation system with room types, individual rooms, date-range availability, bookings, cancellations, pricing rules, and payments.",
+    "quality_tier": "poor",
+    "answer": "I'd create a separate table and class for every date.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Per-date classes and tables are unmanageable.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design a hotel reservation system with room types, individual rooms, date-range availability, bookings, cancellations, pricing rules, and payments.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design hotel photos and filters.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Photos are unrelated to the booking model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a feature-flag service supporting percentage rollouts, targeting rules, low-latency evaluation, audit history, and safe rollback.",
+    "quality_tier": "excellent",
+    "answer": "I'd keep versioned flag definitions with ordered targeting rules and a deterministic hash of user and flag for percentage rollout. SDKs evaluate locally from cached snapshots for low latency, refreshed through streaming or polling. The control plane validates changes, stores audit history, and supports approvals and instant rollback to prior versions. Defaults protect applications when the service is unreachable.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses deterministic targeting, local evaluation, versioning, auditability, fallback, and rollback."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a feature-flag service supporting percentage rollouts, targeting rules, low-latency evaluation, audit history, and safe rollback.",
+    "quality_tier": "good",
+    "answer": "I'd use versioned flag configs, deterministic hashing for rollouts, local SDK evaluation, and an audited control plane with rollback.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses deterministic targeting, local evaluation, versioning, auditability, fallback, and rollback."
+    ],
+    "improvements": [
+      "Could discuss stale snapshot limits and secret targeting attributes."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a feature-flag service supporting percentage rollouts, targeting rules, low-latency evaluation, audit history, and safe rollback.",
+    "quality_tier": "mediocre",
+    "answer": "I'd call the feature-flag API synchronously on every request.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Synchronous dependency increases latency and outage coupling.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a feature-flag service supporting percentage rollouts, targeting rules, low-latency evaluation, audit history, and safe rollback.",
+    "quality_tier": "poor",
+    "answer": "I'd randomly enable the feature with Math.random each time.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Per-request randomness gives users inconsistent experiences.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a feature-flag service supporting percentage rollouts, targeting rules, low-latency evaluation, audit history, and safe rollback.",
+    "quality_tier": "off_topic",
+    "answer": "I'd add colorful flag icons.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Icons do not define flag evaluation.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A query uses an indexed status column but remains slow because most rows have the same status. How would you investigate and optimize it?",
+    "quality_tier": "excellent",
+    "answer": "I'd inspect EXPLAIN ANALYZE, row estimates, heap fetches, and data distribution. A low-selectivity index may be more expensive than a sequential scan. I would shape a composite or partial index around the full query, update statistics, consider extended statistics for correlated columns, and verify pagination and selected columns. Partitioning or archival may help if active data is a small subset.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly connects selectivity, plans, composite indexes, statistics, and query shape."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A query uses an indexed status column but remains slow because most rows have the same status. How would you investigate and optimize it?",
+    "quality_tier": "good",
+    "answer": "I'd check the plan and cardinality, then build a composite or partial index matching the other filters and ordering instead of relying on status alone.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly connects selectivity, plans, composite indexes, statistics, and query shape."
+    ],
+    "improvements": [
+      "Could discuss index-only scans and write overhead."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A query uses an indexed status column but remains slow because most rows have the same status. How would you investigate and optimize it?",
+    "quality_tier": "mediocre",
+    "answer": "I'd rebuild the same status index.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Rebuilding does not improve poor selectivity.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A query uses an indexed status column but remains slow because most rows have the same status. How would you investigate and optimize it?",
+    "quality_tier": "poor",
+    "answer": "I'd force the database to use the index.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Forcing a bad plan can make performance worse.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A query uses an indexed status column but remains slow because most rows have the same status. How would you investigate and optimize it?",
+    "quality_tier": "off_topic",
+    "answer": "I'd add more application servers.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Application scale does not fix a database access path.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Using React Query or a similar client cache, how would you update a list after creating an item without showing stale or duplicate data?",
+    "quality_tier": "excellent",
+    "answer": "I'd give the mutation an idempotent server response with the created ID. I can optimistically insert a temporary item, then replace it with the server record on success and roll back on failure. Query keys must match the affected filters, and invalidation or targeted updates should avoid appending the same item twice. Concurrent mutations need stable temporary IDs.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses optimistic state, reconciliation, scoped invalidation, IDs, rollback, and concurrency."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Using React Query or a similar client cache, how would you update a list after creating an item without showing stale or duplicate data?",
+    "quality_tier": "good",
+    "answer": "I'd update the relevant cached list with the returned item and invalidate related queries, making sure IDs are deduplicated.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses optimistic state, reconciliation, scoped invalidation, IDs, rollback, and concurrency."
+    ],
+    "improvements": [
+      "Could discuss sorted and paginated lists."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Using React Query or a similar client cache, how would you update a list after creating an item without showing stale or duplicate data?",
+    "quality_tier": "mediocre",
+    "answer": "I'd refetch every query in the application after creation.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Global refetching works but is wasteful and may cause flicker.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Using React Query or a similar client cache, how would you update a list after creating an item without showing stale or duplicate data?",
+    "quality_tier": "poor",
+    "answer": "I'd append both the optimistic item and server item without reconciliation.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Creates duplicate entries.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Using React Query or a similar client cache, how would you update a list after creating an item without showing stale or duplicate data?",
+    "quality_tier": "off_topic",
+    "answer": "I'd reload the browser page.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Reloading discards client state and avoids the cache problem.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a saga for an order that reserves inventory, charges payment, and schedules shipment across separate services.",
+    "quality_tier": "excellent",
+    "answer": "I'd model a durable saga state machine. Each step has an idempotent command and compensation: release inventory, refund payment, and cancel shipment. State transitions are persisted before publishing the next command through an outbox. Replies are correlated by saga ID, duplicates are ignored, timeouts trigger policy, and manual review handles failed compensation.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses durable orchestration, idempotency, compensation, outbox, timeouts, and manual recovery."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a saga for an order that reserves inventory, charges payment, and schedules shipment across separate services.",
+    "quality_tier": "good",
+    "answer": "I'd coordinate service steps with a saga record and compensating actions, using idempotent messages and durable state.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses durable orchestration, idempotency, compensation, outbox, timeouts, and manual recovery."
+    ],
+    "improvements": [
+      "Could compare choreography with orchestration."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a saga for an order that reserves inventory, charges payment, and schedules shipment across separate services.",
+    "quality_tier": "mediocre",
+    "answer": "I'd call all three services synchronously and roll back the database if one fails.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "A local rollback cannot undo remote committed effects.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a saga for an order that reserves inventory, charges payment, and schedules shipment across separate services.",
+    "quality_tier": "poor",
+    "answer": "I'd rely on distributed two-phase commit across all services.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "2PC is often unavailable and couples service availability.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a saga for an order that reserves inventory, charges payment, and schedules shipment across separate services.",
+    "quality_tier": "off_topic",
+    "answer": "I'd email operations when errors occur.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Email alerts do not implement recovery.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you chose to prioritize technical debt over a visible feature.",
+    "quality_tier": "excellent",
+    "answer": "Our deployment pipeline had flaky migrations that delayed releases, while product wanted another dashboard filter. I measured the lost engineering time and release risk, proposed a one-week reliability investment, and agreed on a feature delay with product. We added migration checks and rollback automation, cutting failed deployments sharply and making later feature delivery faster.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows evidence, stakeholder alignment, bounded scope, and measurable delivery benefit."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you chose to prioritize technical debt over a visible feature.",
+    "quality_tier": "good",
+    "answer": "I used incident and delivery data to justify a short debt investment, aligned on the trade-off, and measured the resulting improvement.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows evidence, stakeholder alignment, bounded scope, and measurable delivery benefit."
+    ],
+    "improvements": [
+      "Could include exact before-and-after metrics."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you chose to prioritize technical debt over a visible feature.",
+    "quality_tier": "mediocre",
+    "answer": "I told product the codebase needed cleanup and worked on it.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Reasoning and outcome are vague.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you chose to prioritize technical debt over a visible feature.",
+    "quality_tier": "poor",
+    "answer": "I rewrote a subsystem because I disliked the design.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Personal preference is not enough justification.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a time you chose to prioritize technical debt over a visible feature.",
+    "quality_tier": "off_topic",
+    "answer": "I always prioritize features because users do not see technical debt.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Absolute rules ignore risk and long-term delivery.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

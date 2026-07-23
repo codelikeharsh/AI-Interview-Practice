@@ -3,6 +3,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import Card from "../components/ui/Card";
+import logoIcon from "../assets/brand/icon-512.png";
 
 export default function Login() {
   const { user, loading, loginWithGoogle } = useAuth();
@@ -19,7 +20,7 @@ export default function Login() {
     <div className="flex min-h-screen flex-col items-center justify-center px-6 text-text-primary">
       <Card className="w-full max-w-sm p-8 text-center">
         <div className="mb-2 flex items-center justify-center gap-2 text-xl font-semibold tracking-tight">
-          <span className="h-2 w-2 rounded-full bg-accent" />
+          <img src={logoIcon} alt="" className="h-5 w-auto" />
           Anteroom
         </div>
         <p className="mb-8 text-sm text-text-secondary">

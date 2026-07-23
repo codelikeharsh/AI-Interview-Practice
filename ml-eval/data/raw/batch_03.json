@@ -1,0 +1,1024 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given the head of a singly linked list, determine whether it contains a cycle. If it does, return the node where the cycle begins without modifying the list. Explain your approach and complexity.",
+    "quality_tier": "excellent",
+    "answer": "I'd use Floyd's tortoise-and-hare algorithm. One pointer moves one step and the other moves two steps. If they ever meet, there's a cycle. If the fast pointer reaches null, there isn't one. After a meeting, I'd move one pointer back to the head and then advance both one step at a time. The node where they meet again is the cycle's starting node. The reason is that the distances line up after the first collision based on the non-cyclic prefix and the cycle length. It runs in O(n) time and O(1) extra space, and it doesn't modify the links.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Selects Floyd's cycle-detection algorithm, which satisfies the constant-space requirement.",
+      "Correctly distinguishes the no-cycle case by checking whether the fast pointer reaches null.",
+      "Explains the second phase that locates the cycle-entry node.",
+      "Provides accurate O(n) time and O(1) auxiliary-space complexity."
+    ],
+    "improvements": [
+      "Could give a slightly clearer mathematical explanation for why resetting one pointer to the head finds the entry.",
+      "Could mention checking both fast and fast.next before advancing the fast pointer."
+    ],
+    "feedback": "This is a strong fresher-level answer. It gives the expected optimal algorithm, handles both detection and entry location, and states the correct complexity."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given the head of a singly linked list, determine whether it contains a cycle. If it does, return the node where the cycle begins without modifying the list. Explain your approach and complexity.",
+    "quality_tier": "good",
+    "answer": "I'd keep a slow pointer and a fast pointer. Slow moves once and fast moves twice. If they meet, the list has a cycle. Then I'd reset slow to the head and move both pointers one step until they meet again, which should be the cycle start. If fast reaches the end, I'd return that there is no cycle. This is O(n) time and O(1) space.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses the correct slow-and-fast-pointer technique.",
+      "Correctly describes how to locate the cycle entry after detecting a collision.",
+      "Provides the expected time and space complexities."
+    ],
+    "improvements": [
+      "Should explicitly guard against fast.next being null before moving two steps.",
+      "Could explain why the second meeting occurs at the cycle entry instead of only stating it.",
+      "Could clarify what value is returned when no cycle exists."
+    ],
+    "feedback": "The algorithm is correct and concise. It loses some depth because the correctness of the second phase is asserted rather than explained."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given the head of a singly linked list, determine whether it contains a cycle. If it does, return the node where the cycle begins without modifying the list. Explain your approach and complexity.",
+    "quality_tier": "mediocre",
+    "answer": "I'd put every node I visit into a hash set. Before adding a node, I'd check whether it's already there. The first repeated node should be where the cycle begins. This would take O(n) time and O(n) extra space.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 5,
+      "confidence": 7
+    },
+    "strengths": [
+      "Provides a correct method for both cycle detection and identifying the first repeated node.",
+      "Uses node identity rather than node value, which is necessary when values can repeat.",
+      "States accurate time and space complexity for the proposed approach."
+    ],
+    "improvements": [
+      "Does not meet the optimal O(1) auxiliary-space expectation commonly associated with this question.",
+      "Should discuss Floyd's algorithm as the preferred solution after presenting the hash-set baseline.",
+      "Could clarify that the set stores node references, not payload values."
+    ],
+    "feedback": "The solution is correct but not optimal. For a medium linked-list interview question, the candidate is generally expected to improve from a visited set to Floyd's constant-space approach."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given the head of a singly linked list, determine whether it contains a cycle. If it does, return the node where the cycle begins without modifying the list. Explain your approach and complexity.",
+    "quality_tier": "poor",
+    "answer": "I'd keep moving through the list and count the nodes. If the count becomes larger than some big number, like one million, I'd assume there's a cycle. Then I'd return the current node as the cycle start.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Recognizes that a cycle prevents normal traversal from reaching the end."
+    ],
+    "improvements": [
+      "Using an arbitrary traversal limit can misclassify a valid long list as cyclic.",
+      "The current node after a large number of steps is not necessarily the cycle entry.",
+      "The approach provides no correctness guarantee.",
+      "Should use either a visited-node set or Floyd's slow-and-fast-pointer algorithm.",
+      "Does not provide meaningful complexity analysis."
+    ],
+    "feedback": "The proposed heuristic is unreliable and cannot correctly identify the cycle-entry node."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given the head of a singly linked list, determine whether it contains a cycle. If it does, return the node where the cycle begins without modifying the list. Explain your approach and complexity.",
+    "quality_tier": "off_topic",
+    "answer": "I'd probably convert the linked list into an array because arrays are easier to work with and support indexing. Then I could sort the values and search them faster.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 1,
+      "confidence": 4
+    },
+    "strengths": [
+      "Identifies that arrays provide convenient indexed access for some problems."
+    ],
+    "improvements": [
+      "Sorting node values does not reveal whether node references form a cycle.",
+      "Converting a cyclic list to an array would itself never terminate without cycle detection.",
+      "The question requires returning the cycle-entry node, not searching values.",
+      "Should discuss pointer-based cycle detection."
+    ],
+    "feedback": "The response addresses value processing rather than the linked-list structure and does not solve the problem."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A monitoring service receives latency values continuously and must return the median after every new value. The stream may contain millions of values. How would you design the data structure, and how would your answer change if old values also needed to expire?",
+    "quality_tier": "excellent",
+    "answer": "For an insert-only stream, I'd maintain two heaps: a max-heap for the lower half and a min-heap for the upper half. I'd insert into the appropriate heap, rebalance so their sizes differ by at most one, and calculate the median from the larger heap or the two roots. Insert is O(log n), median lookup is O(1), and storage is O(n). If values must expire, ordinary heaps aren't enough because deleting an arbitrary old value is expensive. For a fixed-size sliding window, I'd keep the two heaps plus delayed-deletion maps keyed by value, prune stale roots before reading them, and track logical heap sizes separately from physical sizes. Alternatively, an order-statistics tree or indexed multiset gives O(log n) insert, delete, and median selection. I'd choose based on language support, duplicate handling, and whether expiry is based on arrival order or timestamps.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses the standard two-heap design for online median calculation.",
+      "Defines the ordering and size invariants needed for correct median retrieval.",
+      "Provides accurate operation and storage complexities.",
+      "Correctly identifies arbitrary deletion as the difficult part when values expire.",
+      "Offers both lazy heap deletion and order-statistics-tree alternatives with relevant trade-offs."
+    ],
+    "improvements": [
+      "Could describe how even-sized streams choose between exact fractional median and one of the middle values.",
+      "Could explain how timestamp-based expiry is triggered when arrivals are irregular."
+    ],
+    "feedback": "This is a complete experienced-level response. It solves the insert-only case optimally and handles the substantially harder expiration variant with realistic data-structure choices."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A monitoring service receives latency values continuously and must return the median after every new value. The stream may contain millions of values. How would you design the data structure, and how would your answer change if old values also needed to expire?",
+    "quality_tier": "good",
+    "answer": "I'd use a max-heap for the smaller half of the values and a min-heap for the larger half. After every insert, I'd rebalance them so one heap isn't more than one element larger. The median is either the root of the larger heap or the average of both roots. Inserts are O(log n), and reading the median is O(1). If old entries expire, I'd need a way to delete them, so I'd use lazy deletion with a hash map and remove expired values when they reach a heap root.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly uses two heaps and explains their roles.",
+      "States the balancing invariant and median calculation.",
+      "Provides correct complexity for the streaming insert-only case.",
+      "Recognizes lazy deletion as a practical method for expiring values."
+    ],
+    "improvements": [
+      "Should explain how it determines which logical heap loses an expired value.",
+      "Could mention maintaining logical sizes because stale elements remain physically present.",
+      "Does not discuss duplicates, which require deletion counts rather than a simple set.",
+      "Could present an order-statistics tree as an alternative."
+    ],
+    "feedback": "The answer is correct and strong. The expiration design needs more implementation detail to demonstrate that balancing remains correct with stale heap entries."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A monitoring service receives latency values continuously and must return the median after every new value. The stream may contain millions of values. How would you design the data structure, and how would your answer change if old values also needed to expire?",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep all the values in a sorted array. For each new latency, I'd binary-search where it belongs and insert it there. Then the median is just the middle index. Finding the position is O(log n), but inserting is O(n). For expiry, I'd search for the old value and remove it, which is also O(n).",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 5,
+      "confidence": 7
+    },
+    "strengths": [
+      "Maintains values in an order that makes median lookup straightforward.",
+      "Correctly separates binary-search cost from array-shifting cost.",
+      "Accurately identifies linear insertion and deletion complexity."
+    ],
+    "improvements": [
+      "O(n) updates are too expensive for a stream containing millions of values.",
+      "Should use two heaps for the insert-only case.",
+      "For expiration, should consider lazy-deletion heaps or an order-statistics tree.",
+      "Does not discuss duplicate values during deletion."
+    ],
+    "feedback": "The solution is correct but does not scale to the stated volume. It demonstrates baseline reasoning but misses the expected logarithmic-update design."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A monitoring service receives latency values continuously and must return the median after every new value. The stream may contain millions of values. How would you design the data structure, and how would your answer change if old values also needed to expire?",
+    "quality_tier": "poor",
+    "answer": "I'd keep a running average and return that as the median. When a value arrives, I'd update the average using the old count. If values expire, I'd subtract them from the total.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Describes an efficient method for maintaining a running arithmetic mean."
+    ],
+    "improvements": [
+      "The mean and median are different statistics and can diverge significantly with outliers.",
+      "A running total does not contain enough ordering information to recover the median.",
+      "Expiration does not fix the missing rank information.",
+      "Should maintain ordered halves using two heaps or an order-statistics structure."
+    ],
+    "feedback": "The response solves a running-average problem, not a running-median problem."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A monitoring service receives latency values continuously and must return the median after every new value. The stream may contain millions of values. How would you design the data structure, and how would your answer change if old values also needed to expire?",
+    "quality_tier": "off_topic",
+    "answer": "I'd graph the latency values in Grafana and set an alert when the average exceeds our service-level objective. We could also sample only ten percent of requests to reduce monitoring cost.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests practical monitoring and alerting tools."
+    ],
+    "improvements": [
+      "The question asks for a data structure that computes an exact online median.",
+      "Graphing and sampling do not explain median maintenance.",
+      "Does not provide insertion, query, deletion, or complexity analysis."
+    ],
+    "feedback": "The answer discusses observability operations instead of the requested streaming algorithm."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the core classes for a parking-lot system that supports cars, motorcycles, and trucks, different spot sizes, ticket generation, fee calculation, and multiple payment methods. Explain how your design remains extensible.",
+    "quality_tier": "excellent",
+    "answer": "I'd model Vehicle and ParkingSpot as separate abstractions, with a vehicle type or dimensions used by a SpotAssignmentPolicy to decide compatibility. A ParkingLot contains floors, and each floor owns spots and availability indexes. Entry creates a ParkingTicket containing the vehicle, assigned spot, entry time, and status. Exit passes the ticket to a FeePolicy, which calculates the amount based on duration, vehicle type, and possibly time bands. Payment would go through a PaymentMethod interface so card, cash, or UPI implementations don't affect the exit workflow. I'd keep allocation, pricing, and payment as strategies because they're likely to change independently. Spot state changes should go through a parking service so two gates can't assign the same spot. I'd avoid subclasses like CarSpotOnFloorOne because that would explode the class hierarchy.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates vehicles, spots, tickets, allocation, pricing, and payment into distinct responsibilities.",
+      "Uses strategy-style abstractions for policies that are likely to vary.",
+      "Avoids an inheritance-heavy class explosion.",
+      "Addresses concurrency around assigning the same parking spot.",
+      "Explains how the design can add new vehicle types, fee rules, and payment methods."
+    ],
+    "improvements": [
+      "Could specify whether spot compatibility is represented by enums, capabilities, or dimensions.",
+      "Could describe how display boards receive consistent availability updates."
+    ],
+    "feedback": "This is a mature OOP design. It emphasizes responsibility boundaries and change points instead of producing a rigid class diagram."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the core classes for a parking-lot system that supports cars, motorcycles, and trucks, different spot sizes, ticket generation, fee calculation, and multiple payment methods. Explain how your design remains extensible.",
+    "quality_tier": "good",
+    "answer": "I'd have ParkingLot, ParkingFloor, ParkingSpot, Vehicle, and ParkingTicket classes. Vehicle could have Car, Motorcycle, and Truck implementations, while ParkingSpot stores its size and whether it's occupied. A ParkingService would find a compatible free spot and issue a ticket. I'd use separate interfaces for fee calculation and payment, so hourly pricing or flat pricing and cash or card can be changed without rewriting the parking service.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Identifies the main domain entities expected in a parking-lot design.",
+      "Separates spot assignment from the entity classes through a service.",
+      "Uses abstractions for fee calculation and payment.",
+      "Supports multiple vehicle and spot types."
+    ],
+    "improvements": [
+      "Could explain how spot compatibility is evaluated.",
+      "Does not address concurrent assignment from multiple entry gates.",
+      "Could distinguish entity state from availability-search indexes.",
+      "Does not describe ticket status transitions or failed payment handling."
+    ],
+    "feedback": "The design is sensible and extensible. It would be stronger with concurrency and lifecycle details."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the core classes for a parking-lot system that supports cars, motorcycles, and trucks, different spot sizes, ticket generation, fee calculation, and multiple payment methods. Explain how your design remains extensible.",
+    "quality_tier": "mediocre",
+    "answer": "I'd create a ParkingLot class with arrays for cars, bikes, and trucks. It would have methods like parkCar, parkBike, parkTruck, calculateCarFee, and calculateTruckFee. A Ticket class would store entry and exit time. Payment can be another method that takes a payment type.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 4,
+      "confidence": 6
+    },
+    "strengths": [
+      "Identifies the need for a ticket and time-based fee calculation.",
+      "Separates stored vehicles by broad type.",
+      "Includes payment as part of the exit flow."
+    ],
+    "improvements": [
+      "Vehicle-specific methods will grow every time a new type is introduced.",
+      "The single ParkingLot class is taking on assignment, storage, pricing, and payment responsibilities.",
+      "A payment-type parameter likely leads to conditional logic instead of polymorphism.",
+      "Does not model spot sizes or compatibility cleanly.",
+      "Should extract allocation, fee, and payment policies behind interfaces."
+    ],
+    "feedback": "The answer captures basic functionality but creates a monolithic design that is difficult to extend."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the core classes for a parking-lot system that supports cars, motorcycles, and trucks, different spot sizes, ticket generation, fee calculation, and multiple payment methods. Explain how your design remains extensible.",
+    "quality_tier": "poor",
+    "answer": "I'd make one Parking class with fields for vehicle type, spot type, entry time, exit time, fee, payment type, floor number, and whether the vehicle has left. Then one process method can handle everything with switch statements.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Lists several pieces of information the system must track."
+    ],
+    "improvements": [
+      "Combining all domain concepts into one class creates poor cohesion.",
+      "Switch statements will grow for every vehicle, pricing, and payment variation.",
+      "The design lacks clear entities, services, and policy abstractions.",
+      "Does not explain how spots are allocated or protected from double assignment.",
+      "The proposed structure is not extensible despite that being a central requirement."
+    ],
+    "feedback": "The response creates a large procedural object rather than an extensible object-oriented design."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the core classes for a parking-lot system that supports cars, motorcycles, and trucks, different spot sizes, ticket generation, fee calculation, and multiple payment methods. Explain how your design remains extensible.",
+    "quality_tier": "off_topic",
+    "answer": "I'd build a mobile app that shows empty parking spaces on a map. Users could reserve a space before arriving and receive directions to the correct entrance.",
+    "scores": {
+      "relevance": 2,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests useful customer-facing parking features."
+    ],
+    "improvements": [
+      "The question asks for the core object model and extensibility.",
+      "Does not define classes, responsibilities, allocation, tickets, fees, or payment abstractions.",
+      "Reservation and navigation features do not replace the required OOP design."
+    ],
+    "feedback": "The answer discusses product features rather than the requested class design."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a URL-shortening service that supports custom aliases, links that expire, very high redirect traffic, click analytics, and prevention of two users claiming the same alias. Explain the read path, write path, storage, caching, and failure handling.",
+    "quality_tier": "excellent",
+    "answer": "The write API would validate the destination URL, requested expiry, and optional custom alias. For generated aliases, I'd use a unique numeric ID encoded in base62 or a random token with a uniqueness check. Custom aliases need a strongly enforced unique key in the primary store, so concurrent claims result in one successful insert and one conflict. The mapping record would contain alias, destination, owner, creation time, expiry, and status. Redirects are read-heavy, so the service would check an edge or Redis cache first and fall back to a horizontally scalable key-value store or indexed relational table. Cached entries should include expiry and negative-cache missing aliases briefly to reduce repeated abuse. Redirects should remain fast by publishing click events asynchronously to a durable queue rather than updating analytics synchronously. Consumers can aggregate by alias, time bucket, region, and referrer. I'd use 301 only for immutable links and usually 302 or 307 when links can change. If the cache fails, reads fall back to storage; if analytics is unavailable, redirects should still succeed while events buffer or degrade. Expired or disabled links return an appropriate not-found or gone response, and abuse scanning can disable malicious destinations.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Defines both generated and custom-alias creation paths.",
+      "Uses a database uniqueness constraint to resolve concurrent custom-alias claims safely.",
+      "Optimizes the read-heavy redirect path with layered caching and storage fallback.",
+      "Separates analytics from redirect latency through asynchronous event delivery.",
+      "Handles expiry, mutable-link redirect semantics, negative caching, abuse, and component failures.",
+      "Identifies appropriate data fields and scalable storage patterns."
+    ],
+    "improvements": [
+      "Could estimate alias-space capacity and discuss collision probability for random tokens.",
+      "Could explain how cache invalidation works when a link is edited or disabled."
+    ],
+    "feedback": "This is a comprehensive experienced-level design. It protects uniqueness, keeps redirects fast, and treats analytics and abuse controls as separate concerns."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a URL-shortening service that supports custom aliases, links that expire, very high redirect traffic, click analytics, and prevention of two users claiming the same alias. Explain the read path, write path, storage, caching, and failure handling.",
+    "quality_tier": "good",
+    "answer": "I'd store alias-to-URL mappings in a database with alias as a unique key. For automatic aliases, I'd generate a base62 string from an ID. A create request inserts the mapping with an optional expiry time, and a custom alias that already exists returns a conflict. The redirect endpoint checks Redis first, then the database, and caches the mapping until its expiry. Clicks should be sent to a queue and processed asynchronously so analytics doesn't slow redirects. If Redis is down, the database becomes the fallback.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses a unique alias key to prevent duplicate ownership.",
+      "Provides a practical base62 alias-generation scheme.",
+      "Defines a cache-first redirect path with database fallback.",
+      "Respects link expiry in cache behavior.",
+      "Moves click analytics off the synchronous redirect path."
+    ],
+    "improvements": [
+      "Could discuss cache invalidation for edited or disabled links.",
+      "Does not describe analytics-queue failure behavior or event durability.",
+      "Could address malicious destinations and redirect-status selection.",
+      "Does not discuss negative caching or hot-alias protection."
+    ],
+    "feedback": "The core architecture is correct and scalable. Operational and abuse-related details are the main omissions."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a URL-shortening service that supports custom aliases, links that expire, very high redirect traffic, click analytics, and prevention of two users claiming the same alias. Explain the read path, write path, storage, caching, and failure handling.",
+    "quality_tier": "mediocre",
+    "answer": "I'd have a table with short_code, long_url, and expiry. The short code can be a random six-character string. On redirect, I'd query the table and then increment a click_count column. I'd add an index on short_code so lookup is fast. For custom names, I'd check whether the name already exists before inserting it.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 8,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Defines the essential alias-to-destination mapping.",
+      "Includes expiry and an indexed alias lookup.",
+      "Recognizes the need to detect duplicate custom aliases."
+    ],
+    "improvements": [
+      "A check-before-insert can race; uniqueness must be enforced by the database.",
+      "Synchronously incrementing click_count makes the hot redirect path write-heavy and contentious.",
+      "Does not include caching despite very high redirect traffic.",
+      "Random-token collisions and retry behavior are not discussed.",
+      "Failure handling and detailed analytics are missing."
+    ],
+    "feedback": "The answer provides a workable small-scale baseline but misses key concurrency and scaling requirements."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a URL-shortening service that supports custom aliases, links that expire, very high redirect traffic, click analytics, and prevention of two users claiming the same alias. Explain the read path, write path, storage, caching, and failure handling.",
+    "quality_tier": "poor",
+    "answer": "I'd keep a map in the application where the key is the short URL and the value is the long URL. The server would generate a random number and add it to the domain. Clicks can be counted with another integer in the same map.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Identifies the basic alias-to-destination lookup relationship."
+    ],
+    "improvements": [
+      "In-memory state is lost on restart and is not shared across multiple instances.",
+      "Concurrent servers can generate or claim the same alias.",
+      "The design does not support durable expiry or reliable analytics.",
+      "It cannot handle very high traffic safely across a distributed deployment.",
+      "No cache-storage separation or failure behavior is described."
+    ],
+    "feedback": "The proposed design works only as a single-process prototype and does not meet the durability or scale requirements."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a URL-shortening service that supports custom aliases, links that expire, very high redirect traffic, click analytics, and prevention of two users claiming the same alias. Explain the read path, write path, storage, caching, and failure handling.",
+    "quality_tier": "off_topic",
+    "answer": "I'd make the website responsive and give users a form where they paste a long URL. After shortening it, I'd show a copy button and a QR code.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests reasonable user-interface features for a URL-shortening product."
+    ],
+    "improvements": [
+      "The question asks for backend and distributed-system architecture.",
+      "Does not address alias uniqueness, storage, caching, redirects, expiry, analytics, or failures.",
+      "Frontend features do not explain how the service remains correct under concurrency."
+    ],
+    "feedback": "The response focuses on interface design rather than the requested system design."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A users table allows accounts to be soft-deleted using deleted_at. The business wants email addresses to be unique among active users, but a deleted user's email may be reused. How would you enforce this safely under concurrent sign-ups?",
+    "quality_tier": "excellent",
+    "answer": "I wouldn't enforce this with an application-level check because two sign-ups can race. In PostgreSQL, I'd create a partial unique index on the normalized email expression for rows where deleted_at is null, for example a unique index on lower(email) with that predicate. Then active users can't share an email, while soft-deleted rows are excluded. The application would attempt the insert and translate a unique-constraint violation into a conflict response. I'd define normalization consistently, ideally storing a canonical email column rather than relying on slightly different lowercasing logic in different services. In databases without partial indexes, options include a generated active_email column that's null for deleted rows and uniquely indexed, or a separate active-identity table. I'd also think carefully about undeleting an account because restoring it may conflict with a newer active account using that email.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly relies on a database uniqueness constraint rather than a race-prone pre-check.",
+      "Uses a partial unique index that exactly matches the active-user requirement.",
+      "Addresses case normalization and consistency across services.",
+      "Provides alternatives for databases without partial-index support.",
+      "Identifies undelete conflicts as an important lifecycle edge case."
+    ],
+    "improvements": [
+      "Could mention how whitespace and Unicode normalization are handled in the canonical email.",
+      "Could discuss whether provider-specific email normalization, such as dot removal, should be avoided or explicitly defined."
+    ],
+    "feedback": "This is a robust database answer. It protects the invariant under concurrency and handles portability and restore behavior."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A users table allows accounts to be soft-deleted using deleted_at. The business wants email addresses to be unique among active users, but a deleted user's email may be reused. How would you enforce this safely under concurrent sign-ups?",
+    "quality_tier": "good",
+    "answer": "In PostgreSQL, I'd add a unique partial index on email where deleted_at is null. That lets deleted records keep the old email while preventing two active rows from sharing it. I'd normalize the email before saving, and the API would catch the unique-constraint error instead of checking first and assuming the email is available.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Selects the correct partial unique-index solution.",
+      "Explains why soft-deleted rows do not block reuse.",
+      "Uses the database constraint to handle concurrent sign-ups safely.",
+      "Includes email normalization and constraint-error handling."
+    ],
+    "improvements": [
+      "Could specify whether normalization is enforced in the indexed expression or stored canonical column.",
+      "Does not discuss what happens when a soft-deleted account is restored.",
+      "Could mention alternatives for databases that do not support partial indexes."
+    ],
+    "feedback": "The answer is correct and production-appropriate. A few portability and lifecycle details are missing."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A users table allows accounts to be soft-deleted using deleted_at. The business wants email addresses to be unique among active users, but a deleted user's email may be reused. How would you enforce this safely under concurrent sign-ups?",
+    "quality_tier": "mediocre",
+    "answer": "Before creating a user, I'd query for the same email where deleted_at is null. If no row is returned, I'd insert the account. I'd wrap both operations in a transaction so other requests can't interfere.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 4,
+      "confidence": 6
+    },
+    "strengths": [
+      "Filters duplicate checks to active users only.",
+      "Recognizes that concurrency must be considered.",
+      "Attempts to group the check and insert in a transaction."
+    ],
+    "improvements": [
+      "A normal transaction does not necessarily prevent two concurrent requests from both observing no row.",
+      "The invariant should be enforced by a unique database index or constraint.",
+      "Does not explain the isolation level or locking strategy required for the proposed method.",
+      "Email normalization is not addressed.",
+      "Application checks may improve error messages but should not be the final protection."
+    ],
+    "feedback": "The answer understands the requirement but relies on a check-then-insert pattern that remains race-prone without a database uniqueness constraint."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A users table allows accounts to be soft-deleted using deleted_at. The business wants email addresses to be unique among active users, but a deleted user's email may be reused. How would you enforce this safely under concurrent sign-ups?",
+    "quality_tier": "poor",
+    "answer": "I'd remove the email from the deleted user's row and replace it with something like deleted plus the timestamp. Then the normal unique constraint on email would allow somebody else to register.",
+    "scores": {
+      "relevance": 6,
+      "clarity": 7,
+      "depth": 3,
+      "confidence": 5
+    },
+    "strengths": [
+      "Preserves the ability to keep a standard unique constraint on active email values.",
+      "Attempts to make the original email reusable after deletion."
+    ],
+    "improvements": [
+      "Mutating historical identity data may violate audit, recovery, or legal requirements.",
+      "Restoring the deleted account becomes difficult because its original email was changed.",
+      "The generated replacement value can still collide unless carefully constructed.",
+      "Does not directly model uniqueness among active rows.",
+      "A partial unique index or generated active-email column is a cleaner solution."
+    ],
+    "feedback": "The workaround may function in a narrow implementation, but it damages data semantics and complicates restoration and auditing."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A users table allows accounts to be soft-deleted using deleted_at. The business wants email addresses to be unique among active users, but a deleted user's email may be reused. How would you enforce this safely under concurrent sign-ups?",
+    "quality_tier": "off_topic",
+    "answer": "I'd verify every email by sending an OTP before activating the account. That would reduce fake sign-ups and make sure the user owns the address.",
+    "scores": {
+      "relevance": 2,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests a valid method for verifying ownership of an email address."
+    ],
+    "improvements": [
+      "Email verification does not prevent two concurrent active rows from using the same email.",
+      "Does not address soft deletion or email reuse.",
+      "The question asks for database-level uniqueness enforcement."
+    ],
+    "feedback": "The response solves email ownership verification, not the active-user uniqueness constraint."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A React dashboard contains a table with hundreds of rows. Typing into a search box makes every row re-render and the input feels slow. How would you diagnose the problem and improve performance without changing behavior?",
+    "quality_tier": "excellent",
+    "answer": "I'd profile first using the React DevTools Profiler and the browser performance panel to confirm which components render and whether rendering or filtering is the real bottleneck. I'd check whether the parent recreates row props, callbacks, or context values on every keystroke. If rows receive stable primitive props, I'd wrap the row component in React.memo and stabilize callbacks with useCallback only where that actually prevents prop changes. Expensive filtering or sorting can use useMemo, though for a large dataset I'd also consider useDeferredValue so typing stays responsive while results update. If hundreds of DOM rows remain expensive, I'd virtualize the list so only visible rows render. I'd avoid using array indexes as keys and keep stable row IDs. I'd also verify that memoization overhead doesn't exceed the saved work and make sure state is located as close as possible to the search and table rather than forcing unrelated dashboard sections to re-render.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Starts with measurement rather than applying memoization blindly.",
+      "Distinguishes render cost, filtering cost, and excessive DOM size.",
+      "Explains how unstable props and context values defeat React.memo.",
+      "Uses memoization, deferred rendering, and virtualization for different bottlenecks.",
+      "Includes stable keys and appropriate state placement.",
+      "Acknowledges that optimization overhead should be validated."
+    ],
+    "improvements": [
+      "Could mention debouncing only if server-side searching is involved, since it is not necessarily appropriate for local filtering.",
+      "Could discuss React's production build because development-mode behavior can exaggerate render counts."
+    ],
+    "feedback": "This is a strong intermediate React answer. It uses profiling to select among several optimizations instead of treating all rerenders as automatically harmful."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A React dashboard contains a table with hundreds of rows. Typing into a search box makes every row re-render and the input feels slow. How would you diagnose the problem and improve performance without changing behavior?",
+    "quality_tier": "good",
+    "answer": "I'd use the React Profiler to check which components re-render on each keypress. If every row receives the same data but still renders, I'd memoize the row component with React.memo and make sure callbacks and object props aren't recreated every time. I'd memoize the filtered rows with useMemo. If rendering hundreds of rows is still expensive, I'd use a virtualization library so only the visible rows are mounted.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses profiling to confirm the re-render pattern.",
+      "Correctly identifies unstable callback and object props as memoization blockers.",
+      "Applies React.memo and useMemo to appropriate parts of the component tree.",
+      "Suggests virtualization for large DOM output."
+    ],
+    "improvements": [
+      "Could discuss keeping input updates responsive with useDeferredValue or a transition.",
+      "Does not mention stable row keys.",
+      "Could explain that rerenders are not inherently a problem unless profiling shows meaningful cost.",
+      "Could consider moving unrelated state lower in the tree."
+    ],
+    "feedback": "The proposed optimizations are appropriate and well targeted. It is missing a few responsiveness and state-architecture details."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A React dashboard contains a table with hundreds of rows. Typing into a search box makes every row re-render and the input feels slow. How would you diagnose the problem and improve performance without changing behavior?",
+    "quality_tier": "mediocre",
+    "answer": "I'd put the filter calculation inside useMemo and wrap every function in useCallback. I'd also use React.memo on all the row components. That should stop the unnecessary renders and make it faster.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Recognizes filtering and row rendering as possible optimization targets.",
+      "Names React.memo, useMemo, and useCallback, which may be useful when dependencies and props are stable."
+    ],
+    "improvements": [
+      "Does not profile or identify the actual bottleneck before optimizing.",
+      "Wrapping every function in useCallback can add complexity without preventing renders.",
+      "React.memo does not help if rows receive newly created objects or changed context values.",
+      "Does not consider virtualization for hundreds of rendered rows.",
+      "Should verify performance before and after each optimization."
+    ],
+    "feedback": "The answer lists common React optimization APIs but applies them mechanically without explaining when they work."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A React dashboard contains a table with hundreds of rows. Typing into a search box makes every row re-render and the input feels slow. How would you diagnose the problem and improve performance without changing behavior?",
+    "quality_tier": "poor",
+    "answer": "I'd add a one-second delay after each keypress before updating the input. That way React won't have to render while the user is typing quickly. I'd also hide some rows with CSS.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Recognizes that reducing the frequency or amount of work may improve perceived responsiveness."
+    ],
+    "improvements": [
+      "Delaying the controlled input itself makes typing feel worse and changes expected behavior.",
+      "CSS-hidden rows may still exist in the DOM and still incur rendering and layout costs.",
+      "Does not diagnose the cause using profiling.",
+      "Does not address unstable props, expensive filtering, memoization, or virtualization.",
+      "The solution may mask rather than fix the performance issue."
+    ],
+    "feedback": "The proposed changes degrade usability and do not address the underlying render cost."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A React dashboard contains a table with hundreds of rows. Typing into a search box makes every row re-render and the input feels slow. How would you diagnose the problem and improve performance without changing behavior?",
+    "quality_tier": "off_topic",
+    "answer": "I'd redesign the dashboard with a dark theme and make the table headers sticky. The search box could have an icon and an animated border when focused.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests clear visual changes for the dashboard."
+    ],
+    "improvements": [
+      "The question concerns React rendering performance, not visual styling.",
+      "Does not discuss profiling, component renders, filtering, memoization, or virtualization.",
+      "Animations may add more rendering work rather than fix the slowdown."
+    ],
+    "feedback": "The response does not address the performance problem."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A backend service processes report-generation jobs from a queue. Jobs may be delivered more than once, workers can crash halfway through, some reports take twenty minutes, and one malformed job must not block the queue. Design the worker flow and failure handling.",
+    "quality_tier": "excellent",
+    "answer": "I'd assume at-least-once delivery and make the job handler idempotent. Each job gets a stable job ID stored in a database with states such as QUEUED, RUNNING, COMPLETED, and FAILED, plus an attempt count and output location. A worker claims the job with an atomic state transition or lease so two workers don't process it concurrently. Because reports take twenty minutes, the worker must extend the queue visibility timeout or renew the lease while making progress. Output should be written to a temporary object and only published under the final key after successful completion. Before expensive work, the worker checks whether the job is already completed and returns the existing result. Transient failures retry with exponential backoff and jitter. Validation failures or jobs exceeding a maximum attempt count go to a dead-letter queue with the failure reason, so they don't poison the main queue. If a worker crashes, the lease expires and another worker retries. I'd record progress or checkpoints only if regeneration is expensive and checkpointing can itself be made consistent. Metrics should cover job age, attempts, lease expirations, processing duration, dead-letter volume, and completion rate.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Designs explicitly for at-least-once delivery and worker crashes.",
+      "Uses durable job state and an atomic claim or lease to prevent concurrent processing.",
+      "Handles long-running work through visibility-timeout or lease renewal.",
+      "Makes output publication idempotent and avoids exposing partial reports.",
+      "Separates transient retries from permanent malformed-job dead-lettering.",
+      "Includes observability and optional checkpointing trade-offs."
+    ],
+    "improvements": [
+      "Could explain how cancellation requests interact with a running leased job.",
+      "Could discuss resource limits to prevent a valid but extremely expensive report from exhausting a worker."
+    ],
+    "feedback": "This is a production-grade queue-worker design. It covers duplicate delivery, long execution, crashes, poison messages, output consistency, and operations."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A backend service processes report-generation jobs from a queue. Jobs may be delivered more than once, workers can crash halfway through, some reports take twenty minutes, and one malformed job must not block the queue. Design the worker flow and failure handling.",
+    "quality_tier": "good",
+    "answer": "I'd give every job a unique ID and store its status in the database. When a worker receives it, it atomically changes the state from queued to running. If it's already completed, the worker acknowledges it without generating another report. Since jobs can take twenty minutes, the worker should extend the message visibility timeout while working. Temporary failures retry with backoff, while invalid jobs or jobs that exceed the retry limit go to a dead-letter queue. The generated file should only be marked complete after it has been fully uploaded.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses a stable job ID and durable status for idempotency.",
+      "Claims jobs atomically to reduce duplicate concurrent work.",
+      "Handles long execution through visibility-timeout extension.",
+      "Separates retryable failures from dead-letter cases.",
+      "Avoids marking partially uploaded output as complete."
+    ],
+    "improvements": [
+      "Could describe lease expiry and recovery when a worker crashes after setting RUNNING.",
+      "Does not mention jitter or maximum retry timing.",
+      "Could explain how duplicate output files are prevented.",
+      "Operational metrics and alerting are not covered."
+    ],
+    "feedback": "The design addresses the main correctness and reliability issues. Crash recovery details around stale RUNNING jobs need more precision."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A backend service processes report-generation jobs from a queue. Jobs may be delivered more than once, workers can crash halfway through, some reports take twenty minutes, and one malformed job must not block the queue. Design the worker flow and failure handling.",
+    "quality_tier": "mediocre",
+    "answer": "I'd retry a failed report three times. The worker would save the job ID in Redis so if the same message comes again, it can skip it. I'd increase the queue timeout to thirty minutes, and after three failures I'd log the error and delete the message.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Recognizes duplicate delivery, long execution time, and bounded retries.",
+      "Attempts to deduplicate using a job identifier.",
+      "Prevents endless retries by limiting attempts."
+    ],
+    "improvements": [
+      "Skipping any job ID seen in Redis can lose work if the worker crashes after marking it but before completion.",
+      "A fixed thirty-minute timeout may expire for slower jobs or delay recovery for faster crashes.",
+      "Deleting permanently failed jobs loses diagnostic and replay capability; a dead-letter queue is preferable.",
+      "Does not define durable job states or atomic claiming.",
+      "Does not protect against partial or duplicate report output."
+    ],
+    "feedback": "The answer identifies the main failure categories but uses unsafe deduplication and weak recovery mechanics."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A backend service processes report-generation jobs from a queue. Jobs may be delivered more than once, workers can crash halfway through, some reports take twenty minutes, and one malformed job must not block the queue. Design the worker flow and failure handling.",
+    "quality_tier": "poor",
+    "answer": "I'd process one job at a time so duplicates can't happen. If a worker crashes, an admin can restart it. For malformed jobs, I'd keep retrying because the data might become valid later.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 3
+    },
+    "strengths": [
+      "Recognizes that worker crashes and malformed jobs require some response."
+    ],
+    "improvements": [
+      "Single-threaded processing does not prevent duplicate queue delivery.",
+      "Manual restart is not a reliable crash-recovery strategy.",
+      "Repeatedly retrying permanently malformed jobs can block or overload the queue.",
+      "Does not use idempotency, leases, visibility renewal, retry limits, or a dead-letter queue.",
+      "Cannot scale report throughput."
+    ],
+    "feedback": "The design is neither fault-tolerant nor scalable and allows poison messages to consume the queue indefinitely."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "A backend service processes report-generation jobs from a queue. Jobs may be delivered more than once, workers can crash halfway through, some reports take twenty minutes, and one malformed job must not block the queue. Design the worker flow and failure handling.",
+    "quality_tier": "off_topic",
+    "answer": "I'd create a dashboard where users can choose the report type, date range, and export format. The page could show a progress bar while the report is generated.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Suggests useful user-facing controls and status feedback for report generation."
+    ],
+    "improvements": [
+      "The question asks about queue processing and backend failure handling.",
+      "Does not address duplicate delivery, worker crashes, long-running leases, retries, or poison jobs.",
+      "A progress bar requires reliable backend state but does not define it."
+    ],
+    "feedback": "The response focuses on the frontend experience rather than the worker architecture."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a project where you realized the team would miss an important deadline. How did you communicate it, what trade-offs did you make, and what was the outcome?",
+    "quality_tier": "excellent",
+    "answer": "On a billing-integration project, we were about two weeks from launch when the provider's sandbox started exposing several undocumented failure cases. Our original plan included subscriptions, one-time payments, refunds, and a full internal reconciliation dashboard. After reviewing the remaining work and defect rate, I concluded we couldn't safely deliver all of it. I documented the risks, showed the product manager a revised estimate with evidence from the failed test cases, and proposed launching one-time payments and refunds first while feature-flagging subscriptions. We kept reconciliation as a daily operational report instead of delaying the whole launch for the dashboard. I also assigned clear owners to the provider escalation, retry handling, and launch checklist. We launched the reduced scope on the original date without payment-loss incidents, then enabled subscriptions three weeks later. In the retrospective, we added an earlier integration-spike milestone for external providers.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 10,
+      "confidence": 9
+    },
+    "strengths": [
+      "Identifies the deadline risk early and supports it with concrete technical evidence.",
+      "Communicates transparently with product stakeholders instead of hiding the delay.",
+      "Proposes explicit scope and operational trade-offs while protecting payment correctness.",
+      "Shows leadership through ownership assignment and a launch checklist.",
+      "Provides measurable outcomes and a process improvement from the retrospective."
+    ],
+    "improvements": [
+      "Could mention how customer or compliance stakeholders were informed about the delayed subscription feature.",
+      "Could quantify the team size or workload reduction to make the planning decision even clearer."
+    ],
+    "feedback": "This is a strong experienced-level behavioral answer. It demonstrates judgment, communication, scope management, and learning without pretending the original plan remained achievable."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a project where you realized the team would miss an important deadline. How did you communicate it, what trade-offs did you make, and what was the outcome?",
+    "quality_tier": "good",
+    "answer": "During a data-migration project, we discovered that several old records didn't match the documented schema. I told the engineering manager as soon as we had enough examples to estimate the impact. I proposed moving the low-risk customer accounts first and delaying the affected accounts until we built validation and cleanup scripts. We updated support and product with the revised rollout plan. The first phase launched on time, and the remaining accounts moved about ten days later without data loss.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 9,
+      "depth": 8,
+      "confidence": 8
+    },
+    "strengths": [
+      "Provides a specific deadline risk caused by unexpected legacy data.",
+      "Communicates the issue early enough to change the plan.",
+      "Uses phased rollout to separate low-risk and high-risk records.",
+      "Coordinates with engineering, product, and support.",
+      "States a clear outcome without hiding the delayed portion."
+    ],
+    "improvements": [
+      "Could explain how the revised estimate was calculated.",
+      "Does not describe the candidate's role in implementing or validating the cleanup scripts.",
+      "Could mention what process changed afterward to detect schema drift earlier."
+    ],
+    "feedback": "The answer demonstrates good risk communication and pragmatic phasing. More detail about personal ownership and learning would improve it."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a project where you realized the team would miss an important deadline. How did you communicate it, what trade-offs did you make, and what was the outcome?",
+    "quality_tier": "mediocre",
+    "answer": "We had a feature that was taking longer than expected, so I told my manager we might be late. We decided to remove a few nice-to-have items and focus on the main flow. The feature was still delivered a few days late, but it worked and the customer accepted it.",
+    "scores": {
+      "relevance": 8,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Acknowledges the deadline risk rather than concealing it.",
+      "Uses scope reduction to protect the core functionality.",
+      "Provides an outcome, including the remaining delay."
+    ],
+    "improvements": [
+      "The project, risks, and removed items are too vague to assess the quality of the trade-off.",
+      "Does not explain when or how the issue was communicated.",
+      "The candidate's individual actions and ownership are unclear.",
+      "No lesson or preventive process change is described.",
+      "Could explain why the customer accepted the delay and how expectations were reset."
+    ],
+    "feedback": "The answer addresses the prompt at a basic level but lacks the specificity and leadership evidence expected from an experienced candidate."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a project where you realized the team would miss an important deadline. How did you communicate it, what trade-offs did you make, and what was the outcome?",
+    "quality_tier": "poor",
+    "answer": "I usually push the team to work harder when a deadline is at risk. On one project, people were moving slowly, so I reminded them several times that the deadline was important. We eventually finished, although it was late.",
+    "scores": {
+      "relevance": 5,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Recognizes that a slipping deadline requires active attention."
+    ],
+    "improvements": [
+      "Blames the team without explaining the actual causes of the delay.",
+      "Provides no evidence-based estimate, stakeholder communication, or scope trade-off.",
+      "Repeated pressure is not a substitute for planning, prioritization, or removing blockers.",
+      "The candidate does not show ownership of the final delay.",
+      "No concrete outcome details or lessons are provided."
+    ],
+    "feedback": "The response suggests pressure rather than leadership and does not demonstrate thoughtful deadline management."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "experienced",
+    "question": "Tell me about a project where you realized the team would miss an important deadline. How did you communicate it, what trade-offs did you make, and what was the outcome?",
+    "quality_tier": "off_topic",
+    "answer": "My preferred project-management method is Agile because daily stand-ups help everyone stay aligned. I also like Jira for tracking tasks and sprint velocity.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 7,
+      "depth": 2,
+      "confidence": 5
+    },
+    "strengths": [
+      "Mentions common practices for tracking project work."
+    ],
+    "improvements": [
+      "The question asks for a specific deadline-risk example.",
+      "Does not describe communication, trade-offs, actions, or outcome.",
+      "Tool and methodology preferences do not provide behavioral evidence."
+    ],
+    "feedback": "The answer discusses project-management preferences instead of the requested experience."
+  }
+]

@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a set of courses and prerequisite pairs, determine whether all courses can be completed and return one valid order if possible.",
+    "quality_tier": "excellent",
+    "answer": "I'd build a directed graph from prerequisite to dependent course and track indegrees. Kahn's algorithm starts with all zero-indegree courses, repeatedly emits one, and decreases its neighbors' indegrees. If the output contains every course, it is a valid order; otherwise a cycle exists. Complexity is O(V+E).",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Correctly returns an order and detects cycles in linear graph time."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a set of courses and prerequisite pairs, determine whether all courses can be completed and return one valid order if possible.",
+    "quality_tier": "good",
+    "answer": "I'd use topological sorting with indegrees and a queue. If fewer than all courses are processed, there is a cycle.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Correctly returns an order and detects cycles in linear graph time."
+    ],
+    "improvements": [
+      "Could mention DFS coloring as an alternative."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a set of courses and prerequisite pairs, determine whether all courses can be completed and return one valid order if possible.",
+    "quality_tier": "mediocre",
+    "answer": "I'd repeatedly scan for a course whose prerequisites are already completed.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Repeated scanning can become quadratic and is less direct.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a set of courses and prerequisite pairs, determine whether all courses can be completed and return one valid order if possible.",
+    "quality_tier": "poor",
+    "answer": "I'd sort courses by course number and take them in that order.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Course numbers do not encode prerequisites.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a set of courses and prerequisite pairs, determine whether all courses can be completed and return one valid order if possible.",
+    "quality_tier": "off_topic",
+    "answer": "I'd recommend taking easier courses first.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Difficulty recommendations are unrelated to graph constraints.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Support point updates and prefix-sum or range-sum queries on a large numeric array with many operations.",
+    "quality_tier": "excellent",
+    "answer": "I'd use a Fenwick tree if the required operations are point updates and prefix sums. Update propagates a delta through indices using i += i & -i, and prefix sum moves downward with i -= i & -i. Both are O(log n), range sum is two prefix sums, and memory is O(n).",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Selects the appropriate Fenwick-tree structure and gives exact operation costs."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Support point updates and prefix-sum or range-sum queries on a large numeric array with many operations.",
+    "quality_tier": "good",
+    "answer": "I'd build a Binary Indexed Tree and use logarithmic update and prefix-query operations. A range sum is prefix(r) minus prefix(l-1).",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Selects the appropriate Fenwick-tree structure and gives exact operation costs."
+    ],
+    "improvements": [
+      "Could discuss segment trees when range updates or other aggregates are needed."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Support point updates and prefix-sum or range-sum queries on a large numeric array with many operations.",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep prefix sums and rebuild all later entries after each update.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Queries are fast but updates are O(n).",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Support point updates and prefix-sum or range-sum queries on a large numeric array with many operations.",
+    "quality_tier": "poor",
+    "answer": "I'd recalculate the requested range by looping over it every time.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Each query can degrade to O(n) and ignores repeated-operation scale.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Support point updates and prefix-sum or range-sum queries on a large numeric array with many operations.",
+    "quality_tier": "off_topic",
+    "answer": "I'd store the numbers in a spreadsheet.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "A spreadsheet is not the requested data structure.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the core classes for a restaurant ordering system with tables, dine-in and takeaway orders, menu items, modifiers, kitchen tickets, discounts, and payments.",
+    "quality_tier": "excellent",
+    "answer": "I'd model MenuItem, Modifier, Order, OrderLine, Table, KitchenTicket, DiscountPolicy, and Payment. Order type controls fulfillment details without duplicating the whole order model. Pricing is calculated from immutable order lines and discount strategies; kitchen routing is handled by a service that groups items by station. Payment remains separate from order state.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates ordering, pricing, kitchen routing, and payment concerns."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the core classes for a restaurant ordering system with tables, dine-in and takeaway orders, menu items, modifiers, kitchen tickets, discounts, and payments.",
+    "quality_tier": "good",
+    "answer": "I'd create Order, OrderItem, MenuItem, Table, and Payment classes, with strategy interfaces for discounts and payment methods. Kitchen tickets are generated from confirmed order items.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Separates ordering, pricing, kitchen routing, and payment concerns."
+    ],
+    "improvements": [
+      "Could describe cancellation and partial-payment state transitions."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the core classes for a restaurant ordering system with tables, dine-in and takeaway orders, menu items, modifiers, kitchen tickets, discounts, and payments.",
+    "quality_tier": "mediocre",
+    "answer": "I'd create separate DineInOrder and TakeawayOrder classes containing most of the same fields.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Heavy duplication may appear between order subclasses.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the core classes for a restaurant ordering system with tables, dine-in and takeaway orders, menu items, modifiers, kitchen tickets, discounts, and payments.",
+    "quality_tier": "poor",
+    "answer": "I'd put tables, menu items, totals, discounts, and payment switches inside one Restaurant class.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "A monolithic class is difficult to extend and test.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design the core classes for a restaurant ordering system with tables, dine-in and takeaway orders, menu items, modifiers, kitchen tickets, discounts, and payments.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design the restaurant's online menu layout.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Menu presentation is unrelated to the domain model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a file-sync service similar to Dropbox that synchronizes folders across devices, supports large files, offline edits, version history, and conflict handling.",
+    "quality_tier": "excellent",
+    "answer": "I'd separate file metadata from immutable content chunks. Clients split files into hashed chunks, upload missing chunks directly to object storage, then atomically commit a new file version in metadata. A change journal lets devices fetch deltas by cursor. Offline edits create new versions; concurrent edits produce conflicts or merge only for supported formats. Resumable uploads, deduplication, tombstones, and per-device acknowledgements support reliability.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses chunking, deduplication, versions, offline sync, journals, and conflicts."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a file-sync service similar to Dropbox that synchronizes folders across devices, supports large files, offline edits, version history, and conflict handling.",
+    "quality_tier": "good",
+    "answer": "I'd store file metadata and versions in a database, content in object storage, and use chunked resumable uploads. Devices poll or subscribe to a change log and resolve concurrent edits as conflict copies.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses chunking, deduplication, versions, offline sync, journals, and conflicts."
+    ],
+    "improvements": [
+      "Could explain encryption and permission sharing."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a file-sync service similar to Dropbox that synchronizes folders across devices, supports large files, offline edits, version history, and conflict handling.",
+    "quality_tier": "mediocre",
+    "answer": "I'd upload the full file whenever it changes and use the latest modified timestamp to choose the winner.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Full uploads waste bandwidth and timestamps are weak conflict identifiers.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a file-sync service similar to Dropbox that synchronizes folders across devices, supports large files, offline edits, version history, and conflict handling.",
+    "quality_tier": "poor",
+    "answer": "I'd keep all files on one shared server folder.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "One shared folder is not scalable or resilient.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a file-sync service similar to Dropbox that synchronizes folders across devices, supports large files, offline edits, version history, and conflict handling.",
+    "quality_tier": "off_topic",
+    "answer": "I'd focus on adding file previews and icons.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Previews do not address synchronization architecture.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an audit-log schema that records who changed which fields on customer records and supports querying a customer's history and the latest value before a given time.",
+    "quality_tier": "excellent",
+    "answer": "I'd use an append-only audit_events table with entity_type, entity_id, actor_id, occurred_at, request_id, and a structured before/after or field-change payload. Index entity_id with occurred_at and use a stable event ID for ties. Current state remains in the customer table; history queries scan ordered events, while snapshots can accelerate reconstruction for long histories.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses append-only history, suitable indexes, stable ordering, and snapshot trade-offs."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an audit-log schema that records who changed which fields on customer records and supports querying a customer's history and the latest value before a given time.",
+    "quality_tier": "good",
+    "answer": "I'd store one audit row per change with customer ID, user ID, timestamp, and old and new values, indexed by customer and time.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses append-only history, suitable indexes, stable ordering, and snapshot trade-offs."
+    ],
+    "improvements": [
+      "Could discuss sensitive-field redaction and retention."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an audit-log schema that records who changed which fields on customer records and supports querying a customer's history and the latest value before a given time.",
+    "quality_tier": "mediocre",
+    "answer": "I'd add updated_by and previous_value columns directly to the customer table.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "One previous value cannot preserve complete field history.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an audit-log schema that records who changed which fields on customer records and supports querying a customer's history and the latest value before a given time.",
+    "quality_tier": "poor",
+    "answer": "I'd overwrite one audit row every time the customer changes.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Overwriting destroys the audit trail.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an audit-log schema that records who changed which fields on customer records and supports querying a customer's history and the latest value before a given time.",
+    "quality_tier": "off_topic",
+    "answer": "I'd send change notifications by email.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Email notifications are not a queryable audit schema.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A server-rendered React page produces hydration warnings because client output differs from server HTML. How would you diagnose and fix it?",
+    "quality_tier": "excellent",
+    "answer": "I'd compare server and first-client render output and look for nondeterministic values such as Date.now, random IDs, locale formatting, browser-only APIs, or data fetched twice. The initial client render must use the same serialized data and deterministic IDs as the server. Browser-only differences should be deferred to an effect or isolated in a client-only component.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Targets deterministic initial markup and common SSR/client divergence causes."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A server-rendered React page produces hydration warnings because client output differs from server HTML. How would you diagnose and fix it?",
+    "quality_tier": "good",
+    "answer": "I'd inspect the hydration warning, remove random or time-dependent values from render, and ensure the client uses the same initial props as the server.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Targets deterministic initial markup and common SSR/client divergence causes."
+    ],
+    "improvements": [
+      "Could mention invalid HTML nesting and extension-injected markup."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A server-rendered React page produces hydration warnings because client output differs from server HTML. How would you diagnose and fix it?",
+    "quality_tier": "mediocre",
+    "answer": "I'd suppress the hydration warning so users do not see it in the console.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Suppressing warnings hides rather than fixes mismatch behavior.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A server-rendered React page produces hydration warnings because client output differs from server HTML. How would you diagnose and fix it?",
+    "quality_tier": "poor",
+    "answer": "I'd force the page to rerender immediately after mount.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Immediate rerender still incurs broken hydration and flicker.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A server-rendered React page produces hydration warnings because client output differs from server HTML. How would you diagnose and fix it?",
+    "quality_tier": "off_topic",
+    "answer": "I'd change the page colors so differences are less visible.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Styling is unrelated to markup consistency.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you implement graceful shutdown for an HTTP service that also consumes queue messages?",
+    "quality_tier": "excellent",
+    "answer": "On termination, I'd mark the instance unready so new traffic stops, stop accepting new HTTP connections and queue messages, and allow in-flight work to finish within a deadline. Queue messages are acknowledged only after successful completion; unfinished work loses its lease and is retried. After the deadline, cancel remaining work, flush telemetry, and close database and network pools.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Coordinates readiness, draining, message acknowledgement, deadlines, and resource cleanup."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you implement graceful shutdown for an HTTP service that also consumes queue messages?",
+    "quality_tier": "good",
+    "answer": "I'd remove the instance from the load balancer, stop new consumption, wait for active requests and jobs, then close resources with a timeout.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Coordinates readiness, draining, message acknowledgement, deadlines, and resource cleanup."
+    ],
+    "improvements": [
+      "Could discuss long-lived WebSockets and idempotent job retries."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you implement graceful shutdown for an HTTP service that also consumes queue messages?",
+    "quality_tier": "mediocre",
+    "answer": "I'd sleep for thirty seconds after receiving SIGTERM and then exit.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "A fixed sleep does not know whether work is complete.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you implement graceful shutdown for an HTTP service that also consumes queue messages?",
+    "quality_tier": "poor",
+    "answer": "I'd immediately kill the process so orchestration can restart it.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Immediate exit drops in-flight requests and jobs.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "How would you implement graceful shutdown for an HTTP service that also consumes queue messages?",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a maintenance banner to the website.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "A banner does not implement process shutdown.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you helped a teammate who was struggling without taking over their work.",
+    "quality_tier": "excellent",
+    "answer": "A teammate was blocked on a failing data migration. I paired with them to reproduce the issue, asked them to explain their assumptions, and helped narrow it to timezone conversion. We wrote a small test together, then they implemented the fix and presented it in review. They completed the migration and later reused the debugging approach independently.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows coaching, shared diagnosis, preserved ownership, and later independence."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you helped a teammate who was struggling without taking over their work.",
+    "quality_tier": "good",
+    "answer": "I scheduled a pairing session, helped isolate the issue, and left the teammate to implement and explain the final fix.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows coaching, shared diagnosis, preserved ownership, and later independence."
+    ],
+    "improvements": [
+      "Could quantify the deadline or impact."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you helped a teammate who was struggling without taking over their work.",
+    "quality_tier": "mediocre",
+    "answer": "I sent them the relevant documentation and checked back later.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Helpful, but the support method and result are thin.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you helped a teammate who was struggling without taking over their work.",
+    "quality_tier": "poor",
+    "answer": "I rewrote the feature myself because the deadline was close.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Taking over prevents learning and hides capacity issues.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Tell me about a time you helped a teammate who was struggling without taking over their work.",
+    "quality_tier": "off_topic",
+    "answer": "I told the manager the teammate needed more training.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Escalation alone does not show supportive action.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

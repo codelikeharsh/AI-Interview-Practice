@@ -1,0 +1,866 @@
+[
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a reference to one node in a connected graph, create a deep copy of the entire graph, including cycles.",
+    "quality_tier": "excellent",
+    "answer": "I'd use DFS or BFS with a map from original node to cloned node. Create the clone the first time a node is seen, then recursively or iteratively clone neighbors and connect them. The map prevents infinite loops and preserves shared references. Complexity is O(V+E).",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Uses identity mapping to preserve cycles and shared edges."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a reference to one node in a connected graph, create a deep copy of the entire graph, including cycles.",
+    "quality_tier": "good",
+    "answer": "I'd traverse the graph and keep a hash map from each original node to its copy so cycles are not repeated.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Uses identity mapping to preserve cycles and shared edges."
+    ],
+    "improvements": [
+      "Could mention handling a null input."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a reference to one node in a connected graph, create a deep copy of the entire graph, including cycles.",
+    "quality_tier": "mediocre",
+    "answer": "I'd recursively clone each neighbor without storing visited nodes.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Without a visited map recursion loops forever on cycles.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a reference to one node in a connected graph, create a deep copy of the entire graph, including cycles.",
+    "quality_tier": "poor",
+    "answer": "I'd copy only the starting node and its direct neighbors.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Stops before cloning the full reachable graph.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "medium",
+    "level": "fresher",
+    "question": "Given a reference to one node in a connected graph, create a deep copy of the entire graph, including cycles.",
+    "quality_tier": "off_topic",
+    "answer": "I'd serialize node values into a sorted list.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Sorted values lose connectivity.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Find the median of two individually sorted arrays in logarithmic time without merging them.",
+    "quality_tier": "excellent",
+    "answer": "I'd binary-search the partition position in the smaller array. Choose partitions so the total left side has half the elements and verify maxLeftA <= minRightB and maxLeftB <= minRightA. Move the search based on which inequality fails. The median comes from boundary values, with O(log min(m,n)) time.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Provides the required partition invariant and logarithmic complexity."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Find the median of two individually sorted arrays in logarithmic time without merging them.",
+    "quality_tier": "good",
+    "answer": "I'd binary-search a partition in the smaller array and adjust until every left-side value is no greater than every right-side value.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Provides the required partition invariant and logarithmic complexity."
+    ],
+    "improvements": [
+      "Could discuss sentinel values for empty partition sides."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Find the median of two individually sorted arrays in logarithmic time without merging them.",
+    "quality_tier": "mediocre",
+    "answer": "I'd merge the two arrays and take the middle value.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Merging is correct but O(m+n), not logarithmic.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Find the median of two individually sorted arrays in logarithmic time without merging them.",
+    "quality_tier": "poor",
+    "answer": "I'd average the medians of the two arrays.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "The median of medians is not generally the combined median.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "DSA",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Find the median of two individually sorted arrays in logarithmic time without merging them.",
+    "quality_tier": "off_topic",
+    "answer": "I'd sort both arrays again.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Re-sorting wastes the existing sorted order.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core classes and states for an ATM supporting cards, PIN verification, balance inquiry, withdrawal, deposits, cash inventory, and hardware failures.",
+    "quality_tier": "excellent",
+    "answer": "I'd model ATM as a state machine: Idle, CardInserted, Authenticated, TransactionSelected, Dispensing, and OutOfService. AccountService handles banking operations, CashDispenser manages denomination inventory, CardReader and Printer abstract hardware, and Transaction objects represent inquiry, withdrawal, or deposit. Withdrawal reserves both account funds and cash before final commit.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Separates state, banking, hardware, cash inventory, and transactions."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core classes and states for an ATM supporting cards, PIN verification, balance inquiry, withdrawal, deposits, cash inventory, and hardware failures.",
+    "quality_tier": "good",
+    "answer": "I'd use ATM states and separate services for account access, cash dispensing, and hardware. Each transaction type implements a common interface.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Separates state, banking, hardware, cash inventory, and transactions."
+    ],
+    "improvements": [
+      "Could explain failure recovery between account debit and cash dispense."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core classes and states for an ATM supporting cards, PIN verification, balance inquiry, withdrawal, deposits, cash inventory, and hardware failures.",
+    "quality_tier": "mediocre",
+    "answer": "I'd put PIN checks, balance changes, cash counts, and receipt printing in one ATM class.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "One class mixes independent responsibilities and hardware concerns.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core classes and states for an ATM supporting cards, PIN verification, balance inquiry, withdrawal, deposits, cash inventory, and hardware failures.",
+    "quality_tier": "poor",
+    "answer": "I'd subtract the account balance before checking whether the machine has enough notes.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Can debit customers without delivering cash.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "OOP",
+    "difficulty": "hard",
+    "level": "intermediate",
+    "question": "Design the core classes and states for an ATM supporting cards, PIN verification, balance inquiry, withdrawal, deposits, cash inventory, and hardware failures.",
+    "quality_tier": "off_topic",
+    "answer": "I'd design the ATM touchscreen.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Screen design is unrelated to the object model.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a high-volume metrics ingestion and alerting platform for application counters, gauges, and latency histograms.",
+    "quality_tier": "excellent",
+    "answer": "I'd accept batched metrics through regional ingestion endpoints, validate and normalize tags, and publish to a partitioned log. Stream processors aggregate into time buckets and write a time-series store, while raw data has shorter retention. Alert evaluators read recent aggregates with durable rule state and deduplicate notifications. Cardinality limits protect the system from unbounded labels.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses buffering, aggregation, retention, alert state, deduplication, and cardinality."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a high-volume metrics ingestion and alerting platform for application counters, gauges, and latency histograms.",
+    "quality_tier": "good",
+    "answer": "I'd use regional collectors, a durable queue, stream aggregation, a time-series database, and separate alert evaluators.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses buffering, aggregation, retention, alert state, deduplication, and cardinality."
+    ],
+    "improvements": [
+      "Could discuss histogram representation and late events."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a high-volume metrics ingestion and alerting platform for application counters, gauges, and latency histograms.",
+    "quality_tier": "mediocre",
+    "answer": "I'd write every metric directly into one relational table and run alert SQL every minute.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Direct row writes and polling queries will struggle at high volume.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a high-volume metrics ingestion and alerting platform for application counters, gauges, and latency histograms.",
+    "quality_tier": "poor",
+    "answer": "I'd store only the latest value for each metric.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Latest-only storage loses trends and latency distributions.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "System Design",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Design a high-volume metrics ingestion and alerting platform for application counters, gauges, and latency histograms.",
+    "quality_tier": "off_topic",
+    "answer": "I'd display metrics in a dashboard.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Visualization is not the ingestion architecture.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an inventory ledger schema that can explain every stock change and efficiently return current stock by warehouse and SKU.",
+    "quality_tier": "excellent",
+    "answer": "I'd use an append-only inventory_movements table with movement ID, warehouse, SKU, signed quantity, reason, reference type and ID, and timestamp. A unique reference prevents duplicate application. Current stock can be computed from sums or maintained in an inventory_balances table updated in the same transaction. Reconciliation compares balances with the ledger.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Preserves an auditable ledger while supporting fast materialized balances."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an inventory ledger schema that can explain every stock change and efficiently return current stock by warehouse and SKU.",
+    "quality_tier": "good",
+    "answer": "I'd store every stock delta in a movement table and maintain a current balance row per warehouse and SKU transactionally.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Preserves an auditable ledger while supporting fast materialized balances."
+    ],
+    "improvements": [
+      "Could discuss reservations versus physically available stock."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an inventory ledger schema that can explain every stock change and efficiently return current stock by warehouse and SKU.",
+    "quality_tier": "mediocre",
+    "answer": "I'd keep only a quantity column in the products table.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Current-only quantity cannot explain history.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an inventory ledger schema that can explain every stock change and efficiently return current stock by warehouse and SKU.",
+    "quality_tier": "poor",
+    "answer": "I'd overwrite the previous movement whenever stock changes.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Overwriting destroys auditability.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Databases",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "Design an inventory ledger schema that can explain every stock change and efficiently return current stock by warehouse and SKU.",
+    "quality_tier": "off_topic",
+    "answer": "I'd show warehouse stock in a chart.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Charts do not define storage integrity.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A WebSocket client reconnects after network loss and sometimes displays duplicate or out-of-order chat messages. How would you fix it?",
+    "quality_tier": "excellent",
+    "answer": "I'd give every message a stable server ID and sequence or conversation offset. The client stores the last confirmed cursor, reconnects with it, merges replayed messages by ID, and sorts or applies only valid sequence progression. Locally pending messages use temporary IDs that are reconciled with server acknowledgements. Reconnection uses backoff and one active socket.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Addresses replay, deduplication, ordering, pending messages, and connection lifecycle."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A WebSocket client reconnects after network loss and sometimes displays duplicate or out-of-order chat messages. How would you fix it?",
+    "quality_tier": "good",
+    "answer": "I'd reconnect with the last received cursor, deduplicate by message ID, and reconcile pending messages after acknowledgements.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Addresses replay, deduplication, ordering, pending messages, and connection lifecycle."
+    ],
+    "improvements": [
+      "Could discuss missing-sequence detection and pagination."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A WebSocket client reconnects after network loss and sometimes displays duplicate or out-of-order chat messages. How would you fix it?",
+    "quality_tier": "mediocre",
+    "answer": "I'd clear the message list on every reconnect and download it again.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "Full reload may work but causes flicker and can still race with live events.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A WebSocket client reconnects after network loss and sometimes displays duplicate or out-of-order chat messages. How would you fix it?",
+    "quality_tier": "poor",
+    "answer": "I'd append every incoming event in arrival order.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Arrival order is not guaranteed across reconnects.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Frontend",
+    "difficulty": "medium",
+    "level": "intermediate",
+    "question": "A WebSocket client reconnects after network loss and sometimes displays duplicate or out-of-order chat messages. How would you fix it?",
+    "quality_tier": "off_topic",
+    "answer": "I'd add a Reconnecting animation.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Animation does not fix data correctness.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Several service instances run the same scheduled cleanup task. Design coordination so only one performs a given run while still recovering if that instance crashes.",
+    "quality_tier": "excellent",
+    "answer": "I'd create a lease with a run identity, owner, expiry, and fencing token in a strongly consistent store. An instance acquires it conditionally, renews while working, and releases only if it still owns the token. Downstream writes include the fencing token or are idempotent so a paused old owner cannot corrupt work after lease expiry.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Handles crashes, stale owners, safe release, and duplicate effects."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Several service instances run the same scheduled cleanup task. Design coordination so only one performs a given run while still recovering if that instance crashes.",
+    "quality_tier": "good",
+    "answer": "I'd use a distributed lease with TTL and renewal, plus a unique run ID so duplicate executions become no-ops.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Handles crashes, stale owners, safe release, and duplicate effects."
+    ],
+    "improvements": [
+      "Could compare database advisory locks with external leases."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Several service instances run the same scheduled cleanup task. Design coordination so only one performs a given run while still recovering if that instance crashes.",
+    "quality_tier": "mediocre",
+    "answer": "I'd use Redis SETNX with a long expiry and delete the key afterward.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "A simple lock lacks fencing and safe ownership checks.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Several service instances run the same scheduled cleanup task. Design coordination so only one performs a given run while still recovering if that instance crashes.",
+    "quality_tier": "poor",
+    "answer": "I'd pick one server by hostname and always run cleanup there.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Static ownership fails when that server is unavailable.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Backend",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Several service instances run the same scheduled cleanup task. Design coordination so only one performs a given run while still recovering if that instance crashes.",
+    "quality_tier": "off_topic",
+    "answer": "I'd run the task at a quieter time.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Scheduling time does not coordinate instances.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a project that failed or missed its objective. What was your responsibility, and what did you change afterward?",
+    "quality_tier": "excellent",
+    "answer": "I led an internal search rewrite that missed its adoption target because we optimized relevance before validating the support team's workflow. I owned the discovery gap. We stopped further rollout, interviewed users, and found response-time and filtering mattered more than ranking. We simplified the system, improved those flows, and later reached adoption. I added user-validation checkpoints before major architecture commitments.",
+    "scores": {
+      "relevance": 10,
+      "clarity": 9,
+      "depth": 9,
+      "confidence": 9
+    },
+    "strengths": [
+      "Shows ownership, diagnosis beyond symptoms, recovery, and durable learning."
+    ],
+    "improvements": [
+      "Could add one more concrete edge case or implementation detail."
+    ],
+    "feedback": "Strong answer: correct, specific, and appropriately deep for the stated level."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a project that failed or missed its objective. What was your responsibility, and what did you change afterward?",
+    "quality_tier": "good",
+    "answer": "I describe the failed target, my part in the assumptions, the corrective research, and the process change that followed.",
+    "scores": {
+      "relevance": 9,
+      "clarity": 8,
+      "depth": 7,
+      "confidence": 8
+    },
+    "strengths": [
+      "Shows ownership, diagnosis beyond symptoms, recovery, and durable learning."
+    ],
+    "improvements": [
+      "Could include concrete adoption numbers."
+    ],
+    "feedback": "Correct core answer, but it omits some detail expected at this difficulty."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a project that failed or missed its objective. What was your responsibility, and what did you change afterward?",
+    "quality_tier": "mediocre",
+    "answer": "The project did not meet expectations, so we fixed several bugs and tried again.",
+    "scores": {
+      "relevance": 7,
+      "clarity": 7,
+      "depth": 5,
+      "confidence": 6
+    },
+    "strengths": [
+      "Shows partial understanding of the problem and proposes a relevant baseline."
+    ],
+    "improvements": [
+      "The cause, personal responsibility, and learning remain vague.",
+      "Should move toward the expected interview-grade approach."
+    ],
+    "feedback": "Partly relevant, but inefficient, incomplete, or insufficiently justified."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a project that failed or missed its objective. What was your responsibility, and what did you change afterward?",
+    "quality_tier": "poor",
+    "answer": "The project failed because product changed requirements too often.",
+    "scores": {
+      "relevance": 4,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "Attempts to address one surface aspect of the question."
+    ],
+    "improvements": [
+      "Blaming another function avoids accountability.",
+      "Does not satisfy the central correctness or design requirement."
+    ],
+    "feedback": "Weak answer with a major technical misconception or missing invariant."
+  },
+  {
+    "category": "Behavioral",
+    "difficulty": "hard",
+    "level": "experienced",
+    "question": "Tell me about a project that failed or missed its objective. What was your responsibility, and what did you change afterward?",
+    "quality_tier": "off_topic",
+    "answer": "I have not had a project fail.",
+    "scores": {
+      "relevance": 1,
+      "clarity": 6,
+      "depth": 2,
+      "confidence": 4
+    },
+    "strengths": [
+      "The response is understandable in isolation."
+    ],
+    "improvements": [
+      "Claiming no failures provides no evidence of learning.",
+      "It does not answer the question asked."
+    ],
+    "feedback": "Off-topic response that does not demonstrate the required skill."
+  }
+]

@@ -8,9 +8,27 @@ __pycache__/
 # Node
 node_modules/
 
+# Frontend build output
+frontend/dist/
+
 # Generated at runtime
 backend/generated_audio/*.mp3
 backend/generated_audio/*.wav
+
+# Claude Code project config - not meant for the public repo
+.claude/
+
+# ml-eval: trained model weights and adapter checkpoints (hundreds of MB -
+# GitHub rejects files over 100MB anyway). Fully reproducible from the
+# committed dataset via ml-eval/README.md - never meant to be committed.
+ml-eval/models/
+
+# ml-eval: superseded by ml-eval/data/raw/ (same batches, correct filenames)
+ml-eval/dataset/
+
+# Raw logo source exports - the actual assets used by the app are already
+# committed under frontend/src/assets/brand/ and frontend/public/
+logos/
 
 # OS
 .DS_Store
