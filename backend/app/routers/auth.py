@@ -1,4 +1,5 @@
 import logging
+import os
 
 from fastapi import APIRouter, Depends, HTTPException, Response
 from pydantic import BaseModel
@@ -19,10 +20,16 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
+# Frontend and backend live on different domains in production (e.g. Vercel +
+# Render), which browsers treat as cross-site - the cookie needs
+# SameSite=None + Secure there, or it's silently dropped. Locally both run on
+# "localhost" so Lax + non-secure works over plain HTTP.
+IS_PRODUCTION = os.getenv("ENV", "development") == "production"
+
 COOKIE_KWARGS = dict(
     httponly=True,
-    samesite="lax",
-    secure=False,  # flip to True once served over HTTPS in production
+    samesite="none" if IS_PRODUCTION else "lax",
+    secure=IS_PRODUCTION,
     max_age=SESSION_MAX_AGE_DAYS * 24 * 60 * 60,
     path="/",
 )
