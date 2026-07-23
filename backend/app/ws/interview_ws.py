@@ -13,6 +13,7 @@ from app.services.llm_service import generate_question
 from app.services.llm_evaluator import evaluate_answer
 from app.services.tts_service import generate_tts
 from app.services.rate_limiter import new_interview_limiter, demo_limiter
+from app.services.question_bank import get_question_by_id
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +29,43 @@ PHASE_BY_COUNT = {
 
 def _phase_for(question_count: int) -> tuple[str, str | None]:
     return PHASE_BY_COUNT.get(question_count, ("technical", None))
+
+
+def _format_resume_context(profile: dict | None) -> str:
+    """
+    Turns a parsed resume profile (see resume_service.analyze_resume) into
+    one readable block to ground question generation in the candidate's
+    real background. Empty string (no-op for the prompt) if no profile.
+    """
+    if not profile:
+        return ""
+
+    lines = []
+    if profile.get("name"):
+        lines.append(f"Name: {profile['name']}")
+    if profile.get("role_title"):
+        lines.append(f"Target role: {profile['role_title']}")
+
+    skills = profile.get("skills") or []
+    if skills:
+        lines.append(f"Skills: {', '.join(skills)}")
+
+    experience = profile.get("experience") or []
+    if experience:
+        lines.append("Experience:")
+        for e in experience:
+            lines.append(
+                f"- {e.get('title', '')} at {e.get('company', '')} "
+                f"({e.get('duration', '')}): {e.get('highlights', '')}"
+            )
+
+    education = profile.get("education") or []
+    if education:
+        lines.append("Education:")
+        for ed in education:
+            lines.append(f"- {ed.get('degree', '')}, {ed.get('institution', '')}")
+
+    return "\n".join(lines)
 
 
 HEARTBEAT_INTERVAL_S = 20
@@ -76,6 +114,9 @@ async def interview_ws(websocket: WebSocket):
     current_question = None
     current_audio_url = None
     history = ""
+    resume_context = ""
+    is_practice_session = False
+    pending_eval_task: asyncio.Task | None = None
 
     async def send_question(index: int):
         await websocket.send_json({
@@ -105,11 +146,34 @@ async def interview_ws(websocket: WebSocket):
             difficulty=difficulty,
             history=history,
             question_kind=kind,
+            level=session.level,
+            resume_context=resume_context,
         )
 
         current_question = q
         current_audio_url = await generate_tts(q)
         history += f"\nQ: {q}"
+
+    async def evaluate_and_store(sid, question, answer, role, difficulty, level):
+        """
+        Runs off the critical path (fired via asyncio.create_task, not
+        awaited before the next question is generated) - scoring someone's
+        just-given answer doesn't need to block asking the next question.
+        Adaptive difficulty ends up one question behind as a result, which
+        is a fair trade for the interview no longer stalling on an extra
+        LLM round trip after every single answer. Uses its own DB session
+        since it outlives the request scope that triggered it.
+        """
+        evaluation = await asyncio.to_thread(
+            evaluate_answer, question, answer, role=role, difficulty=difficulty, level=level
+        )
+        async with AsyncSessionLocal() as eval_db:
+            eval_session = await session_store.get_session(eval_db, sid)
+            if not eval_session:
+                return
+            await session_store.add_evaluation(eval_db, sid, question, answer, evaluation)
+            new_difficulty = await session_store.update_difficulty(eval_db, eval_session, evaluation)
+            logger.info("Saved evaluation (background), session=%s difficulty -> %s", sid, new_difficulty)
 
     try:
         while True:
@@ -137,13 +201,28 @@ async def interview_ws(websocket: WebSocket):
                     config["role"], config["level"], config["duration"], len(config["topics"]),
                 )
 
+                resume_context = _format_resume_context(payload.get("resumeProfile"))
+                practice_question = get_question_by_id(payload.get("practice_question_id") or "")
+
                 async with AsyncSessionLocal() as db:
                     session = await session_store.create_session(db, user_id, config)
                     session_id = session.id
                     history = ""
 
-                    await ask_next_question(db, session, config["role"])
-                    logger.info("Sending first question for session=%s", session_id)
+                    if practice_question:
+                        is_practice_session = True
+                        current_question = practice_question["text"]
+                        current_audio_url = await generate_tts(current_question)
+                        session.question_count = 1
+                        await db.commit()
+                        logger.info(
+                            "Sending practice question=%s for session=%s",
+                            practice_question["id"], session_id,
+                        )
+                    else:
+                        await ask_next_question(db, session, config["role"])
+                        logger.info("Sending first question for session=%s", session_id)
+
                     await send_question(session.question_count)
 
             # ================= TRANSCRIPT =================
@@ -184,14 +263,35 @@ async def interview_ws(websocket: WebSocket):
                         })
                         continue
 
-                    # ---------------- EVALUATE CURRENT ANSWER ----------------
+                    # ---------------- PRACTICE MODE: ONE QUESTION, THEN DONE ----------------
+                    if is_practice_session:
+                        if current_question:
+                            evaluation = await asyncio.to_thread(
+                                evaluate_answer, current_question, raw_text,
+                                role=session.role, difficulty=session_store.get_difficulty(session),
+                                level=session.level,
+                            )
+                            await session_store.add_evaluation(
+                                db, session_id, current_question, raw_text, evaluation
+                            )
+                        await session_store.mark_ended(db, session)
+                        await websocket.send_json({
+                            "event": "end",
+                            "reason": "Practice question completed",
+                        })
+                        return
+
+                    # ---------------- EVALUATE IN THE BACKGROUND (don't block on it) ----------------
+                    if pending_eval_task and not pending_eval_task.done():
+                        await pending_eval_task
                     if current_question:
-                        evaluation = await asyncio.to_thread(evaluate_answer, current_question, raw_text)
-                        await session_store.add_evaluation(
-                            db, session_id, current_question, raw_text, evaluation
+                        pending_eval_task = asyncio.create_task(
+                            evaluate_and_store(
+                                session_id, current_question, raw_text,
+                                session.role, session_store.get_difficulty(session), session.level,
+                            )
                         )
-                        new_difficulty = await session_store.update_difficulty(db, session, evaluation)
-                        logger.info("Saved evaluation, difficulty -> %s", new_difficulty)
+                        history += f"\nA: {raw_text}"
 
                     # ---------------- NEXT QUESTION (lazy, adaptive) ----------------
                     await ask_next_question(db, session, session.role)
@@ -241,6 +341,11 @@ async def interview_ws(websocket: WebSocket):
         logger.exception("WS handler error: %s", e)
     finally:
         heartbeat_task.cancel()
+        if pending_eval_task:
+            try:
+                await pending_eval_task
+            except Exception:
+                logger.exception("Background evaluation failed during shutdown")
 
 
 # ================================================================
@@ -276,6 +381,18 @@ def _compute_demo_summary(evaluations: list[dict]) -> dict:
         avg_relevance = avg_clarity = avg_depth = avg_confidence = overall = 0
         recommendation = "Not enough data"
 
+    details = [
+        {
+            "question": e.get("question"),
+            "scores": e.get("scores"),
+            "strengths": e.get("strengths") or [],
+            "improvements": e.get("improvements") or [],
+            "feedback": e.get("feedback"),
+            "difficulty": e.get("difficulty"),
+        }
+        for e in scored
+    ]
+
     return {
         "overall_score": overall,
         "avg_relevance": avg_relevance,
@@ -285,6 +402,7 @@ def _compute_demo_summary(evaluations: list[dict]) -> dict:
         "recommendation": recommendation,
         "total_questions": len(evaluations),
         "unscored_answers": unscored,
+        "details": details,
     }
 
 
@@ -302,14 +420,26 @@ async def _run_demo_session(websocket: WebSocket):
 
     current_question = None
     current_audio_url = None
+    current_difficulty = "easy"
     history = ""
-    evaluations: list[dict] = []
+    eval_tasks: list[asyncio.Task] = []
     role = "Software Engineer"
     topics = ["General"]
+    level = "fresher"
     idx = 0  # number of questions asked so far
 
+    async def evaluate_demo_answer(question, answer, difficulty):
+        # Same off-the-critical-path treatment as the authenticated flow -
+        # demo has no adaptive difficulty to preserve ordering for, so this
+        # is purely a latency win. Tags the question onto the result since
+        # nothing else here persists it for later labeling.
+        evaluation = await asyncio.to_thread(
+            evaluate_answer, question, answer, role=role, difficulty=difficulty, level=level
+        )
+        return {**evaluation, "question": question, "difficulty": difficulty}
+
     async def ask_next():
-        nonlocal current_question, current_audio_url, history, idx
+        nonlocal current_question, current_audio_url, current_difficulty, history, idx
         kind, difficulty = DEMO_PLAN[idx]
         topic = topics[idx % len(topics)] if kind == "technical" else kind
 
@@ -320,10 +450,12 @@ async def _run_demo_session(websocket: WebSocket):
             difficulty=difficulty,
             history=history,
             question_kind=kind,
+            level=level,
         )
 
         current_question = q
         current_audio_url = await generate_tts(q)
+        current_difficulty = difficulty
         history += f"\nQ: {q}"
         idx += 1
 
@@ -341,6 +473,7 @@ async def _run_demo_session(websocket: WebSocket):
         payload = json.loads(raw)
         role = payload.get("role", role)
         topics = payload.get("topics") or topics
+        level = payload.get("level", level)
 
         await ask_next()
         await send_question()
@@ -364,10 +497,13 @@ async def _run_demo_session(websocket: WebSocket):
                     })
                     continue
 
-                evaluation = await asyncio.to_thread(evaluate_answer, current_question, raw_text)
-                evaluations.append(evaluation)
+                eval_tasks.append(asyncio.create_task(
+                    evaluate_demo_answer(current_question, raw_text, current_difficulty)
+                ))
+                history += f"\nA: {raw_text}"
 
                 if idx >= len(DEMO_PLAN):
+                    evaluations = [await t for t in eval_tasks]
                     await websocket.send_json({
                         "event": "end",
                         "reason": "Demo completed",
@@ -389,6 +525,7 @@ async def _run_demo_session(websocket: WebSocket):
 
             elif event == "skip":
                 if idx >= len(DEMO_PLAN):
+                    evaluations = [await t for t in eval_tasks]
                     await websocket.send_json({
                         "event": "end",
                         "reason": "Demo completed",
@@ -404,3 +541,6 @@ async def _run_demo_session(websocket: WebSocket):
         logger.exception("Demo WS handler error: %s", e)
     finally:
         heartbeat_task.cancel()
+        for t in eval_tasks:
+            if not t.done():
+                t.cancel()

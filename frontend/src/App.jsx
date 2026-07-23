@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import InterviewPage from "./pages/InterviewPage";
 import DemoResult from "./pages/DemoResult";
+import ResumeInterview from "./pages/ResumeInterview";
+import QuestionBank from "./pages/QuestionBank";
 import Result from "./pages/Result";
 import History from "./pages/History";
 import Terms from "./pages/Terms";
@@ -47,6 +49,15 @@ function AppRoutes() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/interview" element={<InterviewPage />} />
           <Route path="/demo-result" element={<DemoResult />} />
+          <Route path="/questions" element={<QuestionBank />} />
+          <Route
+            path="/interview/resume"
+            element={
+              <RequireAuth>
+                <ResumeInterview />
+              </RequireAuth>
+            }
+          />
           <Route
             path="/result"
             element={

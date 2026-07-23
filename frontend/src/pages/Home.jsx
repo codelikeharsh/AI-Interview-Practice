@@ -169,6 +169,9 @@ export default function Home() {
             <Button size="lg" variant="secondary" onClick={startDemo}>
               Try Demo
             </Button>
+            <Button size="lg" variant="secondary" as={Link} to="/interview/resume">
+              Resume-Based Interview
+            </Button>
           </motion.div>
 
           <motion.p variants={fadeUp} className="mt-6 text-xs text-text-tertiary">

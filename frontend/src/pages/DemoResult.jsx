@@ -47,6 +47,7 @@ export default function DemoResult() {
     avg_confidence = 0,
     recommendation = "N/A",
     total_questions = 0,
+    details = [],
   } = summary;
 
   return (
@@ -114,6 +115,16 @@ export default function DemoResult() {
             </Button>
           </Card>
 
+          {/* PER-QUESTION FEEDBACK */}
+          {details.length > 0 && (
+            <motion.div variants={fadeUp} className="space-y-4">
+              <h2 className="text-xl font-semibold">Question-by-Question Feedback</h2>
+              {details.map((d, i) => (
+                <QuestionFeedback key={i} index={i} entry={d} />
+              ))}
+            </motion.div>
+          )}
+
           {/* ACTIONS */}
           <motion.div variants={fadeUp} className="flex items-center justify-between">
             <Button as={Link} to="/interview?demo=true" variant="secondary">
@@ -130,6 +141,61 @@ export default function DemoResult() {
 }
 
 /* ---------------- COMPONENTS ---------------- */
+
+function QuestionFeedback({ index, entry }) {
+  const { question, scores, strengths = [], improvements = [], feedback, difficulty } = entry;
+  const chips = [
+    ["Relevance", scores?.relevance],
+    ["Clarity", scores?.clarity],
+    ["Depth", scores?.depth],
+    ["Confidence", scores?.confidence],
+  ];
+
+  return (
+    <Card className="p-6">
+      <div className="mb-3 flex items-start justify-between gap-4">
+        <p className="font-medium text-text-primary">
+          <span className="text-text-tertiary">Q{index + 1}. </span>
+          {question}
+        </p>
+        {difficulty && (
+          <span className="shrink-0 rounded-lg border border-border px-2.5 py-1 text-xs capitalize text-text-secondary">
+            {difficulty}
+          </span>
+        )}
+      </div>
+
+      <div className="mb-3 flex flex-wrap gap-2">
+        {chips.map(([label, value]) => (
+          <span key={label} className="rounded-md bg-surface-hover px-2.5 py-1 text-xs text-text-secondary">
+            {label} <span className="text-text-primary">{value ?? "-"}</span>
+          </span>
+        ))}
+      </div>
+
+      {feedback && <p className="mb-3 text-sm text-text-secondary">{feedback}</p>}
+
+      {(strengths.length > 0 || improvements.length > 0) && (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {strengths.length > 0 && (
+            <ul className="space-y-1 text-sm text-emerald-400">
+              {strengths.map((s, i) => (
+                <li key={i}>• {s}</li>
+              ))}
+            </ul>
+          )}
+          {improvements.length > 0 && (
+            <ul className="space-y-1 text-sm text-yellow-400">
+              {improvements.map((s, i) => (
+                <li key={i}>• {s}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </Card>
+  );
+}
 
 function Metric({ label, value }) {
   return (

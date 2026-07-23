@@ -103,6 +103,8 @@ async def add_evaluation(
         answer=answer,
         scores=evaluation.get("scores"),
         feedback=evaluation.get("feedback"),
+        strengths=evaluation.get("strengths") or [],
+        improvements=evaluation.get("improvements") or [],
         errored=bool(evaluation.get("errored")),
     )
     db.add(row)
@@ -123,7 +125,9 @@ async def compute_summary(db: AsyncSession, session: InterviewSession) -> dict:
     real low score - the count is reported separately.
     """
     result = await db.execute(
-        select(QuestionEvaluation).where(QuestionEvaluation.session_id == session.id)
+        select(QuestionEvaluation)
+        .where(QuestionEvaluation.session_id == session.id)
+        .order_by(QuestionEvaluation.created_at)
     )
     evaluations = result.scalars().all()
 
@@ -157,6 +161,18 @@ async def compute_summary(db: AsyncSession, session: InterviewSession) -> dict:
     session.unscored_answers = unscored
     await db.commit()
 
+    timeline = [
+        {
+            "question": e.question,
+            "scores": e.scores,
+            "strengths": e.strengths or [],
+            "improvements": e.improvements or [],
+            "feedback": e.feedback,
+            "difficulty": e.difficulty,
+        }
+        for e in scored
+    ]
+
     return {
         "overall_score": overall,
         "avg_relevance": avg_relevance,
@@ -166,6 +182,7 @@ async def compute_summary(db: AsyncSession, session: InterviewSession) -> dict:
         "recommendation": recommendation,
         "total_questions": len(evaluations),
         "unscored_answers": unscored,
+        "timeline": timeline,
     }
 
 

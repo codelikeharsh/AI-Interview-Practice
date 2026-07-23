@@ -4,6 +4,8 @@ python-multipart
 groq
 python-dotenv
 edge-tts
+pypdf
+python-docx
 sqlalchemy[asyncio]>=2.0
 asyncpg
 alembic

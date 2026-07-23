@@ -16,6 +16,10 @@ export default function AppHeader({ extraLinks }) {
         <div className="flex items-center gap-6 text-sm text-text-secondary">
           {extraLinks}
 
+          <Link to="/questions" className="hover:text-text-primary transition">
+            Question Bank
+          </Link>
+
           {user ? (
             <div className="flex items-center gap-4">
               <Link to="/history" className="hover:text-text-primary transition">

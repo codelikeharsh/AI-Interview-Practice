@@ -39,3 +39,6 @@ transcribe_limiter = RateLimiter(max_events=30, window_seconds=60)
 
 # Unauthenticated demo interviews, keyed by IP (no user_id to key on).
 demo_limiter = RateLimiter(max_events=5, window_seconds=60 * 60)
+
+# Resume analysis per user: bounds Groq cost: resumes don't change often.
+resume_limiter = RateLimiter(max_events=8, window_seconds=60 * 60)

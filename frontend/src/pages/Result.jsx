@@ -85,20 +85,25 @@ export default function Result() {
     unscored_answers = 0,
   } = summary || {};
 
-  const strengths = [];
-  const improvements = [];
+  // Prefer the model's actual per-question feedback points when available;
+  // fall back to the coarse score-threshold heuristic for older sessions
+  // that predate per-question feedback, or ones where nothing could be scored.
+  let strengths = timeline.flatMap((t) => t.strengths || []);
+  let improvements = timeline.flatMap((t) => t.improvements || []);
 
-  if (avg_relevance >= 7) strengths.push("Conceptual relevance");
-  else improvements.push("Answer relevance");
+  if (strengths.length === 0 && improvements.length === 0) {
+    if (avg_relevance >= 7) strengths.push("Conceptual relevance");
+    else improvements.push("Answer relevance");
 
-  if (avg_clarity >= 7) strengths.push("Communication clarity");
-  else improvements.push("Clear explanation");
+    if (avg_clarity >= 7) strengths.push("Communication clarity");
+    else improvements.push("Clear explanation");
 
-  if (avg_depth >= 7) strengths.push("Technical depth");
-  else improvements.push("Answer depth");
+    if (avg_depth >= 7) strengths.push("Technical depth");
+    else improvements.push("Answer depth");
 
-  if (avg_confidence >= 7) strengths.push("Confidence");
-  else improvements.push("Speaking confidence");
+    if (avg_confidence >= 7) strengths.push("Confidence");
+    else improvements.push("Speaking confidence");
+  }
 
   return (
     <div className="min-h-screen text-text-primary">
@@ -192,6 +197,16 @@ export default function Result() {
             </Card>
           </motion.div>
 
+          {/* PER-QUESTION FEEDBACK */}
+          {timeline.length > 0 && (
+            <motion.div variants={fadeUp} className="space-y-4">
+              <h2 className="text-xl font-semibold">Question-by-Question Feedback</h2>
+              {timeline.map((t, i) => (
+                <QuestionFeedback key={i} index={i} entry={t} />
+              ))}
+            </motion.div>
+          )}
+
           {/* ACTIONS */}
           <motion.div variants={fadeUp} className="flex items-center justify-between">
             <div className="flex gap-3">
@@ -231,6 +246,61 @@ function Metric({ label, value }) {
         />
       </div>
     </div>
+  );
+}
+
+function QuestionFeedback({ index, entry }) {
+  const { question, scores, strengths = [], improvements = [], feedback, difficulty } = entry;
+  const chips = [
+    ["Relevance", scores?.relevance],
+    ["Clarity", scores?.clarity],
+    ["Depth", scores?.depth],
+    ["Confidence", scores?.confidence],
+  ];
+
+  return (
+    <Card className="p-6">
+      <div className="mb-3 flex items-start justify-between gap-4">
+        <p className="font-medium text-text-primary">
+          <span className="text-text-tertiary">Q{index + 1}. </span>
+          {question}
+        </p>
+        {difficulty && (
+          <span className="shrink-0 rounded-lg border border-border px-2.5 py-1 text-xs capitalize text-text-secondary">
+            {difficulty}
+          </span>
+        )}
+      </div>
+
+      <div className="mb-3 flex flex-wrap gap-2">
+        {chips.map(([label, value]) => (
+          <span key={label} className="rounded-md bg-surface-hover px-2.5 py-1 text-xs text-text-secondary">
+            {label} <span className="text-text-primary">{value ?? "-"}</span>
+          </span>
+        ))}
+      </div>
+
+      {feedback && <p className="mb-3 text-sm text-text-secondary">{feedback}</p>}
+
+      {(strengths.length > 0 || improvements.length > 0) && (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {strengths.length > 0 && (
+            <ul className="space-y-1 text-sm text-emerald-400">
+              {strengths.map((s, i) => (
+                <li key={i}>• {s}</li>
+              ))}
+            </ul>
+          )}
+          {improvements.length > 0 && (
+            <ul className="space-y-1 text-sm text-yellow-400">
+              {improvements.map((s, i) => (
+                <li key={i}>• {s}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </Card>
   );
 }
 

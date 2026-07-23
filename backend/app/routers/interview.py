@@ -66,7 +66,9 @@ async def get_interview_summary(
     if session.user_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not your session")
 
-    return await session_store.compute_summary(db, session)
+    result = await session_store.compute_summary(db, session)
+    timeline = result.pop("timeline")
+    return {"summary": result, "timeline": timeline}
 
 
 # ======================================================

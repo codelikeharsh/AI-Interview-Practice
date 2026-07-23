@@ -9,6 +9,7 @@ export default function InterviewPage() {
   const [searchParams] = useSearchParams();
   const { user, loading } = useAuth();
   const isDemo = searchParams.get("demo") === "true";
+  const practiceId = searchParams.get("practice");
   const demoConfig = isDemo
     ? {
         role: "Software Engineer (Demo)",
@@ -18,7 +19,19 @@ export default function InterviewPage() {
         demo: true,
       }
     : null;
-  const [config, setConfig] = useState(demoConfig);
+  // Practicing a bank question is just a real, signed-in single-question
+  // interview - NOT included in the isDemo auth-bypass below, so an
+  // unauthenticated visit falls through to the normal login redirect.
+  const practiceConfig = practiceId
+    ? {
+        role: "Question Bank Practice",
+        topics: [],
+        level: "intermediate",
+        duration: 5,
+        practice_question_id: practiceId,
+      }
+    : null;
+  const [config, setConfig] = useState(demoConfig || practiceConfig);
 
   if (!isDemo) {
     if (loading) {

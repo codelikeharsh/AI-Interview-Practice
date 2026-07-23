@@ -73,6 +73,8 @@ class QuestionEvaluation(Base):
     answer: Mapped[str] = mapped_column(Text, nullable=False)
     scores: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     feedback: Mapped[str | None] = mapped_column(Text, nullable=True)
+    strengths: Mapped[list] = mapped_column(JSONB, default=list)
+    improvements: Mapped[list] = mapped_column(JSONB, default=list)
     difficulty: Mapped[str] = mapped_column(String, default="easy")
     errored: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)

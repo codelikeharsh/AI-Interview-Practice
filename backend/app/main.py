@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.logging_config import setup_logging
-from app.routers import auth, interview
+from app.routers import auth, interview, questions, resume
 from app.ws.interview_ws import interview_ws
 
 load_dotenv()
@@ -48,6 +48,8 @@ async def interview_socket(ws: WebSocket):
 # ===============================
 app.include_router(auth.router)
 app.include_router(interview.router)
+app.include_router(resume.router)
+app.include_router(questions.router)
 
 # ===============================
 # HEALTH CHECK
