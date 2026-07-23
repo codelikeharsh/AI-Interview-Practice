@@ -3,7 +3,6 @@ uvicorn
 python-multipart
 groq
 python-dotenv
-openai-whisper
 edge-tts
 sqlalchemy[asyncio]>=2.0
 asyncpg

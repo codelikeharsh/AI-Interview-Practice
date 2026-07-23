@@ -1,24 +1,39 @@
-import whisper
-import tempfile
+import logging
 import os
 
-model = whisper.load_model("base")
+from groq import Groq
+from dotenv import load_dotenv
+
+load_dotenv()
+
+logger = logging.getLogger(__name__)
+
+API_KEY = os.getenv("GROQ_API_KEY")
+MODEL_NAME = "whisper-large-v3-turbo"
+client = Groq(api_key=API_KEY) if API_KEY else None
+
 
 def transcribe_audio(audio_bytes: bytes):
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp:
-        temp.write(audio_bytes)
-        temp_path = temp.name
+    if not client:
+        logger.warning("GROQ_API_KEY not configured; cannot transcribe audio")
+        return {"text": "", "duration": 0.0}
 
     try:
-        result = model.transcribe(temp_path)
-        duration = result.get("segments", [])
-        total_duration = 0.0
-        if duration:
-            total_duration = duration[-1]["end"]
+        response = client.audio.transcriptions.create(
+            file=("audio.wav", audio_bytes),
+            model=MODEL_NAME,
+            response_format="verbose_json",
+        )
+
+        duration = getattr(response, "duration", None)
+        if duration is None:
+            segments = getattr(response, "segments", None) or []
+            duration = segments[-1]["end"] if segments else 0.0
 
         return {
-            "text": result["text"],
-            "duration": total_duration
+            "text": response.text or "",
+            "duration": float(duration or 0.0),
         }
-    finally:
-        os.remove(temp_path)
+    except Exception as e:
+        logger.error("Groq transcription error: %s", e)
+        return {"text": "", "duration": 0.0}
