@@ -170,8 +170,13 @@ export default function Interview({ config }) {
     };
 
     ws.onmessage = async (msg) => {
-      console.log("[Interview] WebSocket message:", msg.data);
       const data = JSON.parse(msg.data);
+
+      // Server-side keepalive - only exists to stop reverse proxies from
+      // treating a long silent recording as an idle connection and killing it.
+      if (data.event === "ping") return;
+
+      console.log("[Interview] WebSocket message:", msg.data);
 
       if (data.event === "question" || data.event === "repeat") {
         if (data.session_id) {

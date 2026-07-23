@@ -30,6 +30,26 @@ def _phase_for(question_count: int) -> tuple[str, str | None]:
     return PHASE_BY_COUNT.get(question_count, ("technical", None))
 
 
+HEARTBEAT_INTERVAL_S = 20
+
+
+async def _heartbeat(websocket: WebSocket):
+    """
+    Recorded audio goes over a separate REST upload, not this socket, so
+    while someone is answering the WS can otherwise sit fully idle for a
+    minute or more. Reverse proxies in front of the app (e.g. Render's
+    free tier) close connections that look idle, which would silently
+    drop the interview mid-answer - this keeps traffic flowing so that
+    never happens. Exits quietly once the socket is gone.
+    """
+    try:
+        while True:
+            await asyncio.sleep(HEARTBEAT_INTERVAL_S)
+            await websocket.send_json({"event": "ping"})
+    except Exception:
+        return
+
+
 async def interview_ws(websocket: WebSocket):
     is_demo = websocket.query_params.get("demo") == "true"
 
@@ -50,6 +70,7 @@ async def interview_ws(websocket: WebSocket):
     user_id = user.id
     await websocket.accept()
     logger.info("WS accepted for user=%s", user_id)
+    heartbeat_task = asyncio.create_task(_heartbeat(websocket))
 
     session_id: uuid.UUID | None = None
     current_question = None
@@ -218,6 +239,8 @@ async def interview_ws(websocket: WebSocket):
         logger.info("Interview disconnected (user=%s, session=%s)", user_id, session_id)
     except Exception as e:
         logger.exception("WS handler error: %s", e)
+    finally:
+        heartbeat_task.cancel()
 
 
 # ================================================================
@@ -275,6 +298,7 @@ async def _run_demo_session(websocket: WebSocket):
         return
 
     logger.info("Demo WS accepted for ip=%s", client_ip)
+    heartbeat_task = asyncio.create_task(_heartbeat(websocket))
 
     current_question = None
     current_audio_url = None
@@ -378,3 +402,5 @@ async def _run_demo_session(websocket: WebSocket):
         logger.info("Demo interview disconnected (ip=%s)", client_ip)
     except Exception as e:
         logger.exception("Demo WS handler error: %s", e)
+    finally:
+        heartbeat_task.cancel()
