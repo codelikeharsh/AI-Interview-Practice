@@ -9,6 +9,7 @@ asyncpg
 alembic
 pyjwt>=2
 google-auth
+requests
 pytest
 pytest-asyncio
 httpx
