@@ -74,11 +74,11 @@ export default function InterviewSetup({ onStart, onCancel }) {
         initial={{ opacity: 0, scale: 0.96, y: 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
-        className="flex w-full max-w-5xl overflow-hidden shadow-2xl"
+        className="flex max-h-[90vh] w-full max-w-5xl flex-col overflow-y-auto shadow-2xl md:flex-row md:overflow-hidden"
       >
 
         {/* LEFT – PRESETS */}
-        <div className="w-1/2 border-r border-border p-8">
+        <div className="w-full border-b border-border p-5 md:w-1/2 md:border-b-0 md:border-r md:p-8">
           <h2 className="mb-2 text-2xl font-semibold tracking-tight text-text-primary">
             Interview Presets
           </h2>
@@ -108,7 +108,7 @@ export default function InterviewSetup({ onStart, onCancel }) {
         </div>
 
         {/* RIGHT – FORM */}
-        <div className="w-1/2 p-8">
+        <div className="w-full p-5 md:w-1/2 md:p-8">
           <div className="mb-6 flex items-center justify-between">
             <h3 className="text-xl font-semibold text-text-primary">
               Interview Setup

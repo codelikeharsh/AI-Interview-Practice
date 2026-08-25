@@ -59,6 +59,33 @@ function IconLayers({ className = "" }) {
   );
 }
 
+function FeatureTile({ as = "div", to, index, icon: Icon, title, children }) {
+  const interactive = as !== "div";
+  return (
+    <Card
+      as={as}
+      to={to}
+      interactive={interactive}
+      className="group relative h-full overflow-hidden p-7"
+    >
+      <span className="pointer-events-none absolute -bottom-4 -right-2 select-none font-mono text-8xl font-black leading-none text-white/[0.04]">
+        {index}
+      </span>
+      <span className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-accent/60 to-transparent transition-transform duration-300 ease-out group-hover:scale-x-100" />
+
+      <Icon className="mb-5 h-6 w-6 text-accent" />
+      <h3 className="mb-2 font-medium text-text-primary">{title}</h3>
+      <p className="relative max-w-sm text-sm leading-relaxed text-text-secondary">{children}</p>
+
+      {interactive && (
+        <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-medium text-accent opacity-0 transition group-hover:opacity-100">
+          Try it <span className="transition group-hover:translate-x-0.5">→</span>
+        </span>
+      )}
+    </Card>
+  );
+}
+
 const HOW_IT_WORKS_ITEMS = [
   {
     step: "1",
@@ -208,7 +235,6 @@ export default function Home() {
             variants={fadeUp}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-4 py-1.5 text-sm text-text-secondary backdrop-blur"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             AI mock interviews, on demand
           </motion.span>
 
@@ -253,68 +279,59 @@ export default function Home() {
         </motion.div>
       </main>
 
-      {/* PRODUCT SECTION — even grid, no featured/oversized tile */}
+      {/* PRODUCT SECTION — asymmetric bento grid with numbered watermarks */}
       <section ref={productRef} className="px-6 pb-20 pt-8">
         <div className="mx-auto max-w-5xl">
-          <h2 className="mb-8 text-center text-2xl font-semibold tracking-tight md:text-3xl">
-            Product
-          </h2>
+          <div className="mb-10 flex items-end justify-between gap-6 border-b border-border pb-4">
+            <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">Product</h2>
+            <span className="hidden font-mono text-xs uppercase tracking-widest text-text-tertiary sm:block">
+              05 capabilities
+            </span>
+          </div>
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
-            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-4 lg:grid-cols-3"
           >
-            <motion.div variants={fadeUp}>
-              <Card className="h-full p-6">
-                <IconMic className="mb-4 h-6 w-6 text-accent" />
-                <h3 className="mb-2 font-medium text-text-primary">Live Voice Interview</h3>
-                <p className="text-sm text-text-secondary">
-                  AI asks and follows up in real time, adjusting difficulty as you answer.
-                </p>
-              </Card>
+            <motion.div variants={fadeUp} className="lg:col-span-2">
+              <FeatureTile index="01" icon={IconMic} title="Live Voice Interview">
+                AI asks and follows up in real time, adjusting difficulty as you answer.
+              </FeatureTile>
             </motion.div>
 
             <motion.div variants={fadeUp}>
-              <Card className="h-full p-6">
-                <IconTarget className="mb-4 h-6 w-6 text-accent" />
-                <h3 className="mb-2 font-medium text-text-primary">Role-Aware Questions</h3>
-                <p className="text-sm text-text-secondary">Questions adapt to role, topic, and difficulty level.</p>
-              </Card>
+              <FeatureTile index="02" icon={IconTarget} title="Role-Aware Questions">
+                Questions adapt to role, topic, and difficulty level.
+              </FeatureTile>
             </motion.div>
 
             <motion.div variants={fadeUp}>
-              <Card className="h-full p-6">
-                <IconChart className="mb-4 h-6 w-6 text-accent" />
-                <h3 className="mb-2 font-medium text-text-primary">Instant Score Report</h3>
-                <p className="text-sm text-text-secondary">See relevance, clarity, depth, and confidence metrics.</p>
-              </Card>
+              <FeatureTile index="03" icon={IconChart} title="Instant Score Report">
+                See relevance, clarity, depth, and confidence metrics.
+              </FeatureTile>
             </motion.div>
 
             <motion.div variants={fadeUp}>
-              <Card as={Link} to="/interview/resume" interactive className="h-full p-6">
-                <IconDocument className="mb-4 h-6 w-6 text-accent" />
-                <h3 className="mb-2 font-medium text-text-primary">Resume-Based Interview</h3>
-                <p className="text-sm text-text-secondary">Upload your resume for questions built around your real experience.</p>
-              </Card>
+              <FeatureTile as={Link} to="/interview/resume" index="04" icon={IconDocument} title="Resume-Based Interview">
+                Upload your resume for questions built around your real experience.
+              </FeatureTile>
             </motion.div>
 
             <motion.div variants={fadeUp}>
-              <Card as={Link} to="/questions" interactive className="h-full p-6">
-                <IconLayers className="mb-4 h-6 w-6 text-accent" />
-                <h3 className="mb-2 font-medium text-text-primary">Question Bank</h3>
-                <p className="text-sm text-text-secondary">Browse and practice real questions by category and difficulty.</p>
-              </Card>
+              <FeatureTile as={Link} to="/questions" index="05" icon={IconLayers} title="Question Bank">
+                Browse and practice real questions by category and difficulty.
+              </FeatureTile>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* HOW IT WORKS SECTION */}
+      {/* HOW IT WORKS SECTION — connected timeline, not a row of boxes */}
       <section ref={howItWorksRef} className="px-6 pb-24">
         <div className="mx-auto max-w-5xl">
-          <h2 className="mb-8 text-center text-2xl font-semibold tracking-tight md:text-3xl">
+          <h2 className="mb-12 text-center text-2xl font-semibold tracking-tight md:text-3xl">
             How it works
           </h2>
           <motion.div
@@ -322,17 +339,19 @@ export default function Home() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
-            className="grid gap-4 md:grid-cols-3"
+            className="relative grid gap-10 md:grid-cols-3 md:gap-6"
           >
+            <div className="absolute left-5 top-5 hidden h-px w-[calc(100%-2.5rem)] bg-gradient-to-r from-border via-border to-transparent md:block" />
+
             {HOW_IT_WORKS_ITEMS.map((item) => (
-              <motion.div key={item.step} variants={fadeUp}>
-                <Card className="h-full p-6">
-                  <span className="mb-3 inline-flex h-8 w-8 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-sm font-semibold text-accent">
-                    {item.step}
-                  </span>
-                  <h3 className="mb-2 font-medium text-text-primary">{item.title}</h3>
-                  <p className="text-sm text-text-secondary">{item.body}</p>
-                </Card>
+              <motion.div key={item.step} variants={fadeUp} className="relative flex gap-4 md:flex-col md:gap-0">
+                <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-bg font-mono text-sm font-semibold text-accent md:mb-5">
+                  {item.step}
+                </span>
+                <div>
+                  <h3 className="mb-1.5 font-medium text-text-primary">{item.title}</h3>
+                  <p className="text-sm leading-relaxed text-text-secondary">{item.body}</p>
+                </div>
               </motion.div>
             ))}
           </motion.div>

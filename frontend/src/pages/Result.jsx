@@ -164,8 +164,8 @@ export default function Result() {
             </div>
           </Card>
 
-          {/* CONFIDENCE GRAPH */}
-          {timeline.length > 0 && (
+          {/* CONFIDENCE GRAPH - needs at least 2 points to show a trend line */}
+          {timeline.length > 1 && (
             <Card variants={fadeUp} className="p-8">
               <h2 className="mb-4 text-xl font-semibold">
                 Confidence Over Time
@@ -208,7 +208,7 @@ export default function Result() {
           )}
 
           {/* ACTIONS */}
-          <motion.div variants={fadeUp} className="flex items-center justify-between">
+          <motion.div variants={fadeUp} className="flex items-center justify-between print:hidden">
             <div className="flex gap-3">
               <Button onClick={() => window.print()}>
                 Download PDF Report

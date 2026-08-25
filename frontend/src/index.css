@@ -11,3 +11,15 @@
     font-feature-settings: "cv11", "ss01";
   }
 }
+
+/* Printing (e.g. "Download PDF Report" on the results page) - force a
+   plain white/black print instead of the dark theme, which would otherwise
+   print a page full of solid black background and waste ink. */
+@media print {
+  * {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-color: #dddddd !important;
+    box-shadow: none !important;
+  }
+}
