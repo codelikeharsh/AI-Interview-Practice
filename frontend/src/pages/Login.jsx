@@ -11,6 +11,7 @@ export default function Login() {
   const [searchParams] = useSearchParams();
   const expired = searchParams.get("expired") === "1";
   const [error, setError] = useState("");
+  const [signingIn, setSigningIn] = useState(false);
 
   if (!loading && user) {
     return <Navigate to="/" replace />;
@@ -34,20 +35,25 @@ export default function Login() {
         )}
 
         <div className="flex justify-center">
-          <GoogleLogin
-            onSuccess={async (credentialResponse) => {
-              try {
-                setError("");
-                await loginWithGoogle(credentialResponse.credential);
-                navigate("/");
-              } catch {
-                setError("Sign-in failed. Please try again.");
-              }
-            }}
-            onError={() => setError("Sign-in failed. Please try again.")}
-          />
+          <div className={signingIn ? "pointer-events-none opacity-40 transition-opacity" : "transition-opacity"}>
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                try {
+                  setError("");
+                  setSigningIn(true);
+                  await loginWithGoogle(credentialResponse.credential);
+                  navigate("/");
+                } catch {
+                  setError("Sign-in failed. Please try again.");
+                  setSigningIn(false);
+                }
+              }}
+              onError={() => setError("Sign-in failed. Please try again.")}
+            />
+          </div>
         </div>
 
+        {signingIn && <p className="mt-4 text-sm text-text-secondary">Signing you in…</p>}
         {error && <p className="mt-4 text-sm text-red-400">{error}</p>}
       </Card>
     </div>
