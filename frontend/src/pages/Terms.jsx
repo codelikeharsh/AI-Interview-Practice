@@ -2,7 +2,7 @@ import LegalLayout from "../components/LegalLayout";
 
 export default function Terms() {
   return (
-    <LegalLayout title="Terms & Conditions" updated="the day you deploy this">
+    <LegalLayout title="Terms & Conditions" updated="August 26, 2026">
       <p>
         These terms govern your use of Anteroom, an AI mock interview coach ("the Service"). By creating an
         account or starting an interview, you agree to them.
@@ -50,7 +50,13 @@ export default function Terms() {
       </p>
 
       <h2>Contact</h2>
-      <p>Questions about these terms? Reach out at support@example.com.</p>
+      <p>
+        Questions about these terms? Reach out at{" "}
+        <a href="mailto:hello@zero2one.live" className="text-accent hover:text-accent-hover underline">
+          hello@zero2one.live
+        </a>
+        .
+      </p>
     </LegalLayout>
   );
 }

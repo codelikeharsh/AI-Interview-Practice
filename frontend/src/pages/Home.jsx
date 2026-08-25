@@ -96,15 +96,38 @@ export default function Home() {
   const howItWorksRef = useRef(null);
 
   useEffect(() => {
-    getHealth()
-      .then(() => {
-        setStatus("All systems operational");
-        setSystemOk(true);
-      })
-      .catch(() => {
-        setStatus("Backend unavailable");
-        setSystemOk(false);
-      });
+    // Render's free tier sleeps after inactivity and returns an immediate
+    // error response while cold-starting (rather than queueing the
+    // request), which would otherwise show a false "unavailable" for the
+    // ~30-50s it takes to wake up. Retry with backoff before giving up.
+    let cancelled = false;
+    let attempt = 0;
+    const maxAttempts = 10;
+
+    const check = () => {
+      getHealth()
+        .then(() => {
+          if (cancelled) return;
+          setStatus("All systems operational");
+          setSystemOk(true);
+        })
+        .catch(() => {
+          if (cancelled) return;
+          attempt += 1;
+          if (attempt < maxAttempts) {
+            setStatus("Waking up the server…");
+            setTimeout(check, 4000);
+          } else {
+            setStatus("Backend unavailable");
+            setSystemOk(false);
+          }
+        });
+    };
+
+    check();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const startFull = () => {
@@ -209,6 +232,19 @@ export default function Home() {
             <Button size="lg" variant="ghost" onClick={startDemo}>
               Try Demo →
             </Button>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-6">
+            <Link
+              to="/interview/resume"
+              className="group inline-flex items-center gap-3 rounded-full border border-accent/30 bg-accent/5 px-5 py-2.5 text-sm text-text-primary transition hover:border-accent/60 hover:bg-accent/10"
+            >
+              <IconDocument className="h-4 w-4 shrink-0 text-accent" />
+              <span>
+                Have a resume? <span className="font-medium">Upload it and get started</span>
+              </span>
+              <span className="text-accent transition group-hover:translate-x-0.5">→</span>
+            </Link>
           </motion.div>
 
           <motion.p variants={fadeUp} className="mt-6 text-xs text-text-tertiary">
